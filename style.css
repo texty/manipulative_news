@@ -27,22 +27,6 @@ header {
     text-align: center;
     vertical-align: middle; }
 
-@media (max-width: 992px) {
-  header {
-    justify-content: flex-start;
-    padding: 2em 5% 0 5%; }
-    header h1, header p {
-      text-align: left;
-      vertical-align: top; } }
-@media (min-width: 992px) {
-  .reading {
-    padding: 0 15% 0 15%; }
-
-  .header {
-    padding: 0 17.5% 0 17.5%; } }
-@media (min-width: 1199.98px) {
-  .reading {
-    padding: 0 25% 0 25%; } }
 svg {
   background-color: #efefef; }
 
@@ -72,19 +56,6 @@ a {
     letter-spacing: 0.075em;
     margin: 0; }
 
-@media (max-width: 800px) {
-  body {
-    font-size: 90%; }
-
-  .h3 {
-    grid-template-columns: 1fr;
-    z-index: 5; }
-    .h3 .col_block {
-      grid-column: 1 / -1; }
-    .h3 p {
-      font-size: 0.75em;
-      line-height: 1.5;
-      letter-spacing: 0.075em; } }
 h3 {
   font-size: 1rem;
   margin: 0;
@@ -110,7 +81,6 @@ div#tline_text {
     box-sizing: border-box;
     grid-column: 2 / -1;
     display: flex;
-    display: -webkit-flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 2rem 0 2em 0;
@@ -124,7 +94,7 @@ div#tline_text {
     transition: all 1.5s;
     opacity: 0;
     line-height: 1.25em;
-    margin: 0 0 1em 0;
+    margin: 1em 0 1em 0;
     font-size: 0.85em;
     letter-spacing: 0.05em;
     color: #42445b; }
@@ -374,5 +344,35 @@ circle.aricle {
     font-size: 1rem; }
     #howto p.howto_link a {
       text-decoration: underline dotted; }
+
+@media (max-width: 800px) {
+  body {
+    font-size: 90%; }
+
+  .h3 {
+    grid-template-columns: 1fr;
+    z-index: 5; }
+    .h3 .col_block {
+      grid-column: 1 / -1; }
+    .h3 p {
+      font-size: 0.75em;
+      line-height: 1.5;
+      letter-spacing: 0.075em; } }
+@media (max-width: 992px) {
+  header {
+    justify-content: flex-start;
+    padding: 2em 5% 0 5%; }
+    header h1, header p {
+      text-align: left;
+      vertical-align: top; } }
+@media (min-width: 992px) {
+  .reading {
+    padding: 0 15% 0 15%; }
+
+  .header {
+    padding: 0 17.5% 0 17.5%; } }
+@media (min-width: 1199.98px) {
+  .reading {
+    padding: 0 25% 0 25%; } }
 
 /*# sourceMappingURL=style.css.map */

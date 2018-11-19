@@ -609,7 +609,9 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
             })
             .onContainerEnter()
             .onStepEnter(function (r) {
-                var h3 = $(r.element).closest('section').find('.h3 .col_block')
+                var h3 = $(r.element).closest('section')
+                    .css('opacity', 1)
+                    .find('.h3 .col_block')
                     .html(`<h3>${sites_headlines[r.element.id][0]}</h3>${sites_headlines[r.element.id][1]}`);
 
                 if (r.element.id === 'links_net') {

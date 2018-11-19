@@ -19,16 +19,6 @@ body {
   overflow-wrap: break-word;
   word-wrap: break-word;
   margin: 0;
-
-  //-ms-word-break: break-all;
-  ///* Instead use this non-standard one: */
-  //word-break: break-word;
-  //
-  ///* Adds a hyphen where the word breaks, if supported (No Blink) */
-  //-ms-hyphens: auto;
-  //-moz-hyphens: auto;
-  //-webkit-hyphens: auto;
-  //hyphens: auto;
 }
 
 .reading {
@@ -50,37 +40,6 @@ header {
   h1, p {
     text-align: center;
     vertical-align: middle;
-  }
-}
-
-// Extra small devices (portrait phones, less than 576px)
-
-@media (max-width: 992px) {
-  header {
-    justify-content: flex-start;
-    padding: 2em 5% 0 5%;
-
-    h1, p {
-      text-align: left;
-      vertical-align: top;
-    }
-  }
-}
-
-// Medium devices (tablets, less than 992px)
-@media (min-width: 992px) {
-  .reading {
-    padding: 0 15% 0 15%;
-  }
-  .header {
-    padding: 0 17.5% 0 17.5%;
-  }
-}
-
-// Large devices (desktops, less than 1200px)
-@media (min-width: 1199.98px) {
-  .reading {
-    padding: 0 25% 0 25%;
   }
 }
 
@@ -121,26 +80,6 @@ a {
   }
 }
 
-@media (max-width: 800px) {
-  body {
-    font-size: 90%;
-  }
-  .h3 {
-    grid-template-columns: 1fr;
-    z-index: 5;
-
-    .col_block {
-      grid-column: 1 / -1;
-    }
-
-    p {
-      font-size: 0.75em;
-      line-height: 1.5;
-      letter-spacing: 0.075em;
-    }
-  }
-}
-
 h3 {
   font-size: 1rem;
   margin: 0;
@@ -166,18 +105,14 @@ div#tline_text {
   .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    //box-sizing: border-box;
-    //padding: 2em 1em 0 1em;
     position: sticky;
     top: 0;
-    //background-color: $bgcol;
   }
 
   div.hline_day_feed {
     box-sizing: border-box;
     grid-column: 2 / -1;
     display: flex;
-    display: -webkit-flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 2rem 0 2em 0;
@@ -196,7 +131,7 @@ div#tline_text {
     transition: all 1.5s;
     opacity: 0;
     line-height: 1.25em;
-    margin: 0 0 1em 0;
+    margin: 1em 0 1em 0;
     font-size: 0.85em;
     letter-spacing: 0.05em;
     color: lighten($fontcol, 15%);
@@ -550,5 +485,56 @@ circle.aricle {
     a {
       text-decoration: underline dotted;
     }
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+
+@media (max-width: 800px) {
+  body {
+    font-size: 90%;
+  }
+  .h3 {
+    grid-template-columns: 1fr;
+    z-index: 5;
+
+    .col_block {
+      grid-column: 1 / -1;
+    }
+
+    p {
+      font-size: 0.75em;
+      line-height: 1.5;
+      letter-spacing: 0.075em;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  header {
+    justify-content: flex-start;
+    padding: 2em 5% 0 5%;
+
+    h1, p {
+      text-align: left;
+      vertical-align: top;
+    }
+  }
+}
+
+// Medium devices (tablets, less than 992px)
+@media (min-width: 992px) {
+  .reading {
+    padding: 0 15% 0 15%;
+  }
+  .header {
+    padding: 0 17.5% 0 17.5%;
+  }
+}
+
+// Large devices (desktops, less than 1200px)
+@media (min-width: 1199.98px) {
+  .reading {
+    padding: 0 25% 0 25%;
   }
 }
