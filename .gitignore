@@ -2,3 +2,4 @@ node_modules/
 package-lock.json
 bundle.js.tmp*
 index0.js
+\.idea/
