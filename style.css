@@ -172,15 +172,32 @@ circle.aricle {
 
 #screenshots {
   margin: 0 0 0 0;
-  padding: 1em;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr; }
+  box-sizing: border-box; }
+  #screenshots .desktop {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr; }
+  @media (max-width: 800px) and (orientation: portrait) {
+    #screenshots {
+      grid-template-columns: 1fr; } }
   #screenshots span.big_number {
     font-size: 1.25em;
     color: #da55ff;
     font-weight: 600; }
+  @media (max-width: 800px) and (orientation: portrait), (min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    #screenshots .desktop {
+      display: none; } }
+  #screenshots .mobile {
+    padding: 0 10%; }
+    @media (min-width: 801px) {
+      #screenshots .mobile {
+        display: none; } }
+    @media (min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+      #screenshots .mobile {
+        display: block !important; } }
+  #screenshots .mobile .h3 {
+    padding: 2em 1em 0 0 !important; }
   #screenshots .h3 {
     grid-row: 1;
     grid-column: 1 / -1;
@@ -190,6 +207,9 @@ circle.aricle {
     top: 0;
     background-color: #efefef;
     z-index: 5; }
+    @media (max-width: 800px) and (orientation: portrait), (min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+      #screenshots .h3 {
+        position: relative; } }
   #screenshots .img_container {
     grid-column: 1 / 2;
     display: flex;
@@ -209,7 +229,7 @@ circle.aricle {
   #screenshots .img_container:last-of-type {
     justify-content: flex-end;
     align-items: flex-end; }
-  #screenshots img {
+  #screenshots .desktop img {
     max-width: 70%;
     height: auto;
     object-fit: contain;
@@ -218,6 +238,9 @@ circle.aricle {
     --webkit-transition: opacity 1s ease-out 1s, margin 0.5s;
     box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
     pointer-events: none; }
+  #screenshots .mobile img {
+    max-width: 100%;
+    margin: 0 auto 75px auto; }
   #screenshots .sshot_text {
     box-sizing: border-box;
     padding: 5rem 0 1em 1em;
@@ -231,11 +254,12 @@ circle.aricle {
     background-color: #efefef;
     z-index: 7; }
     #screenshots .sshot_text p {
-      opacity: 0;
       transition: opacity 1s ease-out;
       --webkit-transition: opacity 1s ease-out;
       padding: 0 0 2em 0;
       margin: 0; }
+    #screenshots .sshot_text #img-2-text, #screenshots .sshot_text #img-3-text {
+      display: none; }
 
 #sites {
   display: grid;

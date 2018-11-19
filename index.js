@@ -396,26 +396,28 @@ var change_sites_list = {
 };
 
 // Screenshots
-
+// додала id до картинок у append, аби ловити їх на скролі *drozdova
 $('.img_container')
     .each(function (i) {
-        $(this).append(`<img src="screen${i+1}.jpg">`)
-    })
-    .find('img')
-    .mouseover(function () {
-        $(this)
-            .css('margin-top', '-3%')
-            .parent()
-            .css('background-color', 'transparent')
-            .css('z-index', 7);
-    })
-    .mouseout(function () {
-        $(this)
-            .css('margin-top', '0')
-            .parent()
-            .css('background-color', '')
-            .css('z-index', 6);
+        $(this).append(`<img src="screen${i+1}.jpg" id="screen-${i+1}">`);
     });
+
+    //*drozdova прибрала це
+    // .find('img')
+    // .mouseover(function () {
+    //     $(this)
+    //         .css('margin-top', '-3%')
+    //         .parent()
+    //         .css('background-color', 'transparent');
+    //         // .css('z-index', 7);
+    // })
+    // .mouseout(function () {
+    //     $(this)
+    //         .css('margin-top', '0')
+    //         .parent()
+    //         .css('background-color', '');
+    //         .css('z-index', 6);
+    // });
 
 // Scrollama
 const sshot_scroller = scrollama();
@@ -426,7 +428,7 @@ sshot_scroller
         step: '.img_container',
         container: '#screenshots',
         graphic: '.sshot_text',
-        offset: 0.9,
+        offset: 0.8,
         once: true
     })
     .onStepEnter(function (r) {
@@ -434,11 +436,12 @@ sshot_scroller
             $(r.element).find('img')
                 .css('opacity', 1)
                 .css('pointer-events', 'auto');
-
-            $($('.sshot_text p').get(r.index))
-                .css('opacity', 1);
+            //прибрала нижче, бо воно працювалo тільки на першому скролі, всі інші не бачило *drozdova
+            // $($('.sshot_text p').get(r.index))
+            //     .css('opacity', 1);
         }
-    });
+    })
+    ;
 
 // var site_tooltips = {};
 
@@ -786,3 +789,62 @@ var calc_site_w = function () {
     }
     return ws;
 };
+
+
+
+
+
+
+
+
+
+
+
+//функція, що дивиться, чи обʼєкт видно *drozdova
+function isOnScreen(elem, part) {
+    // if the element doesn't exist, abort
+    if (elem.length == 0) {
+        return;
+    }
+    var $window = $(window);
+    var viewport_top = $window.scrollTop();
+    var viewport_height = $window.height();
+    var viewport_bottom;
+    if (part) {
+        viewport_bottom = viewport_top + (viewport_height / part);
+    }
+    else {
+        viewport_bottom = viewport_top + viewport_height;
+    }
+    var $elem = $(elem);
+    var top = $elem.offset().top;
+    var height = $elem.height();
+    var bottom = top + height;
+
+    return (top >= viewport_top && top < viewport_bottom) ||
+        (bottom > viewport_top && bottom <= viewport_bottom) ||
+        (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
+}
+
+//якщо видно показуємо текст, якщо ні, ховаємо.
+$( document ).ready( function() {
+    window.addEventListener('scroll', function(e) {
+        if( isOnScreen( $('#screen-3'), 1 ) ) {
+            $("#img-3-text").css("display", "block")
+        }
+        else if ( ! isOnScreen( $('#screen-3'), 1 ) ) {
+            $("#img-3-text").css("display", "none")
+        }
+    });
+});
+
+$( document ).ready( function() {
+    window.addEventListener('scroll', function(e) {
+        if( isOnScreen( $('#screen-2'), 1) ) {
+            $("#img-2-text").css("display", "block")
+        }
+        else if ( ! isOnScreen( $('#screen-2'), 1 ) ) {
+            $("#img-2-text").css("display", "none")
+        }
+    });
+});
