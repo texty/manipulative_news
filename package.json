@@ -1,0 +1,33 @@
+{
+  "name": "mn_page",
+  "version": "1.0.0",
+  "description": "Web page for texty.org.ua project about manipulative news",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fakenews",
+    "manipulation",
+    "media",
+    "deeplearning",
+    "fastai",
+    "vata",
+    "propaganda",
+    "d3"
+  ],
+  "author": "Nadiia Romanenko and texty.org.ua",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "chroma-js": "^1.4.0",
+    "d3": "^5.7.0",
+    "intersection-observer": "^0.5.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.4",
+    "scrollama": "^1.4.4",
+    "stickyfill": "^1.1.1-strict",
+    "tooltip.js": "^1.3.0",
+    "watchify": "^3.11.0"
+  }
+}
