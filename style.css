@@ -302,7 +302,7 @@ circle.aricle {
       font-size: 1.375em; }
     #sites #sites_list .highlight_ru text {
       font-size: 1.375em;
-      text-shadow: 0 0 3px #01f93a; }
+      text-shadow: 0 0 3px #bdff01; }
     #sites #sites_list .hide_non_ru {
       opacity: 0.75; }
   #sites div.sites_step {
@@ -338,12 +338,13 @@ circle.aricle {
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: auto;
   box-sizing: border-box;
-  padding: 2em;
-  gap: 2em;
+  padding: 2em 10% 2em 10%;
+  gap: 5%;
   font-family: "Ubuntu", SansSerif;
+  color: #4d4f6a;
   background-color: #e7e7e7;
   box-shadow: 0 0 1em 0.5em #e7e7e7;
-  font-size: 0.8em; }
+  font-size: 1em; }
   #howto .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
