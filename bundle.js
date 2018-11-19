@@ -410,7 +410,7 @@ var sites_headlines = {
     ],
     'links_net': [
         'Посилання між сайтами',
-        '<p>Кольорові лінії - на які джерела посилався сайт. Сірі зв\'язки - хто посилався сайт, який ми не досліджували</p>'
+        '<p>Кольорові лінії - на які джерела посилався сайт. Сірі зв\'язки - хто посилався на сайт, який ми не досліджували</p>'
     ],
     'about_ru': [
         'Роспропаганда',
@@ -610,7 +610,9 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
             })
             .onContainerEnter()
             .onStepEnter(function (r) {
-                var h3 = $(r.element).closest('section').find('.h3 .col_block')
+                var h3 = $(r.element).closest('section')
+                    .css('opacity', 1)
+                    .find('.h3 .col_block')
                     .html(`<h3>${sites_headlines[r.element.id][0]}</h3>${sites_headlines[r.element.id][1]}`);
 
                 if (r.element.id === 'links_net') {
