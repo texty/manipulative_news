@@ -40,22 +40,40 @@ body {
   }
 }
 
-// Extra small devices (portrait phones, less than 576px)
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 20% 0 20%;
 
-
-// Medium devices (tablets, less than 992px)
-@media (max-width: 991.99px) {
-  .reading {
-    padding: 0 10% 0 10%;
-  }
-  header {
-    padding: 0 17.5% 0 17.5%;
+  h1, p {
+    text-align: center;
+    vertical-align: middle;
   }
 }
 
+// Extra small devices (portrait phones, less than 576px)
+
+@media (max-width: 992px) {
+  header {
+    justify-content: flex-start;
+    padding: 2em 5% 0 5%;
+
+    h1, p {
+      text-align: left;
+      vertical-align: top;
+    }
+  }
+}
+
+// Medium devices (tablets, less than 992px)
 @media (min-width: 992px) {
   .reading {
     padding: 0 15% 0 15%;
+  }
+  .header {
+    padding: 0 17.5% 0 17.5%;
   }
 }
 
@@ -75,20 +93,6 @@ a {
   text-decoration: underline dashed;
 }
 
-header {
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 0 20% 0 20%;
-
-  h1, p {
-    text-align: center;
-    vertical-align: middle;
-  }
-}
-
 #main {
   display: grid;
   grid-auto-columns: 1fr;
@@ -103,6 +107,7 @@ header {
   margin: 0;
   background-image: linear-gradient($bgcol, $bgcol, $bgcol, darken($bgcol, 3%));
   transition: opacity 0.5s;
+  padding: 1em 1em 1em 1em;
 
   .col_block {
     grid-column: 1;
@@ -112,6 +117,7 @@ header {
     font-size: 0.75em;
     line-height: 2;
     letter-spacing: 0.075em;
+    margin: 0;
   }
 }
 
@@ -141,9 +147,8 @@ h3 {
   text-transform: uppercase;
 }
 
-.sticky {
-  top: 0;
-  position: sticky;
+div#tline_text {
+  margin-bottom: 3em;
 }
 
 #spread_wire {
@@ -161,14 +166,14 @@ h3 {
   .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    box-sizing: border-box;
-    padding: 2em 1em 0 1em;
+    //box-sizing: border-box;
+    //padding: 2em 1em 0 1em;
     position: sticky;
     top: 0;
-    background-color: $bgcol;
+    //background-color: $bgcol;
   }
 
-  div.hline_day_feed, div#tline_text, div#tline_end {
+  div.hline_day_feed {
     box-sizing: border-box;
     grid-column: 2 / -1;
     display: flex;
@@ -177,16 +182,6 @@ h3 {
     justify-content: space-around;
     padding: 2rem 0 2em 0;
     margin: 0 0 0 2em;
-  }
-
-  div#tline_text, div#tline_end {
-    justify-content: start;
-  }
-
-  div#tline_end {
-    margin: 10em 0 0 0;
-    //z-index: 7;
-    background-color: $bgcol;
   }
 
   div.hline_day_feed {
@@ -267,7 +262,7 @@ circle.aricle {
 
 #screenshots {
   margin: 0 0 0 0;
-  padding: 1em;
+  padding: 2em 0 2em 0;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -355,19 +350,11 @@ circle.aricle {
   grid-auto-rows: auto;
   grid-template-columns: 2fr 1fr;
 
-  div, p {
-    margin: 0;
-    padding: 0;
-  }
-
   .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    box-sizing: border-box;
-    padding: 2em 1em 0 1em;
     position: sticky;
     top: 0;
-    background-color: $bgcol;
   }
 
   figure {
@@ -375,6 +362,11 @@ circle.aricle {
     grid-row: 2 / 10;
     margin: 0 0 0 1em;
     padding: 0;
+
+    div {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   div#sites_text {
@@ -452,6 +444,26 @@ circle.aricle {
 
     .hide_non_ru {
       opacity: 0.75;
+    }
+
+    #hower_me_net {
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      top: 33%;
+      font-size: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+
+      p {
+        background-color: $bgcol;
+        box-shadow: 0 0 0.5em 1px darken($bgcol, 10%);
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0.5em;
+      }
     }
   }
   div.sites_step {

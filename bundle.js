@@ -41,8 +41,10 @@ var trans = d3.transition();
 
 var fullscreen_fig = function (scroller=null) {
 
-    $('header')
-        .css('height', function () { return window.innerHeight; });
+    if ($(document).height() > 750) {
+        $('header')
+            .css('min-height', function () { return window.innerHeight; });
+    }
 
     d3.selectAll('#wire_vru svg, #sites_net_svg')
         .attr('width', function () { return this.parentNode.offsetWidth })
@@ -57,7 +59,7 @@ var fullscreen_fig = function (scroller=null) {
             return `${h3.get(0).offsetHeight}px`;
         });
 
-    $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites .sites_step, #tline_end')
+    $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites .sites_step')
         .css( 'min-height', window.innerHeight );
 
     $('#sites_list, .sshot_text, .img_container')
@@ -113,8 +115,6 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
             .enter()
             .append('div')
             .attr('class', 'hline_day_feed');
-
-        $('#tline_end').appendTo('#spread_wire');
 
         var p_headlines = p_headline_divs.selectAll('p')
             .data(function (d) { return d.values })
@@ -267,14 +267,13 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
 
         tline_scroller
             .setup({
-                step: '#spread_wire .hline_day_feed, #spread_wire p.hline, #tline_end',
+                step: '#spread_wire .hline_day_feed, #spread_wire p.hline',
                 container: '#spread_wire',
                 graphic: '#wire_vru',
                 offset: 0.9,
                 progress: true
             })
             .onStepEnter(function (r) {
-                if (r.element.id === 'tline_end') { return }
                 if (r.direction === 'down') {
 
                     if (r.element.tagName === 'DIV') {
@@ -308,7 +307,6 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
                 }
             })
             .onStepExit(function (r) {
-                if (r.element.id === 'tline_end') { return }
                 if (r.direction === 'up') {
 
                     if (r.element.tagName === 'DIV') {
@@ -371,21 +369,21 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
                     .style('stroke-opacity', 1)
                     .style('opacity', 0.8)
                     .duration(300);
-            })
-            .onStepProgress(function (r) {
-                if (r.element.id === 'tline_end' && r.progress > prev_step_progress && r.progress >= 0.8) {
-                    $(r.element).closest('section').find('.h3')
-                        .css('opacity', 0)
-                        .css('pointer-events', 'none');
-                    prev_step_progress = null;
-                } else if (r.element.id === 'tline_end' && r.progress < prev_step_progress && r.progress >= 0.8) {
-                    $(r.element).closest('section').find('.h3')
-                        .css('opacity', 1)
-                        .css('pointer-events', 'auto');
-                    prev_step_progress = null;
-                }
-                prev_step_progress = r.progress;
             });
+            // .onStepProgress(function (r) {
+            //     if (r.element.id === 'tline_end' && r.progress > prev_step_progress && r.progress >= 0.8) {
+            //         $(r.element).closest('section').find('.h3')
+            //             .css('opacity', 0)
+            //             .css('pointer-events', 'none');
+            //         prev_step_progress = null;
+            //     } else if (r.element.id === 'tline_end' && r.progress < prev_step_progress && r.progress >= 0.8) {
+            //         $(r.element).closest('section').find('.h3')
+            //             .css('opacity', 1)
+            //             .css('pointer-events', 'auto');
+            //         prev_step_progress = null;
+            //     }
+            //     prev_step_progress = r.progress;
+            // });
 
         $(window).resize( function() { fullscreen_fig(tline_scroller) } );
     });
@@ -394,6 +392,30 @@ var change_sites_list = {
     'm_emo': 'emo_pers',
     'm_arg': 'arg_pers',
     'm_man': 'norm_pers'
+};
+
+var sites_headlines = {
+    'm_emo': [
+        'Емоційні маніпуляції',
+        '<p>Рейтинг сайтів за часкою новин, в яких маніпулюють емоціями читача.</p>' +
+        '<p>При гортанні тип рейтингу зміниться</p>'
+    ],
+    'm_arg': [
+        'Маніпулювання аргументами',
+        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи</p>'
+    ],
+    'm_man': [
+        'Рейтинг маніпулятивності',
+        '<p>За часткою новин, де зафіксували одну з маніпуляцій</p>'
+    ],
+    'links_net': [
+        'Посилання між сайтами',
+        '<p>Кольорові лінії - на які джерела посилався сайт. Сірі зв\'язки - хто посилався сайт, який ми не досліджували</p>'
+    ],
+    'about_ru': [
+        'Роспропаганда',
+        '<p>Місце в рейтингу маніпулятивності</p>'
+    ]
 };
 
 // Screenshots
@@ -492,7 +514,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
         var site_w = calc_site_w(site_divs);
 
         // target_only_sites
-            // .style('display', 'none');
+            // .style('display', 'none');      
 
         var scale_audience = d3.scaleLog()
             .base(2)
@@ -588,9 +610,19 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
             })
             .onContainerEnter()
             .onStepEnter(function (r) {
+                var h3 = $(r.element).closest('section').find('.h3 .col_block')
+                    .html(`<h3>${sites_headlines[r.element.id][0]}</h3>${sites_headlines[r.element.id][1]}`);
+
                 if (r.element.id === 'links_net') {
                     $('.net_target').css('opacity', 1).css('pointer-events', 'auto');
-                    $('#sites_list div').addClass('link_listen');
+                    
+                    $('#hower_me_net').css('opacity', 0.9).find('p');
+                    window.setTimeout(
+                        function () {
+                            $('#hower_me_net').css('opacity', 0).hide()
+                        }, 2500);
+                    
+                    $('#sites_list div.site, #sites_list div.net_target').addClass('link_listen');
                     $('.link_listen')
                         .on('mouseover mouseout', function (ev) {
                             if (r.element.id !== 'links_net') {
@@ -717,6 +749,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
                         $('.net_target').css('opacity', 0).css('pointer-events', 'none');
                         $('.link_listen').off().removeClass('link_listen');
                         link_lines.style('opacity', 0);
+                        $('#hower_me_net').css('opacity', 0);
                         $('.big_text, .half_big_text')
                             .removeClass('half_big_text')
                             .removeClass('big_text');
@@ -725,7 +758,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
                             .classed('highlight_ru', false);
 
                         site_divs.filter(function (d) { return d.site_type !== 'vata' })
-                            .classed('hide_non_ru', true);
+                            .classed('hide_non_ru', false);
                     }
                 })
             .onStepProgress(function (r) {
@@ -759,7 +792,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
 $(window).resize( function() { fullscreen_fig() } );
 
 var calc_site_w = function () {
-    var $divs = $('#sites_list div');
+    var $divs = $('#sites_list div.site, #sites_list div.net_target');
     var cont_w = $divs.closest('#sites_list').width();
     var ws = [];
     var current_fs = +$divs.css('font-size').replace(/[^0-9\.]+/, '');

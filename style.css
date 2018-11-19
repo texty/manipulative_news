@@ -17,15 +17,29 @@ body {
     padding: 2em 0 0 0;
     text-transform: none; }
 
-@media (max-width: 991.99px) {
-  .reading {
-    padding: 0 10% 0 10%; }
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 20% 0 20%; }
+  header h1, header p {
+    text-align: center;
+    vertical-align: middle; }
 
+@media (max-width: 992px) {
   header {
-    padding: 0 17.5% 0 17.5%; } }
+    justify-content: flex-start;
+    padding: 2em 5% 0 5%; }
+    header h1, header p {
+      text-align: left;
+      vertical-align: top; } }
 @media (min-width: 992px) {
   .reading {
-    padding: 0 15% 0 15%; } }
+    padding: 0 15% 0 15%; }
+
+  .header {
+    padding: 0 17.5% 0 17.5%; } }
 @media (min-width: 1199.98px) {
   .reading {
     padding: 0 25% 0 25%; } }
@@ -35,17 +49,6 @@ svg {
 a {
   color: inherit;
   text-decoration: underline dashed; }
-
-header {
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 0 20% 0 20%; }
-  header h1, header p {
-    text-align: center;
-    vertical-align: middle; }
 
 #main {
   display: grid;
@@ -59,13 +62,15 @@ header {
   z-index: 5;
   margin: 0;
   background-image: linear-gradient(#efefef, #efefef, #efefef, #e7e7e7);
-  transition: opacity 0.5s; }
+  transition: opacity 0.5s;
+  padding: 1em 1em 1em 1em; }
   .h3 .col_block {
     grid-column: 1; }
   .h3 p {
     font-size: 0.75em;
     line-height: 2;
-    letter-spacing: 0.075em; }
+    letter-spacing: 0.075em;
+    margin: 0; }
 
 @media (max-width: 800px) {
   body {
@@ -85,9 +90,8 @@ h3 {
   margin: 0;
   text-transform: uppercase; }
 
-.sticky {
-  top: 0;
-  position: sticky; }
+div#tline_text {
+  margin-bottom: 3em; }
 
 #spread_wire {
   display: grid;
@@ -100,12 +104,9 @@ h3 {
   #spread_wire .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    box-sizing: border-box;
-    padding: 2em 1em 0 1em;
     position: sticky;
-    top: 0;
-    background-color: #efefef; }
-  #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #spread_wire div#tline_end {
+    top: 0; }
+  #spread_wire div.hline_day_feed {
     box-sizing: border-box;
     grid-column: 2 / -1;
     display: flex;
@@ -114,11 +115,6 @@ h3 {
     justify-content: space-around;
     padding: 2rem 0 2em 0;
     margin: 0 0 0 2em; }
-  #spread_wire div#tline_text, #spread_wire div#tline_end {
-    justify-content: start; }
-  #spread_wire div#tline_end {
-    margin: 10em 0 0 0;
-    background-color: #efefef; }
   #spread_wire div.hline_day_feed {
     border-bottom: dotted 1px #afafaf; }
   #spread_wire p.hline {
@@ -172,7 +168,7 @@ circle.aricle {
 
 #screenshots {
   margin: 0 0 0 0;
-  padding: 1em;
+  padding: 2em 0 2em 0;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -241,22 +237,19 @@ circle.aricle {
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns: 2fr 1fr; }
-  #sites div, #sites p {
-    margin: 0;
-    padding: 0; }
   #sites .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    box-sizing: border-box;
-    padding: 2em 1em 0 1em;
     position: sticky;
-    top: 0;
-    background-color: #efefef; }
+    top: 0; }
   #sites figure {
     grid-column: 1;
     grid-row: 2 / 10;
     margin: 0 0 0 1em;
     padding: 0; }
+    #sites figure div {
+      margin: 0;
+      padding: 0; }
   #sites div#sites_text {
     grid-column: 2; }
   #sites #sites_net_svg {
@@ -305,6 +298,22 @@ circle.aricle {
       text-shadow: 0 0 3px #bdff01; }
     #sites #sites_list .hide_non_ru {
       opacity: 0.75; }
+    #sites #sites_list #hower_me_net {
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      top: 33%;
+      font-size: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s; }
+      #sites #sites_list #hower_me_net p {
+        background-color: #efefef;
+        box-shadow: 0 0 0.5em 1px #d6d6d6;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0.5em; }
   #sites div.sites_step {
     display: flex;
     display: -webkit-flex;
