@@ -239,7 +239,7 @@ circle.aricle {
 
   //приховати в комп.версії *drozdova
   .mobile {
-    padding:0 10%;
+    padding:1em;
     @media #{$desktop} {
       display:none;
     }
