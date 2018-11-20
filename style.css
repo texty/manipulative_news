@@ -124,20 +124,17 @@ div#tline_text {
   #spread_wire #tline_tooltip {
     z-index: 10;
     margin-top: 2em; }
-
-circle.tline_day {
-  stroke-width: 1;
-  stroke-dasharray: 2, 3;
-  stroke-linecap: 'round';
-  fill-opacity: 0;
-  stroke: #535353;
-  pointer-events: none; }
-
-circle[stroke-opacity="0"] {
-  pointer-events: none; }
-
-circle.aricle {
-  stroke-width: 3; }
+  #spread_wire circle.tline_day {
+    stroke-width: 1;
+    stroke-dasharray: 2, 3;
+    stroke-linecap: 'round';
+    fill-opacity: 0;
+    stroke: #535353;
+    pointer-events: none; }
+  #spread_wire circle[stroke-opacity="0"] {
+    pointer-events: none; }
+  #spread_wire circle.aricle {
+    stroke-width: 3; }
 
 #screenshots {
   margin: 0 0 0 0;
@@ -331,6 +328,7 @@ circle.aricle {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
     display: block;
+    padding: 0;
     background-image: none;
     background-color: #e7e7e7; }
     #howto .h3 p {
@@ -348,7 +346,7 @@ circle.aricle {
     #howto p.howto_link a {
       text-decoration: underline dotted; }
 
-@media (max-width: 800px) {
+@media (max-width: 576px) {
   body {
     font-size: 90%; }
 
@@ -360,8 +358,73 @@ circle.aricle {
     .h3 p {
       font-size: 0.75em;
       line-height: 1.5;
-      letter-spacing: 0.075em; } }
-@media (max-width: 992px) {
+      letter-spacing: 0.075em; }
+
+  header {
+    justify-content: flex-start;
+    padding: 2em 5% 0 5%; }
+    header h1, header p {
+      text-align: left;
+      vertical-align: top; }
+
+  .reading {
+    padding: 0 7.5% 0 7.5%; }
+
+  #spread_wire {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0 0 2em 0; }
+    #spread_wire svg {
+      padding: 2rem 0 0 0; }
+    #spread_wire .h3 {
+      grid-row: 1 / 2;
+      grid-column: 1 / -1;
+      position: sticky;
+      top: 0; }
+    #spread_wire div.hline_day_feed {
+      box-sizing: border-box;
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 2rem 0 2em 0;
+      margin: 0 0 0 2em; }
+    #spread_wire p.hline {
+      box-sizing: border-box;
+      padding: 0 0 1em 0;
+      -webkit-transition: all 1.5s;
+      transition: all 1.5s;
+      opacity: 0;
+      line-height: 1.25em;
+      margin: 1em 0 1em 0;
+      font-size: 0.85em;
+      letter-spacing: 0.05em;
+      color: #42445b; }
+    #spread_wire p.hline.tooltiped {
+      box-shadow: 0 0 1em 0.5em #c9c9c9;
+      margin-right: 2em;
+      margin-left: -2em; }
+    #spread_wire figure#wire_vru {
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+      grid-row: 2 / 3;
+      position: sticky;
+      top: 0; }
+    #spread_wire rect {
+      opacity: 0; }
+    #spread_wire text {
+      fill: #22232f; }
+    #spread_wire #tline_tooltip {
+      z-index: 10;
+      margin-top: 2em; }
+    #spread_wire circle.tline_day {
+      stroke-width: 2;
+      stroke-dasharray: 2, 3;
+      stroke-linecap: 'round';
+      fill-opacity: 0;
+      stroke: #535353;
+      pointer-events: none; } }
+@media (min-width: 577px) {
   header {
     justify-content: flex-start;
     padding: 2em 5% 0 5%; }

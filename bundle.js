@@ -41,9 +41,11 @@ var trans = d3.transition();
 
 var fullscreen_fig = function (scroller=null) {
 
-    if ($(document).height() > 750) {
-        $('header')
-            .css('min-height', function () { return window.innerHeight; });
+    if ($(document).width() < 576) {
+        $('#wire_vru').attr('height', function () {
+            var h3 = $(this).closest('section').find('.h3');
+
+        })
     }
 
     d3.selectAll('#wire_vru svg, #sites_net_svg')
@@ -621,8 +623,8 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
                     $('#hower_me_net').css('opacity', 0.9).find('p');
                     window.setTimeout(
                         function () {
-                            $('#hower_me_net').css('opacity', 0).hide()
-                        }, 2500);
+                            $('#hower_me_net').css('opacity', 0).slideUp()
+                        }, 3000);
                     
                     $('#sites_list div.site, #sites_list div.net_target').addClass('link_listen');
                     $('.link_listen')
