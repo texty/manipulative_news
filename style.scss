@@ -5,6 +5,13 @@ $vata_col: rgb(194, 0, 235);
 $neut_col: #a0a0a0;
 $alien_green: #bdff01;
 
+$mobile: '(max-width: 800px)';
+$desktop: '(min-width: 801px)';
+$iPadProPortrait: '(min-device-width: 1024px)
+  and (max-device-width: 1366px)
+  and (orientation: portrait)
+  and (-webkit-min-device-pixel-ratio: 1.5)';
+
 @font-face {
   font-family: droid-mono;
   src: url(DroidSansMono.ttf)
@@ -200,17 +207,49 @@ circle.aricle {
 
 #screenshots {
   margin: 0 0 0 0;
-  padding: 2em 0 2em 0;
+  //padding: 1em;
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr;
+
+  .desktop {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  //для моб. версії грід в одну колонку, шириною в екран *drozdova
+  @media #{$mobile} {
+    grid-template-columns: 1fr;
+
+  }
 
   span.big_number {
     font-size: 1.25em;
     color: $spin_col;
     font-weight: 600;
     //text-shadow: 2px 2px 1px $neut_col;
+  }
+
+  //приховати в моб. версії *drozdova
+  .desktop {
+    @media #{$mobile}, #{$iPadProPortrait}  {
+      display:none;
+    }
+  }
+
+  //приховати в комп.версії *drozdova
+  .mobile {
+    padding:0 10%;
+    @media #{$desktop} {
+      display:none;
+    }
+    @media #{$iPadProPortrait} {
+      display:block!important;
+    }
+  }
+
+  .mobile .h3 {
+    padding: 2em 1em 0 0!important;
   }
 
   .h3 {
@@ -222,6 +261,11 @@ circle.aricle {
     top: 0;
     background-color: $bgcol;
     z-index: 5;
+    // в мобільній версії не треба sticky *drozdova
+    @media #{$mobile}, #{$iPadProPortrait}  {
+      position: relative;
+    }
+
   }
 
   .img_container {
@@ -248,7 +292,8 @@ circle.aricle {
     align-items: flex-end;
   }
 
-  img {
+  // окремі стилі для моб і звич. версій *drozdova
+  .desktop img {
     max-width: 70%;
     height: auto;
     object-fit: contain;
@@ -257,6 +302,12 @@ circle.aricle {
     --webkit-transition: opacity 1s ease-out 1s, margin 0.5s;
     box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
     pointer-events: none;
+  }
+
+  //картинки в моб версії шириною 100% *drozdova
+  .mobile img {
+    max-width:100%;
+    margin:0 auto 75px auto;
   }
 
   .sshot_text {
@@ -273,14 +324,20 @@ circle.aricle {
     z-index: 7;
 
     p {
-      opacity: 0;
+      ////прибрала прозорість *drozdova
+      //opacity: 0;
       transition: opacity 1s ease-out;
       --webkit-transition: opacity 1s ease-out;
       padding: 0 0 2em 0;
       margin: 0;
     }
+    //по дефолту ховаємо текст підказок *drozdova
+    #img-2-text, #img-3-text {
+      display:none;
+    }
   }
 }
+
 
 #sites {
   display: grid;
