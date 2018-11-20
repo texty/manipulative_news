@@ -3,7 +3,6 @@ source,target,weight,url_domain,not_other
 40ka.info,radiosvoboda.org,0.02631578947368421,40ka.info,456
 agrimpasa.com,112.ua,0.021488871834228703,agrimpasa.com,1303
 agrimpasa.com,apostrophe.ua,0.15886415963161934,agrimpasa.com,1303
-agrimpasa.com,censor.net.ua,0.009976976208749041,agrimpasa.com,1303
 agrimpasa.com,dialog.ua,0.08595548733691481,agrimpasa.com,1303
 agrimpasa.com,facenews.ua,0.012279355333844973,agrimpasa.com,1303
 agrimpasa.com,gordonua.com,0.012279355333844973,agrimpasa.com,1303
@@ -54,6 +53,10 @@ antifashist.com,ria.ru,0.027387120651369355,antifashist.com,1351
 antifashist.com,strana.ua,0.012583271650629163,antifashist.com,1351
 antifashist.com,tass.ru,0.015544041450777202,antifashist.com,1351
 antifashist.com,ukraina.ru,0.010362694300518135,antifashist.com,1351
+"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",antikor.com.ua,0.1303628412717173,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",16922
+"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",from-ua.com,0.04112989008391443,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",16922
+"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",korupciya.com,0.011700744592837726,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",16922
+"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",obozrevatel.com,0.011759839262498522,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",16922
 comitet.su,antifashist.com,0.07562277580071175,comitet.su,2248
 comitet.su,korrespondent.net,0.014234875444839857,comitet.su,2248
 comitet.su,newsone.ua,0.015569395017793594,comitet.su,2248
@@ -117,7 +120,6 @@ elise.com.ua,gordonua.com,0.014690265486725664,elise.com.ua,5650
 elise.com.ua,interfax.com.ua,0.019646017699115045,elise.com.ua,5650
 elise.com.ua,obozrevatel.com,0.021238938053097345,elise.com.ua,5650
 elise.com.ua,pravda.com.ua,0.04141592920353982,elise.com.ua,5650
-elise.com.ua,radiosvoboda.org,0.00991150442477876,elise.com.ua,5650
 elise.com.ua,segodnya.ua,0.010442477876106195,elise.com.ua,5650
 elise.com.ua,strana.ua,0.02247787610619469,elise.com.ua,5650
 elise.com.ua,ukranews.com,0.021415929203539824,elise.com.ua,5650
@@ -144,6 +146,7 @@ from-ua.com,vesti-ukr.com,0.013082858101308286,from-ua.com,11924
 from-ua.com,znaj.ua,0.03144917812814492,from-ua.com,11924
 goruzont.blogspot.com,agrimpasa.com,0.027794204612655235,goruzont.blogspot.com,3382
 goruzont.blogspot.com,antikor.com.ua,0.021289178001182733,goruzont.blogspot.com,3382
+goruzont.blogspot.com,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",0.10585452395032525,goruzont.blogspot.com,3382
 goruzont.blogspot.com,dialog.ua,0.1017149615612064,goruzont.blogspot.com,3382
 goruzont.blogspot.com,korupciya.com,0.19515079834417504,goruzont.blogspot.com,3382
 goruzont.blogspot.com,life-invest.pp.ua,0.01094027202838557,goruzont.blogspot.com,3382
@@ -259,6 +262,7 @@ news24ua.com,zik.ua,0.012807881773399015,news24ua.com,1015
 newsname.info,agrimpasa.com,0.013221153846153846,newsname.info,832
 newsname.info,antikor.com.ua,0.027644230769230768,newsname.info,832
 newsname.info,apostrophe.ua,0.021634615384615384,newsname.info,832
+newsname.info,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",0.01201923076923077,newsname.info,832
 newsname.info,censor.net.ua,0.014423076923076924,newsname.info,832
 newsname.info,dialog.ua,0.04927884615384615,newsname.info,832
 newsname.info,elise.com.ua,0.026442307692307692,newsname.info,832
@@ -406,8 +410,8 @@ skelet-info.org,strana.ua,0.057515337423312884,skelet-info.org,1304
 skelet-info.org,tsn.ua,0.010736196319018405,skelet-info.org,1304
 skelet-info.org,ukranews.com,0.0352760736196319,skelet-info.org,1304
 skelet-info.org,vesti-ukr.com,0.05368098159509203,skelet-info.org,1304
-skelet-info.org,zn.ua,0.009969325153374233,skelet-info.org,1304
 slovech.co,antikor.com.ua,0.014652014652014652,slovech.co,273
+slovech.co,"bbc-ccnn.com, bbcc-cnn.com, bbcccnn.co, bbcccnn.com.ua, bbcccnn.info, bbcccnn.today",0.02564102564102564,slovech.co,273
 slovech.co,from-ua.com,0.08058608058608059,slovech.co,273
 slovech.co,gazeta.ua,0.01098901098901099,slovech.co,273
 slovech.co,korupciya.com,0.2857142857142857,slovech.co,273
@@ -445,8 +449,6 @@ ua24ua.net,nv.ua,0.01146384479717813,ua24ua.net,2268
 ua24ua.net,pravda.com.ua,0.04144620811287478,ua24ua.net,2268
 ua24ua.net,strana.ua,0.054673721340388004,ua24ua.net,2268
 ua3.info,40ka.info,0.27860696517412936,ua3.info,402
-ua3.info,bihus.info,0.009950248756218905,ua3.info,402
-ua3.info,hromadske.ua,0.009950248756218905,ua3.info,402
 ua3.info,nashigroshi.org,0.012437810945273632,ua3.info,402
 ua3.info,pravda.com.ua,0.05970149253731343,ua3.info,402
 ua3.info,radiosvoboda.org,0.04228855721393035,ua3.info,402

@@ -5,6 +5,7 @@ $vata_col: rgb(194, 0, 235);
 $neut_col: #a0a0a0;
 $alien_green: #bdff01;
 
+
 $mobile: '(max-width: 800px)';
 $desktop: '(min-width: 801px)';
 $iPadProPortrait: '(min-device-width: 1024px)
@@ -63,9 +64,9 @@ a {
 }
 
 #main {
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-auto-rows: auto;
+  //display: grid;
+  //grid-auto-columns: 1fr;
+  //grid-auto-rows: auto;
 }
 
 .h3 {
@@ -508,7 +509,6 @@ div#tline_text {
   gap: 5%;
   font-family: "Ubuntu", SansSerif;
   color: lighten($fontcol, 20%);
-  background-color: darken($bgcol, 3%);
   box-shadow: 0 0 1em 0.5em darken($bgcol, 3%);
   font-size: 1em;
 

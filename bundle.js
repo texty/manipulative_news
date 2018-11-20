@@ -44,7 +44,6 @@ var fullscreen_fig = function (scroller=null) {
     if ($(document).width() < 576) {
         $('#wire_vru').attr('height', function () {
             var h3 = $(this).closest('section').find('.h3');
-
         })
     }
 
@@ -472,7 +471,7 @@ sshot_scroller
 
 // Ranking
 
-Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.csv('site_links_edges.csv')])
+Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.csv('site_links_edges.csv')])
     .then(function ([data, target_only_nodes, site_links]) {
         data.forEach(function (d, i) {
             for (var pr in d) {
@@ -498,7 +497,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
             .append('div')
             .classed('site', true)
             .style('order', function (d, i) { return i+1 })
-            .html(function (d) { return d.url_domain });
+            .html(function (d) { return d.comment || d.url_domain });
 
         var target_only_sites = sites_list
             .selectAll('div.net_target')
@@ -557,7 +556,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
             .attr('x', '0')
             .attr('y', '0.95em')
             // .style('font-size', '1em')
-            .text(function (d) { return d.url_domain });
+            .text(function (d) { return d.comment || d.url_domain });
 
         var link_lines = d3.select('svg#sites_net_svg')
             .selectAll('path')
@@ -567,7 +566,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
 
         site_divs
             .attr('data-tippy-content', function (d) {
-                return `<h6>${d.url_domain}</h6>
+                return `<h6>${d.comment || d.url_domain}</h6>
                         <p>Візитів на місяць: ${d3.format(".2s")(d.ukr_audience)}</p>
                         <p>Новин, що маніпулюють емоціями: ${d3.format(".2%")(d.emo_pers)}</p>
                         `;
@@ -595,7 +594,8 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
         target_only_sites.each(function (d) { sites_el_refs[d] = this });
 
         const scale_link_width = d3.scaleLinear()
-            .domain([d3.min(site_links, function (d) { return d.weight }) * 1.05, 1000])
+            // .domain([d3.min(site_links, function (d) { return d.weight }) * 1.05, 1000])
+            .domain([0.01, 0.25])
             .range([1.5, 7])
             .clamp(true);
 
@@ -635,7 +635,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
                             if (r.element.id !== 'links_net') {
                                 return
                             }
-                            var site = this.textContent;
+                            var site = this.__data__.url_domain || this.textContent;
                             var edges = link_lines.filter(function (d) {
                                 return (target_only_nodes.indexOf(site) < 0)
                                     ? d.source === site
@@ -737,7 +737,7 @@ Promise.all([d3.csv('results291018.csv'), d3.text('site_links_targets.txt'), d3.
                             } else {
                                 name_man = 'Новин, що містять маніпуляції';
                             }
-                            return `<h6>${d.url_domain}</h6>
+                            return `<h6>${d.comment || d.url_domain}</h6>
                             <p>Візитів на місяць: ${d3.format(".2s")(d.ukr_audience)}</p>
                             <p>${name_man}: ${d3.format(".2%")((field === 'norm_pers') ? 1 - d[field] : d[field])}</p>`;
                         })
