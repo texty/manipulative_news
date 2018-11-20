@@ -5,13 +5,6 @@ $vata_col: rgb(194, 0, 235);
 $neut_col: #a0a0a0;
 $alien_green: #bdff01;
 
-
-//змінні для екранів *drozdova
-$mobile: '(max-width: 800px) and (orientation: portrait)'; //можна будь-яку ширину встановити як межу для моб.версії
-$desktop: '(min-width: 801px)';
-$iPadProPortrait: '(min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)';
-
-
 @font-face {
   font-family: droid-mono;
   src: url(DroidSansMono.ttf)
@@ -26,16 +19,6 @@ body {
   overflow-wrap: break-word;
   word-wrap: break-word;
   margin: 0;
-
-  //-ms-word-break: break-all;
-  ///* Instead use this non-standard one: */
-  //word-break: break-word;
-  //
-  ///* Adds a hyphen where the word breaks, if supported (No Blink) */
-  //-ms-hyphens: auto;
-  //-moz-hyphens: auto;
-  //-webkit-hyphens: auto;
-  //hyphens: auto;
 }
 
 .reading {
@@ -47,29 +30,19 @@ body {
   }
 }
 
-// Extra small devices (portrait phones, less than 576px)
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 20% 0 20%;
+  margin: 0 0 3em 0;
+  background-image: url("vat.jpg");
+  background-size: cover;
 
-
-// Medium devices (tablets, less than 992px)
-@media (max-width: 991.99px) {
-  .reading {
-    padding: 0 10% 0 10%;
-  }
-  header {
-    padding: 0 17.5% 0 17.5%;
-  }
-}
-
-@media (min-width: 992px) {
-  .reading {
-    padding: 0 15% 0 15%;
-  }
-}
-
-// Large devices (desktops, less than 1200px)
-@media (min-width: 1199.98px) {
-  .reading {
-    padding: 0 25% 0 25%;
+  h1, p {
+    text-align: center;
+    vertical-align: middle;
   }
 }
 
@@ -80,20 +53,6 @@ svg {
 a {
   color: inherit;
   text-decoration: underline dashed;
-}
-
-header {
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 0 20% 0 20%;
-
-  h1, p {
-    text-align: center;
-    vertical-align: middle;
-  }
 }
 
 #main {
@@ -110,6 +69,7 @@ header {
   margin: 0;
   background-image: linear-gradient($bgcol, $bgcol, $bgcol, darken($bgcol, 3%));
   transition: opacity 0.5s;
+  padding: 1em 1em 1em 1em;
 
   .col_block {
     grid-column: 1;
@@ -119,26 +79,7 @@ header {
     font-size: 0.75em;
     line-height: 2;
     letter-spacing: 0.075em;
-  }
-}
-
-@media (max-width: 800px) {
-  body {
-    font-size: 90%;
-  }
-  .h3 {
-    grid-template-columns: 1fr;
-    z-index: 5;
-
-    .col_block {
-      grid-column: 1 / -1;
-    }
-
-    p {
-      font-size: 0.75em;
-      line-height: 1.5;
-      letter-spacing: 0.075em;
-    }
+    margin: 0;
   }
 }
 
@@ -148,9 +89,8 @@ h3 {
   text-transform: uppercase;
 }
 
-.sticky {
-  top: 0;
-  position: sticky;
+div#tline_text {
+  margin-bottom: 3em;
 }
 
 #spread_wire {
@@ -168,32 +108,18 @@ h3 {
   .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    box-sizing: border-box;
-    padding: 2em 1em 0 1em;
     position: sticky;
     top: 0;
-    background-color: $bgcol;
   }
 
-  div.hline_day_feed, div#tline_text, div#tline_end {
+  div.hline_day_feed {
     box-sizing: border-box;
     grid-column: 2 / -1;
     display: flex;
-    display: -webkit-flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 2rem 0 2em 0;
     margin: 0 0 0 2em;
-  }
-
-  div#tline_text, div#tline_end {
-    justify-content: start;
-  }
-
-  div#tline_end {
-    margin: 10em 0 0 0;
-    //z-index: 7;
-    background-color: $bgcol;
   }
 
   div.hline_day_feed {
@@ -208,7 +134,7 @@ h3 {
     transition: all 1.5s;
     opacity: 0;
     line-height: 1.25em;
-    margin: 0 0 1em 0;
+    margin: 1em 0 1em 0;
     font-size: 0.85em;
     letter-spacing: 0.05em;
     color: lighten($fontcol, 15%);
@@ -272,54 +198,19 @@ circle.aricle {
   stroke-width: 3;
 }
 
-
-
-
 #screenshots {
   margin: 0 0 0 0;
-  //padding: 1em;
+  padding: 2em 0 2em 0;
   box-sizing: border-box;
-
-  .desktop {
-    padding: 1em;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr;
-  }
-
-  //для моб. версії грід в одну колонку, шириною в екран *drozdova
-  @media #{$mobile} {
-    grid-template-columns: 1fr;
-
-  }
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr;
 
   span.big_number {
     font-size: 1.25em;
     color: $spin_col;
     font-weight: 600;
     //text-shadow: 2px 2px 1px $neut_col;
-  }
-
-  //приховати в моб. версії *drozdova
-  .desktop {
-    @media #{$mobile}, #{$iPadProPortrait}  {
-      display:none;
-    }
-  }
-
-  //приховати в комп.версії *drozdova
-  .mobile {
-    padding:0 10%;
-    @media #{$desktop} {
-      display:none;
-    }
-    @media #{$iPadProPortrait} {
-      display:block!important;
-    }
-  }
-
-  .mobile .h3 {
-    padding: 2em 1em 0 0!important;
   }
 
   .h3 {
@@ -331,10 +222,6 @@ circle.aricle {
     top: 0;
     background-color: $bgcol;
     z-index: 5;
-    // в мобільній версії не треба sticky *drozdova
-    @media #{$mobile}, #{$iPadProPortrait}  {
-      position: relative;
-    }
 
   }
 
@@ -362,8 +249,7 @@ circle.aricle {
     align-items: flex-end;
   }
 
-  // окремі стилі для моб і звич. версій *drozdova
-  .desktop img {
+  img {
     max-width: 70%;
     height: auto;
     object-fit: contain;
@@ -372,12 +258,6 @@ circle.aricle {
     --webkit-transition: opacity 1s ease-out 1s, margin 0.5s;
     box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
     pointer-events: none;
-  }
-
-  //картинки в моб версії шириною 100% *drozdova
-  .mobile img {
-    max-width:100%;
-    margin:0 auto 75px auto;
   }
 
   .sshot_text {
@@ -394,16 +274,11 @@ circle.aricle {
     z-index: 7;
 
     p {
-      ////прибрала прозорість *drozdova
-      //opacity: 0;
+      opacity: 0;
       transition: opacity 1s ease-out;
       --webkit-transition: opacity 1s ease-out;
       padding: 0 0 2em 0;
       margin: 0;
-    }
-    //по дефолту ховаємо текст підказок *drozdova
-    #img-2-text, #img-3-text {
-      display:none;
     }
   }
 }
@@ -413,19 +288,11 @@ circle.aricle {
   grid-auto-rows: auto;
   grid-template-columns: 2fr 1fr;
 
-  div, p {
-    margin: 0;
-    padding: 0;
-  }
-
   .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
-    box-sizing: border-box;
-    padding: 2em 1em 0 1em;
     position: sticky;
     top: 0;
-    background-color: $bgcol;
   }
 
   figure {
@@ -433,6 +300,11 @@ circle.aricle {
     grid-row: 2 / 10;
     margin: 0 0 0 1em;
     padding: 0;
+
+    div {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   div#sites_text {
@@ -510,6 +382,26 @@ circle.aricle {
 
     .hide_non_ru {
       opacity: 0.75;
+    }
+
+    #hower_me_net {
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      top: 33%;
+      font-size: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+
+      p {
+        background-color: $bgcol;
+        box-shadow: 0 0 0.5em 1px darken($bgcol, 10%);
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0.5em;
+      }
     }
   }
   div.sites_step {
@@ -596,5 +488,56 @@ circle.aricle {
     a {
       text-decoration: underline dotted;
     }
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+
+@media (max-width: 800px) {
+  body {
+    font-size: 90%;
+  }
+  .h3 {
+    grid-template-columns: 1fr;
+    z-index: 5;
+
+    .col_block {
+      grid-column: 1 / -1;
+    }
+
+    p {
+      font-size: 0.75em;
+      line-height: 1.5;
+      letter-spacing: 0.075em;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  header {
+    justify-content: flex-start;
+    padding: 2em 5% 0 5%;
+
+    h1, p {
+      text-align: left;
+      vertical-align: top;
+    }
+  }
+}
+
+// Medium devices (tablets, less than 992px)
+@media (min-width: 992px) {
+  .reading {
+    padding: 0 15% 0 15%;
+  }
+  .header {
+    padding: 0 17.5% 0 17.5%;
+  }
+}
+
+// Large devices (desktops, less than 1200px)
+@media (min-width: 1199.98px) {
+  .reading {
+    padding: 0 25% 0 25%;
   }
 }
