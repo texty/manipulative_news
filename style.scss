@@ -297,7 +297,7 @@ circle.aricle {
     max-width: 70%;
     height: auto;
     object-fit: contain;
-    opacity: 0;
+    //opacity: 0;  //через цей рул вони глючать на першому скролі, не знизу зʼявляються, а fade in
     transition: opacity 1s ease-out 1s, margin 0.5s;
     --webkit-transition: opacity 1s ease-out 1s, margin 0.5s;
     box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
