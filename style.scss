@@ -6,12 +6,10 @@ $neut_col: #a0a0a0;
 $alien_green: #bdff01;
 
 
-$mobile: '(max-width: 800px)';
-$desktop: '(min-width: 801px)';
-$iPadProPortrait: '(min-device-width: 1024px)
-  and (max-device-width: 1366px)
-  and (orientation: portrait)
-  and (-webkit-min-device-pixel-ratio: 1.5)';
+$mediun: 'screen and (min-width: 577px)';
+$xlarge: 'screen and (min-width: 1199.98px)';
+$large: 'screen and (min-width: 992px)';
+$mobile: 'screen and (max-width: 577px)';
 
 @font-face {
   font-family: droid-mono;
@@ -23,14 +21,28 @@ body {
   color: $fontcol;
   font-family: droid-mono;
   line-height: 2;
-  font-size: 1em;
   overflow-wrap: break-word;
   word-wrap: break-word;
   margin: 0;
+
+  @media #{$mobile} {
+    font-size: 85%;
+  }
 }
 
 .reading {
   box-sizing: border-box;
+  padding: 0 1em 0 1em;
+  @media #{$mediun} {
+    padding: 0 7.5% 0 7.5%;
+  }
+  @media #{$large} {
+    padding: 0 15% 0 15%;
+  }
+  @media #{$xlarge} {
+    padding: 0 25% 0 25%;
+  }
+
 
   h3, h4 {
     padding: 2em 0 0 0;
@@ -43,29 +55,39 @@ header {
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
-  margin: 0 0 ;
-  padding-bottom: 5% !important;
+  margin: 0 0 3em 0 !important;
+  padding: 0 !important;
   min-height: 100vh;
+  @media #{$mobile} {
+    background-color: darken($bgcol, 5%)
+  }
 
 
   h1 {
-    font-size: 3rem;
+    font-size: 3em;
+    @media #{$mobile} {
+      font-size: 2em;
+    }
     background-image: url("glitch.jpg");
     background-size: cover;
     padding-top: 4em !important;
     padding-bottom: 2em !important;
     color: $bgcol;
     margin: 0 0 10% 0;
+    text-align: center;
   }
 
   h1, h2 {
-    text-align: center;
-    vertical-align: middle;
+    //vertical-align: middle;
   }
   h2 {
-    font-size: 1rem;
+    @media #{$mediun} {
+      text-align: center;
+      margin: 0 15% 0 15%;
+    }
+    font-size: 1em;
     font-weight: normal;
-    margin: 0 15% 0 15%;
+    margin: 0 1em 2em 1em;
   }
 }
 
@@ -87,15 +109,28 @@ a {
 .h3 {
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   z-index: 5;
   margin: 0;
   background-image: linear-gradient($bgcol, $bgcol, $bgcol, darken($bgcol, 3%));
   transition: opacity 0.5s;
   padding: 1em 1em 1em 1em;
 
-  .col_block {
-    grid-column: 1;
+  @media #{$large} {
+    grid-template-columns: 1fr 1fr;
+    .col_block {
+      grid-column: 1;
+    }
+  }
+
+  h3 {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    margin: 0;
+
+    @media #{$large} {
+      font-size: 1rem;
+    }
   }
 
   p {
@@ -109,7 +144,6 @@ a {
 h3 {
   font-size: 1rem;
   margin: 0;
-  text-transform: uppercase;
 }
 
 div#tline_text {
@@ -120,11 +154,18 @@ div#tline_text {
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns: 2fr 1fr;
+  @media #{$mobile} {
+    grid-template-columns: 1fr;
+  }
   margin: 0 0 2em 0;
 
   svg {
     padding: 2rem 0 0 0;
     box-sizing: border-box;
+    @media #{$mobile} {
+      border-bottom: dotted 1px darken($bgcol, 25%);
+      padding: 0;
+    }
     //z-index: 7;
   }
 
@@ -137,7 +178,9 @@ div#tline_text {
 
   div.hline_day_feed {
     box-sizing: border-box;
-    grid-column: 2 / -1;
+    @media #{$mediun} {
+      grid-column: 2 / -1;
+    }
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -146,8 +189,9 @@ div#tline_text {
   }
 
   div.hline_day_feed {
-    border-bottom: dotted 1px darken($bgcol, 25%);
-    //box-shadow: 0 0 1em 0 darken($bgcol, 10%);
+    @media #{$mediun} {
+      border-bottom: dotted 1px darken($bgcol, 25%);
+    }
   }
 
   p.hline {
@@ -158,6 +202,9 @@ div#tline_text {
     opacity: 0;
     line-height: 1.25em;
     margin: 1em 0 1em 0;
+    @media #{$mobile} {
+      margin: 0;
+    }
     font-size: 0.85em;
     letter-spacing: 0.05em;
     color: lighten($fontcol, 15%);
@@ -186,7 +233,9 @@ div#tline_text {
   figure#wire_vru {
     margin: 0 0 0 0;
     padding: 0 0 0 0;
-    grid-row: 2 / 10;
+    @media #{$mediun} {
+      grid-row: 2 / 10;
+    }
   }
 
   rect {
@@ -235,7 +284,6 @@ div#tline_text {
   //для моб. версії грід в одну колонку, шириною в екран *drozdova
   @media #{$mobile} {
     grid-template-columns: 1fr;
-
   }
 
   span.big_number {
@@ -247,7 +295,7 @@ div#tline_text {
 
   //приховати в моб. версії *drozdova
   .desktop {
-    @media #{$mobile}, #{$iPadProPortrait}  {
+    @media #{$mobile}, #{$mediun}  {
       display:none;
     }
   }
@@ -255,11 +303,11 @@ div#tline_text {
   //приховати в комп.версії *drozdova
   .mobile {
     padding:1em;
-    @media #{$desktop} {
+    @media #{$large}, #{$xlarge} {
       display:none;
     }
-    @media #{$iPadProPortrait} {
-      display:block!important;
+    @media #{$mediun} {
+      display:block !important;
     }
   }
 
@@ -277,7 +325,7 @@ div#tline_text {
     background-color: $bgcol;
     z-index: 5;
     // в мобільній версії не треба sticky *drozdova
-    @media #{$mobile}, #{$iPadProPortrait}  {
+    @media #{$mobile}, #{$mediun}  {
       position: relative;
     }
 
@@ -405,6 +453,7 @@ div#tline_text {
     flex-wrap: wrap;
     align-items: flex-start;
     //z-index: 6;
+    //align-content: flex-start;
     overflow: hidden;
 
     .big_text {
@@ -413,6 +462,7 @@ div#tline_text {
 
     .site {
       box-sizing: border-box;
+      padding: 0 1em 0 1em;
       -webkit-transition: order 2s ease-out;
 
       transition: order 2s ease-out;
@@ -521,7 +571,7 @@ div#tline_text {
   grid-auto-rows: auto;
   box-sizing: border-box;
   padding: 2em 10% 2em 10%;
-  font-family: "Ubuntu", Arial;
+  font-family: "Ubuntu", sans-serif;
   color: lighten($fontcol, 20%);
   //box-shadow: 0 0 1em 0.5em darken($bgcol, 3%);
   font-size: 1em;
@@ -563,144 +613,39 @@ div#tline_text {
   }
 }
 
-// Extra small devices (portrait phones, less than 576px)
+#topic_map {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-@media (max-width: 576px) {
-  body {
-    font-size: 90%;
-  }
   .h3 {
-    grid-template-columns: 1fr;
-    z-index: 5;
-
-    .col_block {
-      grid-column: 1 / -1;
-    }
-
-    p {
-      font-size: 0.75em;
-      line-height: 1.5;
-      letter-spacing: 0.075em;
-    }
+    grid-row: 1 / 2;
+    grid-column: 1 / -1;
+    position: sticky;
+    top: 0;
   }
 
-  header {
-    justify-content: flex-start;
-    padding: 2em 5% 0 5%;
+  figure {
+    grid-column: 1;
+    grid-row: 2 / 3;
+    margin: 1em;
+    padding: 0;
+    position: sticky;
+    box-sizing: border-box;
 
-    h1, p {
-      text-align: left;
-      vertical-align: top;
-    }
-  }
-
-  .reading {
-    padding: 0 7.5% 0 7.5%;
-  }
-
-  #spread_wire {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin: 0 0 2em 0;
-
-    svg {
-      padding: 2rem 0 0 0;
-    }
-
-    .h3 {
-      grid-row: 1 / 2;
-      grid-column: 1 / -1;
-      position: sticky;
-      top: 0;
-    }
-
-    div.hline_day_feed {
+    canvas {
+      cursor: grabbing;
+      //border: 1px solid darken($bgcol, 15%);
       box-sizing: border-box;
-      grid-column: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      padding: 2rem 0 2em 0;
-      margin: 0 0 0 2em;
-    }
-
-    p.hline {
-      box-sizing: border-box;
-      padding: 0 0 1em 0;
-      -webkit-transition: all 1.5s;
-      transition: all 1.5s;
-      opacity: 0;
-      line-height: 1.25em;
-      margin: 1em 0 1em 0;
-      font-size: 0.85em;
-      letter-spacing: 0.05em;
-      color: lighten($fontcol, 15%);
-    }
-
-    p.hline.tooltiped {
-      box-shadow: 0 0 1em 0.5em darken($bgcol, 15%);
-      margin-right: 2em;
-      margin-left: -2em;
-    }
-
-    figure#wire_vru {
-      margin: 0 0 0 0;
-      padding: 0 0 0 0;
-      grid-row: 2 / 3;
-      position: sticky;
-      top: 0;
-    }
-
-    rect {
-      opacity: 0;
-    }
-
-    text {
-      fill: $fontcol;
-    }
-
-    #tline_tooltip {
-      z-index: 10;
-      margin-top: 2em;
-    }
-
-    circle.tline_day {
-      stroke-width: 2;
-      stroke-dasharray: 2, 3;
-      stroke-linecap: 'round';
-      fill-opacity: 0;
-      stroke: #535353;
-      pointer-events: none;
     }
   }
 
-}
-
-@media (min-width: 577px) {
-  //header {
-  //  justify-content: flex-start;
-  //  padding: 2em 5% 0 5%;
-  //
-  //  h1, p {
-  //    text-align: left;
-  //    vertical-align: top;
-  //  }
-  //}
-}
-
-// Medium devices (tablets, less than 992px)
-@media (min-width: 992px) {
-  .reading {
-    padding: 0 15% 0 15%;
-  }
-  //.header {
-  //  //padding: 0 17.5% 0 17.5%;
-  //}
-}
-
-// Large devices (desktops, less than 1200px)
-@media (min-width: 1199.98px) {
-  .reading {
-    padding: 0 25% 0 25%;
+  div.topic_text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

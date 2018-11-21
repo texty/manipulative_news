@@ -22,6 +22,9 @@ var svg_wire_vru = d3.select('#wire_vru svg')
 
 var sites_list = d3.select('#sites #sites_list');
 
+var canvas = d3.select("#topic_viz")
+    .append('canvas');
+
 // Timeline settings
 var parseDateTime = d3.timeParse('%Y-%m-%d %H:%M:%S %Z');
 var date_str_fmt = d3.timeFormat('%Y-%m-%d');
@@ -42,28 +45,46 @@ var trans = d3.transition();
 var fullscreen_fig = function (scroller=null) {
 
     if ($(document).width() < 576) {
-        $('#wire_vru').attr('height', function () {
-            var h3 = $(this).closest('section').find('.h3');
-        })
+        d3.select('#wire_vru svg')
+            .attr('height', function () {
+                return d3.min([
+                    ( window.innerHeight - $(this).closest('section').find('.h3').height() ) / 3 * 2,
+                    window.innerWidth
+                ]);
+            })
+            .attr('width', function () { return this.getAttribute('height') });
+        
+        d3.select('#wire_vru')
+            .style('position', 'sticky')
+            .style('top', function () {
+                var h3 = $(this).closest('section').find('.h3');
+                return `${h3.get(0).offsetHeight}px`;
+            })
+            .style('z-index', 5);
+    } else {
+        d3.select('#wire_vru svg')
+            .attr('width', function () { return this.parentNode.offsetWidth })
+            .attr('height', function() {
+                return window.innerHeight - $(this).closest('section').find('.h3').get(0).offsetHeight;
+            })
+            .style('position', 'sticky')
+            .style('top', function () {
+                var h3 = $(this).closest('section').find('.h3');
+                return `${h3.get(0).offsetHeight}px`;
+            });
     }
 
-    d3.selectAll('#wire_vru svg, #sites_net_svg')
+    d3.selectAll('#sites_net_svg, #topic_viz canvas')
         .attr('width', function () { return this.parentNode.offsetWidth })
         .attr('height', function() {
             var h3 = $(this).closest('section').find('.h3');
             return window.innerHeight - h3.get(0).offsetHeight;
         });
-        d3.selectAll('#wire_vru svg')
-        .style('position', 'sticky')
-        .style('top', function () {
-            var h3 = $(this).closest('section').find('.h3');
-            return `${h3.get(0).offsetHeight}px`;
-        });
 
-    $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites .sites_step')
+    $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites .sites_step, .topic_text')
         .css( 'min-height', window.innerHeight );
 
-    $('#sites_list, .sshot_text, .img_container')
+    $('#sites_list, .sshot_text, .img_container, #topic_viz')
         .css('min-height', function () {
             var h3 = $(this).closest('section').find('.h3');
             return window.innerHeight - h3.get(0).offsetHeight;
@@ -406,8 +427,8 @@ var sites_headlines = {
         '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи</p>'
     ],
     'm_man': [
-        'Рейтинг маніпулятивності',
-        '<p>За часткою новин, де зафіксували одну з маніпуляцій</p>'
+        'Сумарний рейтинг маніпулятивності',
+        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій</p>'
     ],
     'links_net': [
         'Посилання між сайтами',
@@ -811,9 +832,11 @@ var calc_site_w = function () {
     var end_pos = $divs.last().position().left + ws;
     var i = 0;
     while ( cont_w < end_pos && i < 25 ) {
-        current_fs = ( Math.floor(current_fs * (cont_w / end_pos)) > current_fs - 1 )
-            ? current_fs - 1
-            : Math.floor(current_fs * (cont_w / end_pos));
+        // current_fs = ( Math.floor(current_fs * (cont_w / end_pos)) > current_fs - 1 )
+        //     ? current_fs - 1
+        //     : Math.floor(current_fs * (cont_w / end_pos));
+
+        current_fs -= 1;
 
         $divs.parent()
             .css('font-size', `${current_fs}px`);
@@ -825,18 +848,137 @@ var calc_site_w = function () {
         end_pos = $divs.last().position().left + ws;
         i++;
     }
-    return ws;
+    return ws - +$('#sites_list div.site').css('padding-left').match(/[0-9\.]+/)[0] * 2;
 };
 
+// --- Topic map ------------------------------------------------------------------------------------------------------
+
+// Global variables
+var anchor_array = [],
+    label_array = [],
+    margin = {top: 20, right: 50, bottom: 50, left: 150},
+    width = +canvas.attr('width') - margin.left - margin.right,
+    height = +canvas.attr('height') - margin.top - margin.bottom,
+    x_mean = width / 2,
+    y_mean = height / 2,
+    offset = 4,
+    radius = 7;
 
 
+const words_per_row = 3;
+const nrows = 3;
+const font_size_s = 11;
+const font_size_b = 28;
+const main_font = "droid-mono";
+const second_font = "Yanone Kaffeesatz";
+const between_lines_interval = 0.1;
+// const colors = ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462'];
+// const colors = ['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e','#e6ab02'];
+// const colors = ["#60e3ad", "#c1498c", "#4623a3", "#c1e64e", "#3a87cd", "#7d5aad"];
+const colors = {};
+const color_codes = ["#a03532", "#c1498c", "#4623a3", "#643c5a", "#3a87cd", "#05b66d"];
+const class_names = ["Влада/політики", "Війна", "Росія", "Про Україну", "Новини з соцмереж", "Церква"];
+class_names.map(function(d, i){ colors[d] = color_codes[i] });
+var anchor_data, labels, circ, links, bounds;
+var canvas, context;
+var k = 1;  // zoom level
+function zoomed(){
+    context.save();
+    context.clearRect(0, 0, width, height);
+    context.translate(d3.event.transform.x, d3.event.transform.y);
+    context.scale(d3.event.transform.k, d3.event.transform.k);
+    k = d3.event.transform.k;
+    drawLabels(k);
+    context.restore();
+    // https://github.com/d3/d3-zoom#transform_invert
+    console.log("scale: ", k, "zoom transform: ", d3.event.transform.x, d3.event.transform.y);
+}
+function drawLabels(k){
+    var font_size;
+    context.clearRect(0, 0, width, height);
 
+    for (var i = 0; i < label_array.length; i++) {
+        context.fillStyle = label_array[i].color;
+        if(label_array[i].level < 3){ // in case of topic names
+            //context.clearRect( label_array[i].x, label_array[i].y,
+            //			 label_array[i].width, label_array[i].height);
+            font_size = font_size_b;
+            ////// if(k < 0.75){ font_size = font_size_b }
+            font_size = font_size - 10*(label_array[i].level - 1);
+            context.font = `${font_size}px "${main_font}"`;
+            context.fillText(label_array[i].name, label_array[i].x, label_array[i].y - 0.8*font_size);
+            // - font_size / (label_array[i].level == 2 ? 1 : 2));
+            /*
+             context.beginPath();
+             context.rect(label_array[i].x, label_array[i].y - label_array[i].height,
+             label_array[i].width, label_array[i].height);
+             context.lineWidth = 1;
+             context.strokeStyle = 'black';
+             context.stroke();
+             context.closePath();
+             */
+        } else {  //news items
+            if(k > 0.5){
+                font_size =  Math.floor(Math.sqrt( (font_size_s * k) ));
+                context.font = `${font_size}px "${second_font}"`;
+                var boo = label_array[i];
+                //context.fillText(boo.rows[0].join(' '), boo.x, boo.y);
+                for(var j = 0; j < boo.rows.length; j++){
+                    var row = boo.rows[j].join(' ');
+                    if( j == nrows-1 ){  // add ... in case we've trimmed name
+                        // TODO:  change it in data preparation script
+                        row += ' ...';
+                    }
 
-
-
-
-
-
+                    context.fillText(row,
+                        boo.x,
+                        boo.y - boo.height + j * font_size * (1+between_lines_interval));
+                }
+                // and site name
+                context.font = `${font_size}px "${second_font}"`;
+                context.fillStyle = 'gray';
+                context.fillText(boo.url, boo.x,
+                    boo.y - boo.height + j * font_size * (1 + between_lines_interval));
+                /*
+                 // draw box around text, for debugging
+                 context.beginPath();
+                 context.rect(label_array[i].x, label_array[i].y - label_array[i].height - font_size,
+                 label_array[i].width, label_array[i].height);
+                 context.lineWidth = 0.5;
+                 context.strokeStyle = 'red';
+                 context.stroke();
+                 context.closePath();
+                 */
+            }
+        }
+    }
+}
+// Functions
+function zoom_to(x, y, k){
+    var zoommer = function(){
+        context.save();
+        context.clearRect(0, 0, width, height);
+        context.translate(x, y);
+        context.scale(k, k);
+        drawLabels(k);
+        context.restore();
+    };
+    return zoommer;
+}
+d3.json("./labels.json").then(function(data) {
+    //if (error) console.log(error);
+    //console.log(data);
+    label_array = data;
+    context = canvas.node().getContext("2d");
+    canvas.call(d3.zoom()
+        .scaleExtent([0.5, 4])
+        .wheelDelta(null)
+        .on('zoom', zoomed));
+    (zoom_to(60, 155, 0.5))();
+    //drawLabels(1);
+//      var x1=-534, y1=-1470, k1=3.5;
+//      setTimeout(zoom_to(x1, y1, k1), 2000);
+});
 
 //функція, що дивиться, чи обʼєкт видно *drozdova
 function isOnScreen(elem, part) {
@@ -886,6 +1028,9 @@ $( document ).ready( function() {
         }
     });
 });
+
+
+
 },{"chroma-js":2,"d3":34,"jquery":35,"scrollama":36,"stickyfill":37,"tippy.js":38}],2:[function(require,module,exports){
 
 /**
