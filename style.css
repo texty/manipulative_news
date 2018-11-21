@@ -336,7 +336,6 @@ div#tline_text {
   grid-auto-rows: auto;
   box-sizing: border-box;
   padding: 2em 10% 2em 10%;
-  gap: 5%;
   font-family: "Ubuntu", SansSerif;
   color: #4d4f6a;
   box-shadow: 0 0 1em 0.5em #e7e7e7;
@@ -346,14 +345,16 @@ div#tline_text {
     grid-column: 1 / -1;
     display: block;
     padding: 0;
+    margin: 0 2em 2em 2em;
     background-image: none;
     background-color: #e7e7e7; }
     #howto .h3 p {
       font-size: 1em;
-      border: none; }
+      border: none;
+      margin: 0; }
   #howto p {
     border-top: solid #22232f 1px;
-    margin: 0; }
+    margin: 2em; }
     #howto p .howto_emph {
       font-size: 1.25em; }
   #howto p.howto_link {
