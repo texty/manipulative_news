@@ -41,16 +41,31 @@ body {
 header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   box-sizing: border-box;
-  padding: 0 20% 0 20%;
-  margin: 0 0 3em 0;
-  background-image: url("vat.jpg");
-  background-size: cover;
+  margin: 0 0 ;
+  padding-bottom: 5% !important;
+  min-height: 100vh;
 
-  h1, p {
+
+  h1 {
+    font-size: 3rem;
+    background-image: url("glitch.jpg");
+    background-size: cover;
+    padding-top: 4em !important;
+    padding-bottom: 2em !important;
+    color: $bgcol;
+    margin: 0 0 10% 0;
+  }
+
+  h1, h2 {
     text-align: center;
     vertical-align: middle;
+  }
+  h2 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0 15% 0 15%;
   }
 }
 
@@ -506,9 +521,9 @@ div#tline_text {
   grid-auto-rows: auto;
   box-sizing: border-box;
   padding: 2em 10% 2em 10%;
-  font-family: "Ubuntu", SansSerif;
+  font-family: "Ubuntu", Arial;
   color: lighten($fontcol, 20%);
-  box-shadow: 0 0 1em 0.5em darken($bgcol, 3%);
+  //box-shadow: 0 0 1em 0.5em darken($bgcol, 3%);
   font-size: 1em;
 
   .h3 {
@@ -662,15 +677,15 @@ div#tline_text {
 }
 
 @media (min-width: 577px) {
-  header {
-    justify-content: flex-start;
-    padding: 2em 5% 0 5%;
-
-    h1, p {
-      text-align: left;
-      vertical-align: top;
-    }
-  }
+  //header {
+  //  justify-content: flex-start;
+  //  padding: 2em 5% 0 5%;
+  //
+  //  h1, p {
+  //    text-align: left;
+  //    vertical-align: top;
+  //  }
+  //}
 }
 
 // Medium devices (tablets, less than 992px)
@@ -678,9 +693,9 @@ div#tline_text {
   .reading {
     padding: 0 15% 0 15%;
   }
-  .header {
-    padding: 0 17.5% 0 17.5%;
-  }
+  //.header {
+  //  //padding: 0 17.5% 0 17.5%;
+  //}
 }
 
 // Large devices (desktops, less than 1200px)

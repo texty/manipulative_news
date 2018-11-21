@@ -20,15 +20,26 @@ body {
 header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   box-sizing: border-box;
-  padding: 0 20% 0 20%;
-  margin: 0 0 3em 0;
-  background-image: url("vat.jpg");
-  background-size: cover; }
-  header h1, header p {
+  margin: 0 0;
+  padding-bottom: 5% !important;
+  min-height: 100vh; }
+  header h1 {
+    font-size: 3rem;
+    background-image: url("glitch.jpg");
+    background-size: cover;
+    padding-top: 4em !important;
+    padding-bottom: 2em !important;
+    color: #efefef;
+    margin: 0 0 10% 0; }
+  header h1, header h2 {
     text-align: center;
     vertical-align: middle; }
+  header h2 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0 15% 0 15%; }
 
 svg {
   background-color: #efefef; }
@@ -336,9 +347,8 @@ div#tline_text {
   grid-auto-rows: auto;
   box-sizing: border-box;
   padding: 2em 10% 2em 10%;
-  font-family: "Ubuntu", SansSerif;
+  font-family: "Ubuntu", Arial;
   color: #4d4f6a;
-  box-shadow: 0 0 1em 0.5em #e7e7e7;
   font-size: 1em; }
   #howto .h3 {
     grid-row: 1 / 2;
@@ -442,19 +452,9 @@ div#tline_text {
       fill-opacity: 0;
       stroke: #535353;
       pointer-events: none; } }
-@media (min-width: 577px) {
-  header {
-    justify-content: flex-start;
-    padding: 2em 5% 0 5%; }
-    header h1, header p {
-      text-align: left;
-      vertical-align: top; } }
 @media (min-width: 992px) {
   .reading {
-    padding: 0 15% 0 15%; }
-
-  .header {
-    padding: 0 17.5% 0 17.5%; } }
+    padding: 0 15% 0 15%; } }
 @media (min-width: 1199.98px) {
   .reading {
     padding: 0 25% 0 25%; } }
