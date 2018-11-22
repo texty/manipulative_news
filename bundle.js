@@ -856,15 +856,15 @@ var calc_site_w = function () {
 // Global variables
 var anchor_array = [],
     label_array = [],
-    margin = {top: 20, right: 50, bottom: 50, left: 150},
-    width = +canvas.attr('width') - margin.left - margin.right,
-    height = +canvas.attr('height') - margin.top - margin.bottom,
+    // margin = {top: 20, right: 20, bottom: 20, left: 20},
+    // width = +canvas.attr('width') - margin.left - margin.right,
+    // height = +canvas.attr('height') - margin.top - margin.bottom,
+    width = +canvas.attr('width'),
+    height = +canvas.attr('height'),
     x_mean = width / 2,
     y_mean = height / 2,
     offset = 4,
     radius = 7;
-
-
 const words_per_row = 3;
 const nrows = 3;
 const font_size_s = 11;
@@ -872,15 +872,15 @@ const font_size_b = 28;
 const main_font = "droid-mono";
 const second_font = "Yanone Kaffeesatz";
 const between_lines_interval = 0.1;
-// const colors = ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462'];
-// const colors = ['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e','#e6ab02'];
-// const colors = ["#60e3ad", "#c1498c", "#4623a3", "#c1e64e", "#3a87cd", "#7d5aad"];
+//const color_codes = ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462'];
+const color_codes = ['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e','#e6ab02'];
+//const color_codes = ["#60e3ad", "#c1498c", "#4623a3", "#c1e64e", "#3a87cd", "#7d5aad"];
 const colors = {};
-const color_codes = ["#a03532", "#c1498c", "#4623a3", "#643c5a", "#3a87cd", "#05b66d"];
-const class_names = ["Влада/політики", "Війна", "Росія", "Про Україну", "Новини з соцмереж", "Церква"];
+const class_names = ["#a03532", "#c1498c", "#4623a3", "#643c5a", "#3a87cd", "#05b66d"];
+//const class_names = ["Влада/політики", "Війна", "Росія", "Про Україну", "Новини з соцмереж", "Церква"];
 class_names.map(function(d, i){ colors[d] = color_codes[i] });
 var anchor_data, labels, circ, links, bounds;
-var canvas, context;
+var context;
 var k = 1;  // zoom level
 function zoomed(){
     context.save();
@@ -898,58 +898,32 @@ function drawLabels(k){
     context.clearRect(0, 0, width, height);
 
     for (var i = 0; i < label_array.length; i++) {
-        context.fillStyle = label_array[i].color;
+        context.fillStyle = colors[label_array[i].color];
         if(label_array[i].level < 3){ // in case of topic names
-            //context.clearRect( label_array[i].x, label_array[i].y,
-            //			 label_array[i].width, label_array[i].height);
             font_size = font_size_b;
-            ////// if(k < 0.75){ font_size = font_size_b }
             font_size = font_size - 10*(label_array[i].level - 1);
             context.font = `${font_size}px "${main_font}"`;
             context.fillText(label_array[i].name, label_array[i].x, label_array[i].y - 0.8*font_size);
-            // - font_size / (label_array[i].level == 2 ? 1 : 2));
-            /*
-             context.beginPath();
-             context.rect(label_array[i].x, label_array[i].y - label_array[i].height,
-             label_array[i].width, label_array[i].height);
-             context.lineWidth = 1;
-             context.strokeStyle = 'black';
-             context.stroke();
-             context.closePath();
-             */
         } else {  //news items
-            if(k > 0.5){
-                font_size =  Math.floor(Math.sqrt( (font_size_s * k) ));
-                context.font = `${font_size}px "${second_font}"`;
-                var boo = label_array[i];
-                //context.fillText(boo.rows[0].join(' '), boo.x, boo.y);
-                for(var j = 0; j < boo.rows.length; j++){
-                    var row = boo.rows[j].join(' ');
-                    if( j == nrows-1 ){  // add ... in case we've trimmed name
-                        // TODO:  change it in data preparation script
-                        row += ' ...';
-                    }
-
-                    context.fillText(row,
-                        boo.x,
-                        boo.y - boo.height + j * font_size * (1+between_lines_interval));
+            font_size =  Math.floor(Math.sqrt( (font_size_s * k) ));
+            context.font = `${font_size}px "${second_font}"`;
+            var boo = label_array[i];
+            for(var j = 0; j < boo.rows.length; j++){
+                var row = boo.rows[j].join(' ');
+                if( j == nrows-1 ){  // add ... in case we've trimmed name
+                    // TODO:  change it in data preparation script
+                    row += ' ...';
                 }
-                // and site name
-                context.font = `${font_size}px "${second_font}"`;
-                context.fillStyle = 'gray';
-                context.fillText(boo.url, boo.x,
-                    boo.y - boo.height + j * font_size * (1 + between_lines_interval));
-                /*
-                 // draw box around text, for debugging
-                 context.beginPath();
-                 context.rect(label_array[i].x, label_array[i].y - label_array[i].height - font_size,
-                 label_array[i].width, label_array[i].height);
-                 context.lineWidth = 0.5;
-                 context.strokeStyle = 'red';
-                 context.stroke();
-                 context.closePath();
-                 */
+
+                context.fillText(row,
+                    boo.x,
+                    boo.y - boo.height + j * font_size * (1+between_lines_interval));
             }
+            // and site name
+            context.font = `${font_size}px "${second_font}"`;
+            context.fillStyle = 'gray';
+            context.fillText(boo.url, boo.x,
+                boo.y - boo.height + j * font_size * (1 + between_lines_interval));
         }
     }
 }
@@ -965,20 +939,65 @@ function zoom_to(x, y, k){
     };
     return zoommer;
 }
+function get_translation(label, width, height, k){
+    var rx = (label.x + 50)/width, ry = label.y/height;  // +50 - to position on center of word
+    var xn = width*(0.5 - rx*k);
+    var yn = height*(0.5 - ry*k);
+    return {x:xn, y:yn};
+}
 d3.json("./labels.json").then(function(data) {
-    //if (error) console.log(error);
-    //console.log(data);
     label_array = data;
+    //canvas.on("mousemove",function(){
+    //});
     context = canvas.node().getContext("2d");
     canvas.call(d3.zoom()
         .scaleExtent([0.5, 4])
-        .wheelDelta(null)
-        .on('zoom', zoomed));
-    (zoom_to(60, 155, 0.5))();
+        .on("zoom", zoomed));
+    // initial view
+    var scale = 0.75;
+    var zoomWidth = (width-scale*width)/2, zoomHeight = (height-scale*height)/2;
+    (zoom_to(zoomWidth, zoomHeight, scale))();
+    var k = 3.5;
+
+    // translate to saakashvili
+    var new_point = get_translation(label_array[728], width, height, k);
+    //var new_point = get_translation(286/width, 83/height,  width, height, k)
+    //setTimeout(zoom_to(new_point.x, new_point.y, k), 2000);
+    // translate to Poroshenko
+    new_point = get_translation(label_array[730], width, height, k);
+    //setTimeout(zoom_to(new_point.x, new_point.y, k), 5000);
+    // 'На Украине ...'
+    new_point = get_translation(label_array[741], width, height, k);
+    //setTimeout(zoom_to(new_point.x, new_point.y, k), 7000);
     //drawLabels(1);
-//      var x1=-534, y1=-1470, k1=3.5;
-//      setTimeout(zoom_to(x1, y1, k1), 2000);
+
+    // Scrollama
+    const tmap_scroller = scrollama();
+    fullscreen_fig(tmap_scroller);
+
+    const id2topic = [728, 730, 741];
+
+    tmap_scroller
+        .setup({
+            step: '.topic_text',
+            container: '#spread_wire',
+            graphic: '#topic_map',
+            offset: 0.9,
+            progress: true
+        })
+        .onStepEnter(function (r) {
+            if ( [1,2,3].indexOf(r.index) >= 0 ) {
+
+            }
+        })
 });
+/*
+ for(var j = 0; j < label_array.length; j++){
+ if(label_array[j].name == "Саакашвілі"){ console.log("Саакашвілі:", j)};
+ if(label_array[j].name == "Порошенко"){ console.log("Порошенко:", j)};
+ if(label_array[j].name == "'На Украине' все погано"){ console.log("НА ... :", j)};
+ }
+ */
 
 //функція, що дивиться, чи обʼєкт видно *drozdova
 function isOnScreen(elem, part) {
