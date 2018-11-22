@@ -21,8 +21,7 @@ var svg_wire_vru = d3.select('#wire_vru svg')
 
 var sites_list = d3.select('#sites #sites_list');
 
-var canvas = d3.select("#topic_viz")
-    .append('canvas');
+var canvas = d3.select("#topic_viz canvas");
 
 // Timeline settings
 var parseDateTime = d3.timeParse('%Y-%m-%d %H:%M:%S %Z');
@@ -418,16 +417,18 @@ var change_sites_list = {
 var sites_headlines = {
     'm_emo': [
         'Емоційні маніпуляції',
-        '<p>Рейтинг сайтів за часкою новин, в яких маніпулюють емоціями читача.</p>' +
+        '<p>Колір та місце у рейтингу - % емоційно маніпулятивних новин. Довжина прямокутника - місячна кількість візитів, логарифмічна шкала з основою = 2</p>' +
         '<p>При гортанні тип рейтингу зміниться</p>'
     ],
     'm_arg': [
         'Маніпулювання аргументами',
-        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи</p>'
+        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи</p>' +
+        '<p>Колір та місце у рейтингу - % новин з маніпуляцією аргументами. Довжина прямокутника - місячна кількість візитів, логарифмічна шкала з основою = 2</p>'
     ],
     'm_man': [
         'Сумарний рейтинг маніпулятивності',
-        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій</p>'
+        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій</p>' +
+        '<p>Колір та місце у рейтингу - % новин, що містять маніпуляції. Довжина прямокутника - місячна кількість візитів, логарифмічна шкала з основою = 2</p>'
     ],
     'links_net': [
         'Посилання між сайтами',
@@ -855,32 +856,25 @@ var calc_site_w = function () {
 // Global variables
 var anchor_array = [],
     label_array = [],
-    // margin = {top: 20, right: 20, bottom: 20, left: 20},
-    // width = +canvas.attr('width') - margin.left - margin.right,
-    // height = +canvas.attr('height') - margin.top - margin.bottom,
     width = +canvas.attr('width'),
-    height = +canvas.attr('height'),
-    x_mean = width / 2,
-    y_mean = height / 2,
-    offset = 4,
-    radius = 7;
-const words_per_row = 3;
+    height = +canvas.attr('height');
 const nrows = 3;
 const font_size_s = 11;
 const font_size_b = 28;
 const main_font = "droid-mono";
 const second_font = "Yanone Kaffeesatz";
 const between_lines_interval = 0.1;
-//const color_codes = ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462'];
+// real colors
 const color_codes = ['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e','#e6ab02'];
-//const color_codes = ["#60e3ad", "#c1498c", "#4623a3", "#c1e64e", "#3a87cd", "#7d5aad"];
 const colors = {};
+// some technical ids, not colors
 const class_names = ["#a03532", "#c1498c", "#4623a3", "#643c5a", "#3a87cd", "#05b66d"];
 //const class_names = ["Влада/політики", "Війна", "Росія", "Про Україну", "Новини з соцмереж", "Церква"];
 class_names.map(function(d, i){ colors[d] = color_codes[i] });
-var anchor_data, labels, circ, links, bounds;
-var context;
-var k = 1;  // zoom level
+var anchor_data, labels, circ, links, bounds, context;
+var k = 1;  // current zoom level
+
+// function to redraw on each "zoom" event
 function zoomed(){
     context.save();
     context.clearRect(0, 0, width, height);
@@ -889,9 +883,8 @@ function zoomed(){
     k = d3.event.transform.k;
     drawLabels(k);
     context.restore();
-    // https://github.com/d3/d3-zoom#transform_invert
-    console.log("scale: ", k, "zoom transform: ", d3.event.transform.x, d3.event.transform.y);
 }
+// workhorse: to draw titles of news and names of topics
 function drawLabels(k){
     var font_size;
     context.clearRect(0, 0, width, height);
@@ -913,90 +906,89 @@ function drawLabels(k){
                     // TODO:  change it in data preparation script
                     row += ' ...';
                 }
-
-                context.fillText(row,
-                    boo.x,
-                    boo.y - boo.height + j * font_size * (1+between_lines_interval));
+                context.fillText(row, boo.x, boo.y - boo.height + j * font_size * (1+between_lines_interval));
             }
-            // and site name
+            // ... and add site name
             context.font = `${font_size}px "${second_font}"`;
             context.fillStyle = 'gray';
-            context.fillText(boo.url, boo.x,
-                boo.y - boo.height + j * font_size * (1 + between_lines_interval));
+            context.fillText(boo.url, boo.x, boo.y - boo.height + j * font_size * (1 + between_lines_interval));
         }
     }
 }
-// Functions
-function zoom_to(x, y, k){
-    var zoommer = function(){
-        context.save();
-        context.clearRect(0, 0, width, height);
-        context.translate(x, y);
-        context.scale(k, k);
-        drawLabels(k);
-        context.restore();
-    };
-    return zoommer;
+
+var zoom = d3.zoom()
+    .scaleExtent([0.5, 4])
+    .on("zoom", zoomed);
+
+// starting point - center of carnmvas
+var point = {x: width / 2, y: height / 2 };
+
+function transform() {
+    return d3.zoomIdentity
+        .translate(width / 2, height / 2)
+        .scale(k)
+        .translate(-point.x - correction, -point.y); // center topic name on screen
 }
-function get_translation(label, width, height, k){
-    var rx = (label.x + 50)/width, ry = label.y/height;  // +50 - to position on center of word
-    var xn = width*(0.5 - rx*k);
-    var yn = height*(0.5 - ry*k);
-    return {x:xn, y:yn};
+
+// parameters of transition
+function transition(canvas) {
+    canvas.transition()
+        .delay(10)
+        .duration(1500)
+        .call(zoom.transform, transform)
 }
+var correction = 0;
+var points = { 
+    'poroshenko': 730,
+    'saakashvili': 728,
+    'ukraine': 741 }; // "Порошенко", "Саакашвілі", "'На Украине'"
+// Main logic
 d3.json("./labels.json").then(function(data) {
     label_array = data;
-    //canvas.on("mousemove",function(){
-    //});
     context = canvas.node().getContext("2d");
-    canvas.call(d3.zoom()
-        .scaleExtent([0.5, 4])
-        .on("zoom", zoomed));
-    // initial view
-    var scale = 0.75;
-    var zoomWidth = (width-scale*width)/2, zoomHeight = (height-scale*height)/2;
-    (zoom_to(zoomWidth, zoomHeight, scale))();
-    var k = 3.5;
+    // initial screen with scale (k) == 1
+    canvas
+        .call(zoom.transform, transform);
+    canvas
+        .call(transition);
+    // canvas.call(zoom)
 
-    // translate to saakashvili
-    var new_point = get_translation(label_array[728], width, height, k);
-    //var new_point = get_translation(286/width, 83/height,  width, height, k)
-    //setTimeout(zoom_to(new_point.x, new_point.y, k), 2000);
-    // translate to Poroshenko
-    new_point = get_translation(label_array[730], width, height, k);
-    //setTimeout(zoom_to(new_point.x, new_point.y, k), 5000);
-    // 'На Украине ...'
-    new_point = get_translation(label_array[741], width, height, k);
-    //setTimeout(zoom_to(new_point.x, new_point.y, k), 7000);
-    //drawLabels(1);
-
-    // Scrollama
     const tmap_scroller = scrollama();
     fullscreen_fig(tmap_scroller);
-
-    const id2topic = [728, 730, 741];
-
     tmap_scroller
         .setup({
             step: '.topic_text',
             container: '#spread_wire',
             graphic: '#topic_map',
-            offset: 0.9,
+            offset: 0.5,
             progress: true
         })
         .onStepEnter(function (r) {
-            if ( [1,2,3].indexOf(r.index) >= 0 ) {
+            if ( points[r.element.id] ) {
+                point = label_array[points[r.element.id]];
+                correction = point.width / 3;
+                k = 3;  // new scale
+                canvas
+                    .call(transition);
 
+            } else if ( r.element.id === 'topic_intro' || r.direction === 'up') {
+                point = {x: width / 2, y: height / 2 };
+                k = 1;
+                canvas
+                    .call(transition);
+            } else if (r.element.id === 'show_map') {
+                point = {x: width / 2, y: height / 2 };
+                k = 1;
+                canvas.call(zoom);
             }
         })
+        .onStepExit(function (r) {
+            if (r.element.id === 'show_map') {
+                canvas.on(".zoom", null);
+            }
+        })
+
 });
-/*
- for(var j = 0; j < label_array.length; j++){
- if(label_array[j].name == "Саакашвілі"){ console.log("Саакашвілі:", j)};
- if(label_array[j].name == "Порошенко"){ console.log("Порошенко:", j)};
- if(label_array[j].name == "'На Украине' все погано"){ console.log("НА ... :", j)};
- }
- */
 
 //функція, що дивиться, чи обʼєкт видно *drozdova
 function isOnScreen(elem, part) {

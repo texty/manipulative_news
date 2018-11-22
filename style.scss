@@ -615,33 +615,36 @@ div#tline_text {
 }
 
 #topic_map {
-  display: grid;
-  grid-auto-rows: auto;
-  grid-template-columns: 1fr;
+  //display: grid;
+  //grid-auto-rows: auto;
+  //grid-template-columns: 1fr;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 
   .h3 {
-    grid-row: 1 / 2;
-    grid-column: 1 / -1;
+    //grid-row: 1 / 2;
+    //grid-column: 1 / -1;
     position: sticky;
     top: 0;
   }
 
   figure {
-    grid-column: 1;
-    grid-row: 2 / 3;
+    //grid-column: 1;
+    //grid-row: 2 / 3;
     margin: 1em;
     padding: 0;
     position: sticky;
     box-sizing: border-box;
-    pointer-events: none;
 
     canvas {
       cursor: grabbing;
       //border: 1px solid darken($bgcol, 15%);
       box-sizing: border-box;
+    }
+
+    nav {
+      position: absolute;
     }
   }
 
@@ -657,10 +660,28 @@ div#tline_text {
       background-color: rgba($bgcol, 0.85);
       padding: 2em;
       margin-right: 4em;
+      z-index: 1;
     }
   }
-  div.topic_text:last-of-type {
+  div#show_map {
     pointer-events: none;
-    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    opacity: 0;
+    z-index: -1
+
+
+    p {
+      background-color: $bgcol;
+      box-shadow: 0 0 0.5em 1px darken($bgcol, 10%);
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0.5em;
+      transition: opacity 0.25s;
+      opacity: 1;
+      z-index: 0;
+    }
   }
 }
