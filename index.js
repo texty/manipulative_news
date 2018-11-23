@@ -82,6 +82,8 @@ var fullscreen_fig = function (scroller=null) {
     $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites .sites_step, .topic_text')
         .css( 'min-height', window.innerHeight );
 
+    $('#show_map').css('min-height', window.innerHeight * 2);
+
     $('#sites_list, .sshot_text, .img_container, #topic_viz')
         .css('min-height', function () {
             var h3 = $(this).closest('section').find('.h3');
@@ -868,8 +870,8 @@ const between_lines_interval = 0.1;
 const color_codes = ['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e','#e6ab02'];
 const colors = {};
 // some technical ids, not colors
-const class_names = ["#a03532", "#c1498c", "#4623a3", "#643c5a", "#3a87cd", "#05b66d"];
-//const class_names = ["Влада/політики", "Війна", "Росія", "Про Україну", "Новини з соцмереж", "Церква"];
+const class_names = ["#a03532",          "#c1498c", "#4623a3", "#643c5a",     "#3a87cd",           "#05b66d"];
+//const class_names = ["Влада/політики", "Війна",   "Росія",   "Про Україну", "Новини з соцмереж", "Церква"];
 class_names.map(function(d, i){ colors[d] = color_codes[i] });
 var anchor_data, labels, circ, links, bounds, context;
 var k = 1;  // current zoom level
@@ -960,10 +962,12 @@ d3.json("./labels.json").then(function(data) {
             step: '.topic_text',
             container: '#spread_wire',
             graphic: '#topic_map',
-            offset: 0.5,
+            offset: 0.1,
             progress: true
         })
         .onStepEnter(function (r) {
+            console.log(r.element.id);
+
             if ( points[r.element.id] ) {
                 point = label_array[points[r.element.id]];
                 correction = point.width / 3;
@@ -971,20 +975,39 @@ d3.json("./labels.json").then(function(data) {
                 canvas
                     .call(transition);
 
-            } else if ( r.element.id === 'topic_intro' || r.direction === 'up') {
+            } else if (r.element.id === 'topic_intro') {
                 point = {x: width / 2, y: height / 2 };
-                k = 1;
+                k = 0.7;
                 canvas
                     .call(transition);
             } else if (r.element.id === 'show_map') {
                 point = {x: width / 2, y: height / 2 };
                 k = 1;
-                canvas.call(zoom);
+
+                canvas
+                    .call(zoom)
+                    .call(transition);
+
+                $('#topic_tip, #topic_tip *').css('opacity', 1);
+                $('#topic_tip nav i').css('pointer-events', 'auto');
+                window.setTimeout(
+                    function () {
+                        $('#topic_tip p').css('opacity', 0).slideUp()
+                    }, 3000);
+                if (r.direction === 'up') {
+                    window.scrollTo({
+                        top: document.getElementById('show_map').offsetTop,
+                        behavior: "smooth"
+                    });
+                }
+
             }
         })
         .onStepExit(function (r) {
             if (r.element.id === 'show_map') {
                 canvas.on(".zoom", null);
+                $('#topic_tip, #topic_tip *').css('opacity', 0);
+                $('#topic_tip nav i').css('pointer-events', 'none');
             }
         })
 
@@ -1037,6 +1060,15 @@ $( document ).ready( function() {
             $("#img-2-text").css("display", "none")
         }
     });
+
+    $('#topic_tip nav i').click(function () {
+        var to_el = ( this.classList.contains('fa-angle-up') )
+            ? document.getElementById('saakashvili')
+            : $(this).closest('section').next('*').get(0);
+
+        window.scrollTo({
+            top: to_el.offsetTop,
+            behavior: "smooth"
+        });
+    })
 });
-
-
