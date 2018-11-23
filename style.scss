@@ -643,8 +643,54 @@ div#tline_text {
       box-sizing: border-box;
     }
 
-    nav {
+    #topic_tip {
       position: absolute;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 2em;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      transition: opacity 0.25s;
+
+      nav {
+        text-align: center;
+        line-height: 1;
+        opacity: 0;
+
+        i {
+          font-size: 2em !important;
+          line-height: 1.25;
+          background-color: rgba($bgcol, 0.8);
+          width: 1.25em;
+          height: 1.25em;
+          border-radius: 100%;
+          pointer-events: none;
+          color: lighten($fontcol, 40%);
+          cursor: pointer;
+        }
+        span {
+          background-color: rgba($bgcol, 0.8);
+          font-size: 0.85em;
+          font-style: italic;
+        }
+      }
+
+      p {
+        background-color: rgba($bgcol, 0.8);
+        box-shadow: 0 0 0.5em 1px darken($bgcol, 10%);
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0.5em;
+        opacity: 0;
+        z-index: 0;
+        font-size: 1.25em;
+      }
     }
   }
 
@@ -663,25 +709,19 @@ div#tline_text {
       z-index: 1;
     }
   }
+
+  #ukraine span {
+    background-color: rgba(#e7298a, 0.5);
+  }
+
+  #poroshenko, #saakashvili {
+    span {
+      background-color: rgba(#1b9e77, 0.5);
+    }
+  }
+
   div#show_map {
     pointer-events: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
     opacity: 0;
-    z-index: -1
-
-
-    p {
-      background-color: $bgcol;
-      box-shadow: 0 0 0.5em 1px darken($bgcol, 10%);
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0.5em;
-      transition: opacity 0.25s;
-      opacity: 1;
-      z-index: 0;
-    }
   }
 }
