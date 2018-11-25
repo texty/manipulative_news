@@ -42,7 +42,7 @@ var trans = d3.transition();
 
 var fullscreen_fig = function (scroller=null) {
 
-    if ($(document).width() < 576) {
+    if ($(document).width() <= 576) {
         d3.select('#wire_vru svg')
             .attr('height', function () {
                 return d3.min([
@@ -51,14 +51,20 @@ var fullscreen_fig = function (scroller=null) {
                 ]);
             })
             .attr('width', function () { return this.getAttribute('height') });
-        
-        d3.select('#wire_vru')
+        d3.selectAll('#wire_vru, #sites_graph')
             .style('position', 'sticky')
             .style('top', function () {
                 var h3 = $(this).closest('section').find('.h3');
                 return `${h3.get(0).offsetHeight}px`;
-            })
+            });
+        d3.select('#wire_vru')
             .style('z-index', 5);
+
+        d3.selectAll('div.sites_gap')
+            .style('height', function () {
+                return `${window.innerHeight}px`;
+            });
+
     } else {
         d3.select('#wire_vru svg')
             .attr('width', function () { return this.parentNode.offsetWidth })
@@ -70,16 +76,18 @@ var fullscreen_fig = function (scroller=null) {
                 var h3 = $(this).closest('section').find('.h3');
                 return `${h3.get(0).offsetHeight}px`;
             });
+
+        $('.sites_step, .topic_text')
+            .css( 'min-height', window.innerHeight );
     }
 
     d3.selectAll('#sites_net_svg, #topic_viz canvas')
         .attr('width', function () { return this.parentNode.offsetWidth })
         .attr('height', function() {
-            var h3 = $(this).closest('section').find('.h3');
-            return window.innerHeight - h3.get(0).offsetHeight;
+            return window.innerHeight - $(this).closest('section').find('.h3').get(0).offsetHeight;
         });
 
-    $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites .sites_step, .topic_text')
+    $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites')
         .css( 'min-height', window.innerHeight );
 
     $('#show_map').css('min-height', window.innerHeight * 2);
@@ -170,7 +178,7 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
                     .filter(function (t) { return d.real_url === t.real_url })
                     .select('path');
                 a.interrupt().transition(trans)
-                    .attr('transform', 'scale(2.5)')
+                    .attr('transform',(window.innerWidth > 576) ? 'scale(2.5)' : 'scale(3.5)')
                     .duration(100)
             });
 
@@ -204,7 +212,7 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
             .text(function (d) { return d.key })
             .style('text-anchor', 'middle')
             .style('alignment-baseline', 'baseline')
-            .style('font-size', '1.1em');
+            .style('font-size', (window.innerWidth > 576) ?'1.1em' : '1.5em');
 
         tline_lab_rects
             .datum(function (d) {
@@ -243,7 +251,7 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
         var tline_article_circles = tline_articles.append('path')
             .attr('class', 'article')
             .attr('d', glyph_path)
-            .attr('transform', 'scale(2.5)');
+            .attr('transform', (window.innerWidth > 576) ? 'scale(2.5)' : 'scale(3.5)');
 
         var h3_h = $(p_headlines.node()).closest('section').find('.h3').height();
 
@@ -258,20 +266,24 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
             .on('mouseover', function (d) {
                 var p = p_headlines.filter(function(p) { return p.real_url === d.real_url} )
                     .node();
-                if (p.getBoundingClientRect().bottom > h3_h) {
+                if ( (p.getBoundingClientRect().bottom > h3_h && window.innerWidth > 576) ||
+                     (p.getBoundingClientRect().top > svg_wire_vru.node().getBoundingClientRect().bottom && window.innerWidth <= 576)
+                ) {
                     d3.select(p)
                         .classed('tooltiped', true)
                 } else {
-                    $(p).clone()
-                        .addClass('tooltiped')
-                        .css('padding', '0.5em 0.5em 0.5em 0.5em')
-                        .appendTo('#tline_tooltip');
-                    $('#tline_tooltip').show();
+                    $(this).attr('data-tippy-content', p.outerHTML);
+                    // $(p).clone()
+                    //     .addClass('tooltiped')
+                    //     .css('padding', '0.5em 0.5em 0.5em 0.5em')
+                    //     .appendTo('#tline_tooltip');
+                    // $('#tline_tooltip').show();
                 }
             })
             .on('mouseleave', function () {
                 $('p.hline.tooltiped').removeClass('tooltiped');
-                $('#tline_tooltip').hide().find('p').remove();
+                $(this).removeAttr('data-tippy-content');
+                // $('#tline_tooltip').hide().find('p').remove();
             });
 
         var min_published = d3.min(tline_articles.data(), function(d) {return d.published});
@@ -289,13 +301,15 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
 
         tline_scroller
             .setup({
-                step: '#spread_wire .hline_day_feed, #spread_wire p.hline',
+                step: '#spread_wire .hline_day_feed, #spread_wire p.hline, #spread_wire #tline_text',
                 container: '#spread_wire',
                 graphic: '#wire_vru',
-                offset: 0.9,
+                offset: (window.innerWidth > 576) ? 0.7 : 1,
                 progress: true
             })
             .onStepEnter(function (r) {
+                if (r.element.id === 'tline_text') { return }
+
                 if (r.direction === 'down') {
 
                     if (r.element.tagName === 'DIV') {
@@ -369,9 +383,9 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
             .onContainerEnter(function (r) {
                 $('.hline_day_feed').last().css('border-bottom', 'none');
 
-                $('#tline_tooltip').css('left', function () {
-                    return $('div#tline_text').position().left;
-                });
+                // $('#tline_tooltip').css('left', function () {
+                //     return $('div#tline_text').position().left;
+                // });
 
                 stickyfill.add( $('.sticky') );
 
@@ -392,22 +406,25 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
                     .style('opacity', 0.8)
                     .duration(300);
             });
-            // .onStepProgress(function (r) {
-            //     if (r.element.id === 'tline_end' && r.progress > prev_step_progress && r.progress >= 0.8) {
-            //         $(r.element).closest('section').find('.h3')
-            //             .css('opacity', 0)
-            //             .css('pointer-events', 'none');
-            //         prev_step_progress = null;
-            //     } else if (r.element.id === 'tline_end' && r.progress < prev_step_progress && r.progress >= 0.8) {
-            //         $(r.element).closest('section').find('.h3')
-            //             .css('opacity', 1)
-            //             .css('pointer-events', 'auto');
-            //         prev_step_progress = null;
-            //     }
-            //     prev_step_progress = r.progress;
-            // });
 
         $(window).resize( function() { fullscreen_fig(tline_scroller) } );
+
+        var tippy_tip;
+
+        $(function () {
+            tippy_tip = tippy(document.querySelectorAll('g.article'), {
+                animation: 'fade',
+                placement: 'top',
+                onShow(tip) {
+                    var content = tip.reference.getAttribute('data-tippy-content');
+                    if (content) {
+                        tip.setContent(content);
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        });
     });
 
 var change_sites_list = {
@@ -633,7 +650,7 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 step: '#sites .sites_step',
                 container: '#sites',
                 graphic: '#sites_graph',
-                offset: 0.5,
+                offset: (window.innerWidth > 576) ? 0.5 : 0,
                 progress: true
             })
             .onContainerEnter()
@@ -856,8 +873,7 @@ var calc_site_w = function () {
 // --- Topic map ------------------------------------------------------------------------------------------------------
 
 // Global variables
-var anchor_array = [],
-    label_array = [],
+var label_array = [],
     width = +canvas.attr('width'),
     height = +canvas.attr('height');
 const nrows = 3;
@@ -873,8 +889,8 @@ const colors = {};
 const class_names = ["#a03532",          "#c1498c", "#4623a3", "#643c5a",     "#3a87cd",           "#05b66d"];
 //const class_names = ["Влада/політики", "Війна",   "Росія",   "Про Україну", "Новини з соцмереж", "Церква"];
 class_names.map(function(d, i){ colors[d] = color_codes[i] });
-var anchor_data, labels, circ, links, bounds, context;
-var k = 1;  // current zoom level
+var context;
+var k = (window.innerWidth > 576) ? 1 : 0.7;  // current zoom level
 
 // function to redraw on each "zoom" event
 function zoomed(){
@@ -943,7 +959,9 @@ var correction = 0;
 var points = { 
     'poroshenko': 730,
     'saakashvili': 728,
-    'ukraine': 741 }; // "Порошенко", "Саакашвілі", "'На Украине'"
+    'ukraine': 741
+};
+
 // Main logic
 d3.json("./labels.json").then(function(data) {
     label_array = data;
@@ -971,23 +989,24 @@ d3.json("./labels.json").then(function(data) {
             if ( points[r.element.id] ) {
                 point = label_array[points[r.element.id]];
                 correction = point.width / 3;
-                k = 3;  // new scale
+                k = (window.innerWidth > 576) ? 3 : 2;  // new scale
                 canvas
                     .call(transition);
 
             } else if (r.element.id === 'topic_intro') {
                 point = {x: width / 2, y: height / 2 };
-                k = 0.7;
+                k = (window.innerWidth > 576) ? 1 : 0.7;
                 canvas
                     .call(transition);
             } else if (r.element.id === 'show_map') {
                 point = {x: width / 2, y: height / 2 };
-                k = 1;
+                k = (window.innerWidth > 576) ? 1 : 0.7;
 
                 canvas
                     .call(zoom)
                     .call(transition);
 
+                $('#topic_map canvas').css('cursor', 'grabbing');
                 $('#topic_tip, #topic_tip *').css('opacity', 1);
                 $('#topic_tip nav i').css('pointer-events', 'auto');
                 window.setTimeout(
@@ -1008,6 +1027,7 @@ d3.json("./labels.json").then(function(data) {
                 canvas.on(".zoom", null);
                 $('#topic_tip, #topic_tip *').css('opacity', 0);
                 $('#topic_tip nav i').css('pointer-events', 'none');
+                $('#topic_map canvas').css('cursor', 'auto');
             }
         })
 
@@ -1072,3 +1092,5 @@ $( document ).ready( function() {
         });
     })
 });
+
+

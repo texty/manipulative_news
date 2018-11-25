@@ -67,7 +67,12 @@ svg {
 
 a {
   color: inherit;
-  text-decoration: underline dashed; }
+  text-decoration: underline dashed;
+  text-underline-position: under; }
+
+span[data-tippy] {
+  background-color: rgba(189, 255, 1, 0.3);
+  cursor: help; }
 
 .h3 {
   display: grid;
@@ -123,7 +128,7 @@ div#tline_text {
     grid-column: 1 / -1;
     position: sticky;
     top: 0; }
-  #spread_wire div.hline_day_feed {
+  #spread_wire div.hline_day_feed, #spread_wire #tline_text {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -131,17 +136,19 @@ div#tline_text {
     padding: 2rem 0 2em 0;
     margin: 0 0 0 2em; }
     @media screen and (min-width: 577px) {
-      #spread_wire div.hline_day_feed {
+      #spread_wire div.hline_day_feed, #spread_wire #tline_text {
         grid-column: 2 / -1; } }
   @media screen and (min-width: 577px) {
     #spread_wire div.hline_day_feed {
       border-bottom: dotted 1px #afafaf; } }
+  #spread_wire div.hline_day_feed:last-of-type {
+    margin-bottom: 10em; }
   #spread_wire p.hline {
     box-sizing: border-box;
     padding: 0 0 1em 0;
     -webkit-transition: all 1.5s;
     transition: all 1.5s;
-    opacity: 0;
+    opacity: 0.5;
     line-height: 1.25em;
     margin: 1em 0 1em 0;
     font-size: 0.85em;
@@ -172,6 +179,9 @@ div#tline_text {
     opacity: 0; }
   #spread_wire text {
     fill: #22232f; }
+    @media screen and (max-width: 577px) {
+      #spread_wire text {
+        font-size: 2em; } }
   #spread_wire #tline_tooltip {
     z-index: 10;
     margin-top: 2em; }
@@ -281,6 +291,9 @@ div#tline_text {
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns: 2fr 1fr; }
+  @media screen and (max-width: 577px) {
+    #sites {
+      grid-template-columns: 1fr; } }
   #sites .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
@@ -288,14 +301,29 @@ div#tline_text {
     top: 0; }
   #sites figure {
     grid-column: 1;
-    grid-row: 2 / 10;
     margin: 0 0 0 1em;
     padding: 0; }
+    @media screen and (min-width: 577px) {
+      #sites figure {
+        grid-row: 2 / 10; } }
     #sites figure div {
       margin: 0;
       padding: 0; }
   #sites div#sites_text {
-    grid-column: 2; }
+    z-index: 4; }
+    @media screen and (min-width: 577px) {
+      #sites div#sites_text {
+        grid-column: 2;
+        z-index: auto; } }
+    @media screen and (max-width: 577px) {
+      #sites div#sites_text {
+        pointer-events: none; }
+        #sites div#sites_text div.sites_gap {
+          pointer-events: none;
+          opacity: 0; }
+        #sites div#sites_text .sites_step {
+          pointer-events: auto;
+          background-color: rgba(239, 239, 239, 0.85); } }
   #sites #sites_net_svg {
     z-index: -100;
     box-sizing: border-box;
@@ -328,19 +356,28 @@ div#tline_text {
     #sites #sites_list .net_target {
       -webkit-transition: opacity 1s ease-out;
       transition: opacity 1s ease-out;
-      fill: #4d4f6a; }
+      fill: #585a79;
+      padding: 0 1em 0 1em; }
       #sites #sites_list .net_target svg {
-        background-color: transparent; }
+        background-color: transparent;
+        padding: 0; }
     #sites #sites_list text {
-      -webkit-transition: font-size 0.2s ease-out 0.5s;
       transition: font-size 0.2s ease-out 0.5s; }
     #sites #sites_list .big_text {
       font-size: 1.75em; }
     #sites #sites_list .half_big_text {
       font-size: 1.375em; }
+    @media screen and (max-width: 577px) {
+      #sites #sites_list .big_text {
+        font-size: 2em; }
+      #sites #sites_list .half_big_text {
+        font-size: 1.6em; } }
     #sites #sites_list .highlight_ru text {
       font-size: 1.375em;
       text-shadow: 0 0 3px #bdff01; }
+      @media screen and (max-width: 577px) {
+        #sites #sites_list .highlight_ru text {
+          font-size: 1.6em; } }
     #sites #sites_list .hide_non_ru {
       opacity: 0.75; }
     #sites #sites_list #hower_me_net {
@@ -348,11 +385,14 @@ div#tline_text {
       width: 100%;
       display: flex;
       justify-content: center;
+      font-size: 1rem;
       top: 33%;
-      font-size: 1.5rem;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s; }
+      @media screen and (min-width: 577px) {
+        #sites #sites_list #hower_me_net {
+          font-size: 1.25rem; } }
       #sites #sites_list #hower_me_net p {
         background-color: #efefef;
         box-shadow: 0 0 0.5em 1px #d6d6d6;
@@ -361,7 +401,6 @@ div#tline_text {
         padding: 0.5em; }
   #sites div.sites_step {
     display: flex;
-    display: -webkit-flex;
     flex-direction: column;
     justify-content: center;
     padding: 1.5em 0 1.5em 0; }
@@ -381,6 +420,9 @@ div#tline_text {
   padding: 0 0 0 0;
   font-size: 1.25em;
   text-align: left; }
+  @media screen and (min-width: 577px) {
+    .tippy-popper h6 {
+      font-size: 0.65rem; } }
 .tippy-popper p {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
@@ -392,22 +434,32 @@ div#tline_text {
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: auto;
   box-sizing: border-box;
-  padding: 2em 10% 2em 10%;
   font-family: "Ubuntu", sans-serif;
   color: #4d4f6a;
   font-size: 1em; }
+  @media screen and (max-width: 577px) {
+    #howto {
+      grid-template-columns: 1fr;
+      padding: 2em 0 2em 0; } }
+  @media screen and (min-width: 577px) {
+    #howto {
+      padding: 2em 10% 2em 10%; } }
   #howto .h3 {
-    grid-row: 1 / 2;
-    grid-column: 1 / -1;
     display: block;
     padding: 0;
     margin: 0 2em 2em 2em;
     background-image: none;
     background-color: #e7e7e7; }
+    @media screen and (min-width: 577px) {
+      #howto .h3 {
+        grid-row: 1 / 2;
+        grid-column: 1 / -1; } }
     #howto .h3 p {
-      font-size: 1em;
       border: none;
       margin: 0; }
+      @media screen and (min-width: 577px) {
+        #howto .h3 p {
+          font-size: 1em; } }
   #howto p {
     border-top: solid #22232f 1px;
     margin: 2em; }
@@ -418,7 +470,8 @@ div#tline_text {
     grid-column: 1 / -1;
     font-size: 1rem; }
     #howto p.howto_link a {
-      text-decoration: underline dotted; }
+      text-decoration: underline dotted;
+      text-underline-position: under; }
 
 #topic_map {
   margin: 0;
@@ -433,7 +486,6 @@ div#tline_text {
     position: sticky;
     box-sizing: border-box; }
     #topic_map figure canvas {
-      cursor: grabbing;
       box-sizing: border-box; }
     #topic_map figure #topic_tip {
       position: absolute;
@@ -482,12 +534,19 @@ div#tline_text {
     justify-content: flex-end;
     align-items: flex-end;
     z-index: 4; }
+    @media screen and (max-width: 577px) {
+      #topic_map div.topic_text {
+        justify-content: space-around;
+        align-items: center; } }
     #topic_map div.topic_text p {
-      width: 25%;
+      width: 80%;
       background-color: rgba(239, 239, 239, 0.85);
-      padding: 2em;
-      margin-right: 4em;
-      z-index: 1; }
+      z-index: 1;
+      padding: 2em; }
+      @media screen and (min-width: 577px) {
+        #topic_map div.topic_text p {
+          width: 25%;
+          margin-right: 4em; } }
   #topic_map #ukraine span {
     background-color: rgba(231, 41, 138, 0.5); }
   #topic_map #poroshenko span, #topic_map #saakashvili span {
