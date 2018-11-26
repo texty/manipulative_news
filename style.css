@@ -112,7 +112,7 @@ div#tline_text {
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns: 2fr 1fr;
-  margin: 0 0 2em 0; }
+  margin: 3em 0 2em 0; }
   @media screen and (max-width: 577px) {
     #spread_wire {
       grid-template-columns: 1fr; } }
