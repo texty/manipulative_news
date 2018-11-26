@@ -16,6 +16,11 @@ $mobile: 'screen and (max-width: 577px)';
   src: url(DroidSansMono.ttf)
 }
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   background-color: $bgcol;
   color: $fontcol;
@@ -24,6 +29,8 @@ body {
   overflow-wrap: break-word;
   word-wrap: break-word;
   margin: 0;
+  width: 100%;
+  height: 100%;
 
   @media #{$mobile} {
     font-size: 85%;

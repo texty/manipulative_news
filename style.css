@@ -1,6 +1,10 @@
 @font-face {
   font-family: droid-mono;
   src: url(DroidSansMono.ttf); }
+html {
+  height: 100%;
+  width: 100%; }
+
 body {
   background-color: #efefef;
   color: #22232f;
@@ -8,7 +12,9 @@ body {
   line-height: 2;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  margin: 0; }
+  margin: 0;
+  width: 100%;
+  height: 100%; }
   @media screen and (max-width: 577px) {
     body {
       font-size: 85%; } }
