@@ -1,10 +1,8 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var $ = require("jquery");
 require('intersection-observer');
-// var Stickyfill = require('stickyfill');
 const scrollama = require('scrollama');
 const d3 = require('d3');
-// const Tooltip = require('tooltip.js');
 const chroma = require('chroma-js');
 const tippy = require('tippy.js');
 
@@ -272,17 +270,11 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
                         .classed('tooltiped', true)
                 } else {
                     $(this).attr('data-tippy-content', p.outerHTML);
-                    // $(p).clone()
-                    //     .addClass('tooltiped')
-                    //     .css('padding', '0.5em 0.5em 0.5em 0.5em')
-                    //     .appendTo('#tline_tooltip');
-                    // $('#tline_tooltip').show();
                 }
             })
             .on('mouseleave', function () {
                 $('p.hline.tooltiped').removeClass('tooltiped');
                 $(this).removeAttr('data-tippy-content');
-                // $('#tline_tooltip').hide().find('p').remove();
             });
 
         var min_published = d3.min(tline_articles.data(), function(d) {return d.published});
@@ -381,12 +373,6 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
             })
             .onContainerEnter(function (r) {
                 $('.hline_day_feed').last().css('border-bottom', 'none');
-
-                // $('#tline_tooltip').css('left', function () {
-                //     return $('div#tline_text').position().left;
-                // });
-
-                // stickyfill.add( $('.sticky') );
 
                 var min_published = d3.min(tline_articles.data(), function(d) {return d.published});
                 var first_day_transition = trans.selection()
@@ -503,10 +489,7 @@ sshot_scroller
             // $($('.sshot_text p').get(r.index))
             //     .css('opacity', 1);
         }
-    })
-    ;
-
-// var site_tooltips = {};
+    });
 
 // Ranking
 
@@ -610,23 +593,6 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                         <p>Новин, що маніпулюють емоціями: ${d3.format(".2%")(d.emo_pers)}</p>
                         `;
             });
-
-        // $(function () {
-        //     site_divs
-        //         .each(function (d) {
-        //             site_tooltips[d.url_domain] = new Tooltip(this, {
-        //                 title: `<h6>${d.url_domain}</h6>
-        //                 <p>Візитів на місяць: ${d3.format(".2s")(d.ukr_audience)}</p>
-        //                 <p>Новин, що маніпулюють емоціями: ${d3.format(".2%")(d.emo_pers)}</p>
-        //                 `,
-        //                 positionFixed: true,
-        //                 placement: 'right',
-        //                 html: true,
-        //                 trigger: 'manual',
-        //                 container: document.getElementById('sites_graph')
-        //             });
-        //         });
-        // });
 
         const sites_el_refs = {};
         site_divs.each(function (d) { sites_el_refs[d.url_domain] = this });

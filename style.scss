@@ -16,6 +16,7 @@ $mobile: 'screen and (max-width: 577px)';
   src: url(DroidSansMono.ttf)
 }
 
+//without this 100% shit scrollama and intersection observer do not work in safari!
 html {
   height: 100%;
   width: 100%;
