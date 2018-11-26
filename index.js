@@ -1,4 +1,5 @@
 var $ = require("jquery");
+require('intersection-observer');
 // var Stickyfill = require('stickyfill');
 const scrollama = require('scrollama');
 const d3 = require('d3');
@@ -981,7 +982,6 @@ d3.json("./labels.json").then(function(data) {
             progress: true
         })
         .onStepEnter(function (r) {
-            console.log(r.element.id);
 
             if ( points[r.element.id] ) {
                 point = label_array[points[r.element.id]];
