@@ -175,6 +175,12 @@ div#tline_text {
     @media screen and (min-width: 577px) {
       #spread_wire figure#wire_vru {
         grid-row: 2 / 10; } }
+    @media screen and (max-width: 577px) {
+      #spread_wire figure#wire_vru {
+        background-color: #efefef;
+        display: flex;
+        justify-content: center;
+        align-items: center; } }
   #spread_wire rect {
     opacity: 0; }
   #spread_wire text {

@@ -247,6 +247,12 @@ div#tline_text {
     @media #{$mediun} {
       grid-row: 2 / 10;
     }
+    @media #{$mobile} {
+      background-color: $bgcol;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   rect {
