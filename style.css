@@ -323,7 +323,8 @@ div#tline_text {
         z-index: auto; } }
     @media screen and (max-width: 577px) {
       #sites div#sites_text {
-        pointer-events: none; }
+        pointer-events: none;
+        padding: 1em; }
         #sites div#sites_text div.sites_gap {
           pointer-events: none;
           opacity: 0; }
