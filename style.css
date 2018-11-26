@@ -179,7 +179,10 @@ div#tline_text {
         background-color: #efefef;
         display: flex;
         justify-content: center;
-        align-items: center; } }
+        align-items: center;
+        position: sticky; } }
+    #spread_wire figure#wire_vru svg {
+      position: sticky; }
   #spread_wire rect {
     opacity: 0; }
   #spread_wire text {
@@ -245,7 +248,6 @@ div#tline_text {
   #screenshots .img_container {
     grid-column: 1 / 2;
     display: flex;
-    display: -webkit-flex;
     position: sticky;
     padding: 5rem 2em 5em 0;
     box-sizing: border-box;
@@ -278,7 +280,6 @@ div#tline_text {
     grid-row: 2;
     position: sticky;
     display: flex;
-    display: -webkit-flex;
     flex-direction: column;
     justify-content: start;
     background-color: #efefef;
@@ -341,24 +342,22 @@ div#tline_text {
     box-sizing: border-box;
     font-size: 0.75em;
     display: flex;
-    display: -webkit-flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: flex-start;
+    position: sticky;
     overflow: hidden; }
     #sites #sites_list .big_text {
       z-index: 5000; }
     #sites #sites_list .site {
       box-sizing: border-box;
       padding: 0 1em 0 1em;
-      -webkit-transition: order 2s ease-out;
       transition: order 2s ease-out; }
       #sites #sites_list .site div, #sites #sites_list .site p, #sites #sites_list .site svg {
         margin: 0;
         padding: 0;
         background-color: transparent; }
     #sites #sites_list .net_target {
-      -webkit-transition: opacity 1s ease-out;
       transition: opacity 1s ease-out;
       fill: #585a79;
       padding: 0 1em 0 1em; }
