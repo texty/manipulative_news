@@ -1,5 +1,5 @@
 var $ = require("jquery");
-var Stickyfill = require('stickyfill');
+// var Stickyfill = require('stickyfill');
 const scrollama = require('scrollama');
 const d3 = require('d3');
 // const Tooltip = require('tooltip.js');
@@ -109,7 +109,7 @@ var fullscreen_fig = function (scroller=null) {
     if (scroller == null) {} else { scroller.resize() }
 };
 
-var stickyfill = Stickyfill();
+// var stickyfill = Stickyfill();
 
 // Timeline
 
@@ -384,7 +384,7 @@ Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
                 //     return $('div#tline_text').position().left;
                 // });
 
-                stickyfill.add( $('.sticky') );
+                // stickyfill.add( $('.sticky') );
 
                 var min_published = d3.min(tline_articles.data(), function(d) {return d.published});
                 var first_day_transition = trans.selection()
