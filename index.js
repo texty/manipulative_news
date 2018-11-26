@@ -53,6 +53,7 @@ var fullscreen_fig = function (scroller=null) {
             .attr('width', function () { return this.getAttribute('height') });
         d3.selectAll('#wire_vru, #sites_graph')
             .style('position', 'sticky')
+            .style('position', '-webkit-sticky')
             .style('top', function () {
                 var h3 = $(this).closest('section').find('.h3');
                 return `${h3.get(0).offsetHeight}px`;
@@ -72,6 +73,7 @@ var fullscreen_fig = function (scroller=null) {
                 return window.innerHeight - $(this).closest('section').find('.h3').get(0).offsetHeight;
             })
             .style('position', 'sticky')
+            .style('position', '-webkit-sticky')
             .style('top', function () {
                 var h3 = $(this).closest('section').find('.h3');
                 return `${h3.get(0).offsetHeight}px`;
@@ -98,6 +100,7 @@ var fullscreen_fig = function (scroller=null) {
             return window.innerHeight - h3.get(0).offsetHeight;
         })
         .css('position', 'sticky')
+        .css('position', '-webkit-sticky')
         .css('top', function () {
             var h3 = $(this).closest('section').find('.h3');
             return `${h3.get(0).offsetHeight}px`;
