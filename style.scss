@@ -382,7 +382,6 @@ div#tline_text {
     object-fit: contain;
     //opacity: 0;  //через цей рул вони глючать на першому скролі, не знизу зʼявляються, а fade in
     transition: opacity 1s ease-out 1s, margin 0.5s;
-    --webkit-transition: opacity 1s ease-out 1s, margin 0.5s;
     box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
     pointer-events: none;
   }
@@ -410,7 +409,6 @@ div#tline_text {
       ////прибрала прозорість *drozdova
       //opacity: 0;
       transition: opacity 1s ease-out;
-      --webkit-transition: opacity 1s ease-out;
       padding: 0 0 2em 0;
       margin: 0;
     }
