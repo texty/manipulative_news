@@ -60,7 +60,7 @@ header {
     @media screen and (min-width: 577px) {
       header h2 {
         text-align: center;
-        margin: 0 15% 0 15%; } }
+        margin: 0 15% 3em 15%; } }
 
 svg {
   background-color: #efefef; }
