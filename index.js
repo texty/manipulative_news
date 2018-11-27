@@ -447,7 +447,7 @@ var sites_headlines = {
 // додала id до картинок у append, аби ловити їх на скролі *drozdova
 $('.img_container')
     .each(function (i) {
-        $(this).append(`<img src="screen${i+1}.jpg" id="screen-${i+1}">`);
+        $(this).append(`<img src="img/screen${i+1}.jpg" id="screen-${i+1}">`);
     });
 
     //*drozdova прибрала це
