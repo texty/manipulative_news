@@ -577,6 +577,9 @@ div#tline_text {
     pointer-events: none;
     opacity: 0; }
 
+footer {
+  font-family: Ubuntu, sans-serif; }
+
 #credits {
   margin: 3em 0 2em 0;
   padding: 1em 15% 1em 15%;
@@ -584,7 +587,6 @@ div#tline_text {
   color: #efefef;
   font-size: 0.85em;
   line-height: 1.5;
-  font-family: Ubuntu, sans-serif;
   display: flex; }
   #credits img {
     max-width: 10rem;
@@ -596,5 +598,52 @@ div#tline_text {
   #credits p {
     padding: 0;
     margin: 1em 3em 1em 3em; }
+
+#created_texty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  margin: 0 0 0 1em; }
+  #created_texty i {
+    margin: 0.5em;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    border: 1px solid #9a9cb6;
+    color: #9a9cb6;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: bottom;
+    padding: 0.5em;
+    font-size: 2.5em;
+    line-height: 1;
+    transition: all 0.5s; }
+  #created_texty i:hover {
+    border: 1px solid #42445b;
+    color: #42445b; }
+  #created_texty img {
+    max-height: 4em; }
+  #created_texty h3 {
+    text-align: center;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 1.5rem; }
+
+#read_more {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 2em 3em 2em 3em;
+  grid-gap: 3em; }
+  @media screen and (max-width: 577px) {
+    #read_more {
+      grid-template-columns: 1fr; } }
+  #read_more h3 {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.25em; }
+  #read_more img {
+    max-width: 100%; }
 
 /*# sourceMappingURL=style.css.map */

@@ -824,6 +824,10 @@ div#tline_text {
   }
 }
 
+footer {
+  font-family: Ubuntu, sans-serif;
+}
+
 #credits {
   //text-align: center;
   margin: 3em 0 2em 0;
@@ -833,7 +837,6 @@ div#tline_text {
   font-size: 0.85em;
   line-height: 1.5;
 
-  font-family: Ubuntu, sans-serif;
   display: flex;
 
   img {
@@ -848,5 +851,66 @@ div#tline_text {
   p {
     padding: 0;
     margin: 1em 3em 1em 3em;
+  }
+}
+
+#created_texty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  margin: 0 0 0 1em;
+
+  i{
+    margin: 0.5em;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    border: 1px solid lighten($fontcol, 50%);
+    color: lighten($fontcol, 50%);
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: bottom;
+    padding: 0.5em;
+    font-size: 2.5em;
+    line-height: 1;
+    transition: all 0.5s;
+  }
+
+  i:hover {
+    border: 1px solid lighten($fontcol, 15%);
+    color: lighten($fontcol, 15%);
+  }
+
+  img {
+    max-height: 4em;
+  }
+
+  h3 {
+    text-align: center;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 1.5rem;
+  }
+}
+
+#read_more {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 2em 3em 2em 3em;
+  grid-gap: 3em;
+  @media #{$mobile} {
+    grid-template-columns: 1fr;
+  }
+
+  h3 {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.25em;
+  }
+
+  img {
+    max-width: 100%;
   }
 }
