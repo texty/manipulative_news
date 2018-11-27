@@ -599,7 +599,7 @@ footer {
   #credits div {
     padding: 1em;
     display: flex;
-    align-items: flex-start; }
+    justify-content: center; }
   #credits p {
     padding: 0;
     margin: 1em; }
