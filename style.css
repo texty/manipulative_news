@@ -564,4 +564,24 @@ div#tline_text {
     pointer-events: none;
     opacity: 0; }
 
+#credits {
+  margin: 3em 0 2em 0;
+  padding: 1em 15% 1em 15%;
+  background-color: #2e2a2b;
+  color: #efefef;
+  font-size: 0.85em;
+  line-height: 1.5;
+  font-family: Ubuntu, sans-serif;
+  display: flex; }
+  #credits img {
+    max-width: 10rem;
+    height: auto; }
+  #credits div {
+    padding: 1em;
+    display: flex;
+    align-items: flex-start; }
+  #credits p {
+    padding: 0;
+    margin: 1em 3em 1em 3em; }
+
 /*# sourceMappingURL=style.css.map */

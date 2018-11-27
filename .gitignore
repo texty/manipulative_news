@@ -4,3 +4,4 @@ bundle.js.tmp*
 index0.js
 \.idea/
 \.git
+*.eps
