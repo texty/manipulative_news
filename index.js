@@ -114,7 +114,7 @@ var fullscreen_fig = function (scroller=null) {
 
 var prev_step_progress;
 
-Promise.all([d3.svg('tline_glyph.svg'), d3.csv('vru_wire.csv')])
+Promise.all([d3.svg('img/tline_glyph.svg'), d3.csv('vru_wire.csv')])
     .then(function([glyph_path, data]) {
         glyph_path = $(glyph_path.documentElement).find('path').attr('d');
 
