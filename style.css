@@ -587,10 +587,12 @@ footer {
   color: #efefef;
   font-size: 0.85em;
   line-height: 1.5;
-  display: flex; }
-  @media screen and (max-width: 577px) {
+  display: grid;
+  grid-template-columns: 1fr; }
+  @media screen and (min-width: 577px) {
     #credits {
-      flex-wrap: wrap; } }
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 2em; } }
   #credits img {
     max-width: 10rem;
     height: auto; }
@@ -600,7 +602,7 @@ footer {
     align-items: flex-start; }
   #credits p {
     padding: 0;
-    margin: 1em 5em 1em 1em; }
+    margin: 1em; }
 
 #created_texty {
   display: flex;

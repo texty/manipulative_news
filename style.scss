@@ -6,7 +6,7 @@ $neut_col: #a0a0a0;
 $alien_green: #bdff01;
 
 
-$mediun: 'screen and (min-width: 577px)';
+$medium: 'screen and (min-width: 577px)';
 $xlarge: 'screen and (min-width: 1199.98px)';
 $large: 'screen and (min-width: 992px)';
 $mobile: 'screen and (max-width: 577px)';
@@ -41,7 +41,7 @@ body {
 .reading {
   box-sizing: border-box;
   padding: 0 1em 0 1em;
-  @media #{$mediun} {
+  @media #{$medium} {
     padding: 0 7.5% 0 7.5%;
   }
   @media #{$large} {
@@ -108,7 +108,7 @@ header {
     //vertical-align: middle;
   }
   h2 {
-    @media #{$mediun} {
+    @media #{$medium} {
       text-align: center;
       margin: 0 15% 3em 15%;
     }
@@ -211,7 +211,7 @@ div#tline_text {
 
   div.hline_day_feed, #tline_text {
     box-sizing: border-box;
-    @media #{$mediun} {
+    @media #{$medium} {
       grid-column: 2 / -1;
     }
     display: flex;
@@ -222,7 +222,7 @@ div#tline_text {
   }
 
   div.hline_day_feed {
-    @media #{$mediun} {
+    @media #{$medium} {
       border-bottom: dotted 1px darken($bgcol, 25%);
     }
   }
@@ -270,7 +270,7 @@ div#tline_text {
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 
-    @media #{$mediun} {
+    @media #{$medium} {
       grid-row: 2 / 10;
     }
     @media #{$mobile} {
@@ -468,7 +468,7 @@ div#tline_text {
     grid-column: 1;
     margin: 0 0 0 1em;
     padding: 0;
-    @media #{$mediun} {
+    @media #{$medium} {
       grid-row: 2 / 10;
     }
 
@@ -480,7 +480,7 @@ div#tline_text {
 
   div#sites_text {
     z-index: 4;
-    @media #{$mediun} {
+    @media #{$medium} {
       grid-column: 2;
       z-index: auto;
     }
@@ -595,7 +595,7 @@ div#tline_text {
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s;
-      @media #{$mediun} {
+      @media #{$medium} {
         font-size: 1.25rem;
       }
 
@@ -637,7 +637,7 @@ div#tline_text {
     padding: 0 0 0 0;
     font-size: 1.25em;
     text-align: left;
-    @media #{$mediun} {
+    @media #{$medium} {
       font-size: 0.65rem;
     }
   }
@@ -664,7 +664,7 @@ div#tline_text {
     padding: 2em 0 2em 0;
   }
 
-  @media #{$mediun} {
+  @media #{$medium} {
     padding: 2em 10% 2em 10%;
   }
 
@@ -674,7 +674,7 @@ div#tline_text {
     margin: 0 2em 2em 2em;
     background-image: none;
     background-color: darken($bgcol, 3%);
-    @media #{$mediun} {
+    @media #{$medium} {
       grid-row: 1 / 2;
       grid-column: 1 / -1;
     }
@@ -682,7 +682,7 @@ div#tline_text {
     p {
       border: none;
       margin: 0;
-      @media #{$mediun} {
+      @media #{$medium} {
         font-size: 1em;
       }
     }
@@ -801,7 +801,7 @@ div#tline_text {
       background-color: rgba($bgcol, 0.85);
       z-index: 1;
       padding: 2em;
-      @media #{$mediun} {
+      @media #{$medium} {
         width: 25%;
         margin-right: 4em;
       }
@@ -836,9 +836,11 @@ footer {
   color: $bgcol;
   font-size: 0.85em;
   line-height: 1.5;
-  display: flex;
-  @media #{$mobile} {
-    flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
+  @media #{$medium} {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2em;
   }
 
   img {
@@ -852,7 +854,11 @@ footer {
   }
   p {
     padding: 0;
-    margin: 1em 5em 1em 1em;
+    margin: 1em;
+  }
+  
+  @media #{$medium} {
+    
   }
 }
 
