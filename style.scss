@@ -830,7 +830,7 @@ footer {
 
 #credits {
   //text-align: center;
-  margin: 3em 0 2em 0;
+  margin: 5em 0 2em 0;
   padding: 1em 15% 1em 15%;
   background-color: #2e2a2b;
   color: $bgcol;
@@ -869,7 +869,7 @@ footer {
   justify-content: center;
   justify-items: center;
   align-content: center;
-  margin: 0 0 0 1em;
+  margin: 4em 0 0 1em;
 
   i{
     margin: 0.5em;
@@ -906,7 +906,7 @@ footer {
 #read_more {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 2em 3em 2em 3em;
+  margin: 4em 3em 2em 3em;
   grid-gap: 3em;
   @media #{$mobile} {
     grid-template-columns: 1fr;
