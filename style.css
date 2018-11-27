@@ -587,8 +587,10 @@ footer {
   color: #efefef;
   font-size: 0.85em;
   line-height: 1.5;
-  flex-wrap: wrap;
   display: flex; }
+  @media screen and (max-width: 577px) {
+    #credits {
+      flex-wrap: wrap; } }
   #credits img {
     max-width: 10rem;
     height: auto; }
