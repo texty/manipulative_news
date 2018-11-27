@@ -70,6 +70,24 @@ header {
     background-color: darken($bgcol, 5%)
   }
 
+  #logos {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5em;
+    box-sizing: border-box;
+
+    img {
+      max-height: 1em;
+    }
+
+    i {
+      color: $bgcol;
+      font-size: 1.75em;
+      padding: 0 0 0 0.5em;
+    }
+  }
 
   h1 {
     font-size: 3em;

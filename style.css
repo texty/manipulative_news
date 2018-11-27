@@ -46,6 +46,19 @@ header {
   @media screen and (max-width: 577px) {
     header {
       background-color: #e2e2e2; } }
+  header #logos {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5em;
+    box-sizing: border-box; }
+    header #logos img {
+      max-height: 1em; }
+    header #logos i {
+      color: #efefef;
+      font-size: 1.75em;
+      padding: 0 0 0 0.5em; }
   header h1 {
     font-size: 3em;
     background-image: url("glitch.jpg");
