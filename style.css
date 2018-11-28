@@ -111,7 +111,7 @@ span[data-tippy] {
   padding: 1em 1em 1em 1em; }
   @media screen and (min-width: 950px) {
     .h3 {
-      grid-template-columns: 1fr 1fr; }
+      grid-template-columns: 2fr 1fr; }
       .h3 .col_block {
         grid-column: 1; } }
   .h3 h3 {
@@ -338,6 +338,19 @@ div#tline_text {
     grid-column: 1 / -1;
     position: sticky;
     top: 0; }
+    #sites .h3 svg {
+      display: inline-flex;
+      height: 2em;
+      background: transparent;
+      overflow: visible; }
+      #sites .h3 svg rect {
+        fill: #c9c9c9; }
+      #sites .h3 svg text {
+        fill: #22232f;
+        font-size: 0.75em;
+        text-anchor: middle; }
+    #sites .h3 span {
+      background: linear-gradient(-90deg, #eebeff, #9b00b7); }
   #sites figure {
     grid-column: 1;
     margin: 0 0 0 1em;

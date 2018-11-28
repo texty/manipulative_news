@@ -164,7 +164,7 @@ span[data-tippy] {
   padding: 1em 1em 1em 1em;
 
   @media #{$large} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     .col_block {
       grid-column: 1;
     }
@@ -474,6 +474,27 @@ div#tline_text {
     grid-column: 1 / -1;
     position: sticky;
     top: 0;
+
+    svg {
+      display: inline-flex;
+      height: 2em;
+      background: transparent;
+      overflow: visible;
+
+      rect {
+        fill: darken($bgcol, 15%)
+      }
+
+      text {
+        fill: $fontcol;
+        font-size: 0.75em;
+        text-anchor: middle;
+      }
+    }
+
+    span {
+      background: linear-gradient(-90deg, #eebeff, #9b00b7);
+    }
   }
 
   figure {
