@@ -481,14 +481,16 @@ div#tline_text {
       background: transparent;
       overflow: visible;
 
-      rect {
-        fill: darken($bgcol, 15%)
+      line {
+        stroke: lighten($fontcol, 25%);
       }
 
       text {
         fill: $fontcol;
         font-size: 0.75em;
         text-anchor: middle;
+
+
       }
     }
 

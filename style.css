@@ -343,8 +343,8 @@ div#tline_text {
       height: 2em;
       background: transparent;
       overflow: visible; }
-      #sites .h3 svg rect {
-        fill: #c9c9c9; }
+      #sites .h3 svg line {
+        stroke: #585a79; }
       #sites .h3 svg text {
         fill: #22232f;
         font-size: 0.75em;

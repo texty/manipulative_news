@@ -440,18 +440,18 @@ var change_sites_list = {
 var sites_headlines = {
     'm_emo': [
         'Емоційні маніпуляції',
-        '<p>Місце у рейтингу та колір - % емоційно маніпулятивних новин, <span>менше - більше</span>. Довжина прямокутника - місячна кількість візитів, шкала log<sub>2</sub> <svg></svg></p>' +
+        '<p>Місце у рейтингу та колір - % емоційно маніпулятивних новин, <span>20% - 100%</span>. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>' +
         '<p>При гортанні тип рейтингу зміниться</p>'
     ],
     'm_arg': [
         'Маніпулювання аргументами',
-        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи, <span>менше - більше</span></p>' +
-        '<p>Колір та місце у рейтингу - % новин з маніпуляцією аргументами. Довжина прямокутника - місячна кількість візитів, шкала log<sub>2</sub> <svg></svg></p>'
+        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи, <span>20% - 100%</span></p>' +
+        '<p>Колір та місце у рейтингу - % новин з маніпуляцією аргументами. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>'
     ],
     'm_man': [
         'Сумарний рейтинг маніпулятивності',
-        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій</p>' +
-        '<p>Колір та місце у рейтингу - % новин, що містять маніпуляції. Довжина прямокутника - місячна кількість візитів, шкала log<sub>2</sub> <svg></svg></p>'
+        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій, <span>20% - 100%</span></p>' +
+        '<p>Колір та місце у рейтингу - % новин, що містять маніпуляції. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>'
     ],
     'links_net': [
         'Посилання між сайтами',
@@ -621,26 +621,26 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 var size_legend = d3.select(h3.find('svg').get(0));
 
                 size_legend.attr('width', site_w*1.01)
-                    .append('rect')
-                    .attr('x', 0)
-                    .attr('y', '1em')
-                    .attr('height', '1em')
-                    .attr('width', '100%');
+                    .append('line')
+                    .attr('x1', 0)
+                    .attr('x2', site_w)
+                    .attr('y1', '2em')
+                    .attr('y2', '2em');
                 
-                var legend_gs = size_legend.selectAll('line')
-                    .data([10000, 100000, 1000000, 10000000])
+                var legend_gs = size_legend.selectAll('g')
+                    .data((window.innerWidth > 576) ? [10000, 100000, 1000000, 3000000, 12000000] : [10000, 100000, 1000000, 12000000])
                     .enter()
                     .append('g')
                     .attr('transform', function (d) {
-                        return `translate(${scale_audience(d)}, ${$(this).closest('p').css('font-size').match(/[0-9\.]+/)[0]})`
+                        return `translate(${scale_audience(d)}, ${+$(this).closest('p').css('font-size').match(/[0-9\.]+/)[0]*1.5})`
                     });
                     
                 legend_gs
                     .append('line')
                     .attr('x1', 0)
                     .attr('x2', 0)
-                    .attr('y1', 0)
-                    .attr('y2', '1em')
+                    .attr('y1', '0.5em')
+                    .attr('y2', '0')
                     .style('stroke', font_col);
                 
                 legend_gs.append('text')
