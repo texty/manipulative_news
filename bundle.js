@@ -100,12 +100,6 @@ var fullscreen_fig = function (scroller=null) {
             return `${h3.get(0).offsetHeight}px`;
         });
 
-    $('.img_container').css('min-height', function () {
-        return ($(this).find('img').length > 0)
-            ? `${$(this).find('img').height * 2}px`
-            :`${this.offsetHeight * 0.8}px`;
-    });
-
     if (scroller == null) {} else { scroller.resize() }
 };
 
@@ -445,50 +439,25 @@ var sites_headlines = {
 };
 
 // Screenshots
-// додала id до картинок у append, аби ловити їх на скролі *drozdova
-$('.img_container')
-    .each(function (i) {
-        $(this).append(`<img src="img/screen${i+1}.jpg" id="screen-${i+1}">`);
-    });
 
-    //*drozdova прибрала це
-    // .find('img')
-    // .mouseover(function () {
-    //     $(this)
-    //         .css('margin-top', '-3%')
-    //         .parent()
-    //         .css('background-color', 'transparent');
-    //         // .css('z-index', 7);
-    // })
-    // .mouseout(function () {
-    //     $(this)
-    //         .css('margin-top', '0')
-    //         .parent()
-    //         .css('background-color', '');
-    //         .css('z-index', 6);
-    // });
-
-// Scrollama
 const sshot_scroller = scrollama();
 fullscreen_fig(sshot_scroller);
 
 sshot_scroller
     .setup({
-        step: '.img_container',
+        step: '.img_container img',
         container: '#screenshots',
         graphic: '.sshot_text',
-        offset: 0.8,
-        once: true
+        offset: 1
+        // once: true
     })
     .onStepEnter(function (r) {
-        if (r.direction === 'down') {
-            $(r.element).find('img')
-                .css('opacity', 1)
-                .css('pointer-events', 'auto');
-            //прибрала нижче, бо воно працювалo тільки на першому скролі, всі інші не бачило *drozdova
-            // $($('.sshot_text p').get(r.index))
-            //     .css('opacity', 1);
-        }
+        $(r.element)
+            .css('opacity', 1)
+            .css('pointer-events', 'auto');
+
+        $($('.sshot_text p').get(r.index))
+            .css('opacity', 1);
     });
 
 // Ranking
@@ -816,10 +785,6 @@ var calc_site_w = function () {
     var end_pos = $divs.last().position().left + ws;
     var i = 0;
     while ( cont_w < end_pos && i < 25 ) {
-        // current_fs = ( Math.floor(current_fs * (cont_w / end_pos)) > current_fs - 1 )
-        //     ? current_fs - 1
-        //     : Math.floor(current_fs * (cont_w / end_pos));
-
         current_fs -= 1;
 
         $divs.parent()
@@ -855,7 +820,7 @@ const class_names = ["#a03532",          "#c1498c", "#4623a3", "#643c5a",     "#
 //const class_names = ["Влада/політики", "Війна",   "Росія",   "Про Україну", "Новини з соцмереж", "Церква"];
 class_names.map(function(d, i){ colors[d] = color_codes[i] });
 var context;
-var k = (window.innerWidth > 576) ? 1 : 0.7;  // current zoom level
+var k = (window.innerWidth > 576) ? 1 : 0.8;  // current zoom level
 
 // function to redraw on each "zoom" event
 function zoomed(){
@@ -903,7 +868,7 @@ var zoom = d3.zoom()
     .scaleExtent([0.5, 4])
     .on("zoom", zoomed);
 
-// starting point - center of carnmvas
+// starting point - center of canvas
 var point = {x: width / 2, y: height / 2 };
 
 function transform() {
@@ -936,7 +901,6 @@ d3.json("./labels.json").then(function(data) {
         .call(zoom.transform, transform);
     canvas
         .call(transition);
-    // canvas.call(zoom)
 
     const tmap_scroller = scrollama();
     fullscreen_fig(tmap_scroller);
@@ -949,7 +913,6 @@ d3.json("./labels.json").then(function(data) {
             progress: true
         })
         .onStepEnter(function (r) {
-
             if ( points[r.element.id] ) {
                 point = label_array[points[r.element.id]];
                 correction = point.width / 3;
@@ -959,12 +922,12 @@ d3.json("./labels.json").then(function(data) {
 
             } else if (r.element.id === 'topic_intro') {
                 point = {x: width / 2, y: height / 2 };
-                k = (window.innerWidth > 576) ? 1 : 0.7;
+                k = (window.innerWidth > 576) ? 1 : 0.9;
                 canvas
                     .call(transition);
             } else if (r.element.id === 'show_map') {
                 point = {x: width / 2, y: height / 2 };
-                k = (window.innerWidth > 576) ? 1 : 0.7;
+                k = (window.innerWidth > 576) ? 1 : 0.9;
 
                 canvas
                     .call(zoom)
@@ -983,7 +946,6 @@ d3.json("./labels.json").then(function(data) {
                         behavior: "smooth"
                     });
                 }
-
             }
         })
         .onStepExit(function (r) {
@@ -994,57 +956,9 @@ d3.json("./labels.json").then(function(data) {
                 $('#topic_map canvas').css('cursor', 'auto');
             }
         })
-
-});
-
-//функція, що дивиться, чи обʼєкт видно *drozdova
-function isOnScreen(elem, part) {
-    // if the element doesn't exist, abort
-    if (elem.length == 0) {
-        return;
-    }
-    var $window = $(window);
-    var viewport_top = $window.scrollTop();
-    var viewport_height = $window.height();
-    var viewport_bottom;
-    if (part) {
-        viewport_bottom = viewport_top + (viewport_height / part);
-    }
-    else {
-        viewport_bottom = viewport_top + viewport_height;
-    }
-    var $elem = $(elem);
-    var top = $elem.offset().top;
-    var height = $elem.height();
-    var bottom = top + height;
-
-    return (top >= viewport_top && top < viewport_bottom) ||
-        (bottom > viewport_top && bottom <= viewport_bottom) ||
-        (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
-}
-
-//якщо видно показуємо текст, якщо ні, ховаємо.
-$( document ).ready( function() {
-    window.addEventListener('scroll', function(e) {
-        if( isOnScreen( $('#screen-3'), 1 ) ) {
-            $("#img-3-text").css("display", "block")
-        }
-        else if ( ! isOnScreen( $('#screen-3'), 1 ) ) {
-            $("#img-3-text").css("display", "none")
-        }
-    });
 });
 
 $( document ).ready( function() {
-    window.addEventListener('scroll', function(e) {
-        if( isOnScreen( $('#screen-2'), 1) ) {
-            $("#img-2-text").css("display", "block")
-        }
-        else if ( ! isOnScreen( $('#screen-2'), 1 ) ) {
-            $("#img-2-text").css("display", "none")
-        }
-    });
-
     $('#topic_tip nav i').click(function () {
         var to_el = ( this.classList.contains('fa-angle-up') )
             ? document.getElementById('saakashvili')
@@ -1054,10 +968,23 @@ $( document ).ready( function() {
             top: to_el.offsetTop,
             behavior: "smooth"
         });
-    })
+    });
+
+    $('#screenshots')
+        .find('img')
+        .mouseover(function () {
+            $(this)
+                .parent()
+                .css('background-color', 'transparent')
+                .css('z-index', 7);
+        })
+        .mouseout(function () {
+            $(this)
+                .parent()
+                .css('background-color', '')
+                .css('z-index', 6);
+        });
 });
-
-
 
 },{"chroma-js":2,"d3":34,"intersection-observer":35,"jquery":36,"scrollama":37,"tippy.js":38}],2:[function(require,module,exports){
 

@@ -8,8 +8,11 @@ $alien_green: #bdff01;
 
 $medium: 'screen and (min-width: 577px)';
 $xlarge: 'screen and (min-width: 1199.98px)';
-$large: 'screen and (min-width: 992px)';
+$large: 'screen and (min-width: 950px)';
 $mobile: 'screen and (max-width: 577px)';
+$max_medium: 'screen and (max-width: 949.99px)';
+$ipad_portrait: 'screen and (min-device-width: 768px) and (max-device-width: 1112px) and (orientation: portrait)';
+
 
 @font-face {
   font-family: droid-mono;
@@ -97,10 +100,11 @@ header {
     background-image: url("img/glitch.jpg");
     border: 2px solid $bgcol;
     background-size: cover;
-    padding-top: 3em !important;
-    padding-bottom: 3em !important;
+    //padding-top: 3em !important;
+    //padding-bottom: 3em !important;
     color: $bgcol;
     margin: 0 0 10% 0;
+    padding: 3em 5px 3em 5px;
     text-align: center;
   }
 
@@ -193,11 +197,11 @@ div#tline_text {
   margin: 3em 0 2em 0;
 
   svg {
-    padding: 2rem 0 0 0;
+    padding: 0 0 0 0;
     box-sizing: border-box;
     @media #{$mobile} {
       border-bottom: dotted 1px darken($bgcol, 25%);
-      padding: 0;
+      //padding: 0 !important;
     }
     //z-index: 7;
   }
@@ -322,20 +326,7 @@ div#tline_text {
 
 #screenshots {
   margin: 0 0 0 0;
-  //padding: 1em;
   box-sizing: border-box;
-
-  .desktop {
-    padding: 1em;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr;
-  }
-
-  //для моб. версії грід в одну колонку, шириною в екран *drozdova
-  @media #{$mobile} {
-    grid-template-columns: 1fr;
-  }
 
   span.big_number {
     font-size: 1.25em;
@@ -344,42 +335,17 @@ div#tline_text {
     //text-shadow: 2px 2px 1px $neut_col;
   }
 
-  //приховати в моб. версії *drozdova
-  .desktop {
-    @media #{$mobile} {
-      display:none;
-    }
-  }
-
-  //приховати в комп.версії *drozdova
-  .mobile {
-    padding:1em;
-    @media #{$large}, #{$xlarge} {
-      display:none;
-    }
-    @media #{$mobile} {
-      display:block !important;
-    }
-  }
-
-  .mobile .h3 {
-    padding: 2em 1em 0 0!important;
-  }
-
   .h3 {
-    grid-row: 1;
-    grid-column: 1 / -1;
     box-sizing: border-box;
     padding: 2em 1em 0 1em;
     position: sticky;
     top: 0;
     background-color: $bgcol;
     z-index: 5;
-    // в мобільній версії не треба sticky *drozdova
-    @media #{$mobile} {
-      position: relative;
+    @media #{$large}{
+      grid-row: 1;
+      grid-column: 1 / -1;
     }
-
   }
 
   .img_container {
@@ -405,45 +371,81 @@ div#tline_text {
     align-items: flex-end;
   }
 
-  // окремі стилі для моб і звич. версій *drozdova
-  .desktop img {
-    max-width: 70%;
-    height: auto;
-    object-fit: contain;
-    //opacity: 0;  //через цей рул вони глючать на першому скролі, не знизу зʼявляються, а fade in
-    transition: opacity 1s ease-out 1s, margin 0.5s;
-    box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
-    pointer-events: none;
-  }
-
-  //картинки в моб версії шириною 100% *drozdova
-  .mobile img {
-    max-width:100%;
-    margin:0 auto 75px auto;
-  }
-
-  .sshot_text {
+  .mobile {
+    padding: 0;
+    margin: 0;
+    display: none;
     box-sizing: border-box;
-    padding: 5rem 0 1em 1em;
-    grid-column: 2 / -1;
-    grid-row: 2;
-    position: sticky;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    background-color: $bgcol;
-    z-index: 7;
-
-    p {
-      ////прибрала прозорість *drozdova
-      //opacity: 0;
-      transition: opacity 1s ease-out;
-      padding: 0 0 2em 0;
-      margin: 0;
+    @media #{$mobile}, #{$max_medium} {
+      display: block !important;
     }
-    //по дефолту ховаємо текст підказок *drozdova
-    #img-2-text, #img-3-text {
-      display:none;
+
+    h3 {
+      padding: 1em !important;
+    }
+
+    #mobile_sshots {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        justify-self: center;
+        box-sizing: border-box;
+        max-width: 550px;
+        padding: 0 0 2em 1em;
+        margin: 0 auto 2em auto;
+        @media #{$mobile} {
+          max-width: 100%;
+        }
+      }
+      p {
+        padding: 0 1em 0 1em;
+      }
+    }
+  }
+
+  .desktop {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    pointer-events: none;
+    @media #{$mobile}, #{$ipad_portrait}, #{$max_medium} {
+      display: none;
+    }
+
+    * {
+      pointer-events: auto;
+    }
+
+    img {
+      max-width: 70%;
+      height: auto;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 1s ease-out 1s, margin 0.5s;
+      box-shadow: 0 0 1em 0.5em rgba(20, 20, 20, 0.5);
+      pointer-events: auto;
+    }
+
+    .sshot_text {
+      box-sizing: border-box;
+      padding: 5rem 0 1em 1em;
+      grid-column: 2 / -1;
+      grid-row: 2;
+      position: sticky;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      background-color: $bgcol;
+      z-index: 7;
+
+      p {
+        opacity: 0.4;
+        transition: opacity 1s ease-out;
+        padding: 0 0 2em 0;
+        margin: 0;
+      }
     }
   }
 }
@@ -470,6 +472,9 @@ div#tline_text {
     padding: 0;
     @media #{$medium} {
       grid-row: 2 / 10;
+    }
+    @media #{$mobile} {
+      position: sticky;
     }
 
     div {
