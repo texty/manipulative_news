@@ -350,7 +350,7 @@ div#tline_text {
         font-size: 0.75em;
         text-anchor: middle; }
     #sites .h3 span {
-      background: linear-gradient(-90deg, #eebeff, #9b00b7); }
+      background: linear-gradient(-90deg, #9b00b7, #eebeff); }
   #sites figure {
     grid-column: 1;
     margin: 0 0 0 1em;
