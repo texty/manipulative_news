@@ -79,6 +79,14 @@ header {
       header h2 {
         text-align: center;
         margin: 0 15% 3em 15%; } }
+  header h6 {
+    font-size: 0.75em;
+    font-weight: normal;
+    margin: 0 1em 2em 1em; }
+    @media screen and (min-width: 577px) {
+      header h6 {
+        text-align: center;
+        margin: 0 15% 0em 15%; } }
 
 svg {
   background-color: #efefef; }

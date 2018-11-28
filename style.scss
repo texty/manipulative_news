@@ -120,6 +120,16 @@ header {
     font-weight: normal;
     margin: 0 1em 2em 1em;
   }
+
+  h6 {
+    @media #{$medium} {
+      text-align: center;
+      margin: 0 15% 0em 15%;
+    }
+    font-size: 0.75em;
+    font-weight: normal;
+    margin: 0 1em 2em 1em;
+  }
 }
 
 svg {
