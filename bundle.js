@@ -894,6 +894,9 @@ var points = {
 
 // Main logic
 d3.json("./labels.json").then(function(data) {
+    const tmap_scroller = scrollama();
+    fullscreen_fig(tmap_scroller);
+
     label_array = data;
     context = canvas.node().getContext("2d");
     // initial screen with scale (k) == 1
@@ -902,8 +905,6 @@ d3.json("./labels.json").then(function(data) {
     canvas
         .call(transition);
 
-    const tmap_scroller = scrollama();
-    fullscreen_fig(tmap_scroller);
     tmap_scroller
         .setup({
             step: '.topic_text',
