@@ -441,17 +441,17 @@ var change_sites_list = {
 var sites_headlines = {
     'm_emo': [
         'Емоційні маніпуляції',
-        '<p>Місце у рейтингу та колір - % емоційно маніпулятивних новин, <span>20% - 100%</span>. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>' +
+        '<p>Місце у рейтингу та колір - % емоційно маніпулятивних новин, <span>20% - 85%</span>. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>' +
         '<p>При гортанні тип рейтингу зміниться</p>'
     ],
     'm_arg': [
         'Маніпулювання аргументами',
-        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи, <span>20% - 100%</span></p>' +
+        '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи, <span>20% - 85%</span></p>' +
         '<p>Колір та місце у рейтингу - % новин з маніпуляцією аргументами. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>'
     ],
     'm_man': [
         'Сумарний рейтинг маніпулятивності',
-        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій, <span>20% - 100%</span></p>' +
+        '<p>За часткою новин, у яких зафіксували одну з маніпуляцій, <span>20% - 85%</span></p>' +
         '<p>Колір та місце у рейтингу - % новин, що містять маніпуляції. Довжина прямокутника - місячна кількість візитів, шкала <a href="https://uk.wikipedia.org/wiki/%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%96%D1%87%D0%BD%D0%B0_%D1%88%D0%BA%D0%B0%D0%BB%D0%B0" target="_blank">log<sub>2</sub></a> <svg></svg></p>'
     ],
     'links_net': [
@@ -825,18 +825,31 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 });
             });
         } else {
-            var mob_table = d3.select('table#mobile_ranking');
-            var mob_rows = mob_table.selectAll('tr.site_row')
+            var mob_table = d3.select('figure#mobile_ranking');
+            var mob_rows = mob_table.selectAll('p.site_row')
                 .data(data)
                 .enter()
-                .append('tr')
+                .append('p')
                 .classed('site_row', true);
 
-            mob_rows.selectAll('td')
-                .data(function (d) {
-                    debugger;
-                    Object.values(d);
+            var mob_scale_audience = d3.scaleLog()
+                .base(2)
+                .domain( d3.extent(mob_rows.data(), function (d) { return d.ukr_audience }) )
+                .range([5, 100]);
+
+            var mob_spans = mob_rows.append('span')
+                .text(function (d) { return d.comment || d.url_domain });
+
+            var mob_row_w = calc_site_h();
+            mob_spans
+                .style('display', 'block')
+                .style('width', `${mob_row_w}px`)
+                .style('background-image', function (d) {
+                    
+                    var point = mob_scale_audience(d.ukr_audience);
+                    return `linear-gradient(to right, ${man_scale(1 - d.norm_pers)} ${point}%, transparent ${point}%)`;
                 })
+
         }
 
         
@@ -870,6 +883,29 @@ var calc_site_w = function () {
         i++;
     }
     return ws - +$('#sites_list div.site').css('padding-left').match(/[0-9\.]+/)[0] * 2;
+};
+
+var calc_site_h = function () {
+    var $ps = $('#sites_mobile p.site_row');
+    var current_fs = +$ps.css('font-size').replace(/[^0-9\.]+/, '');
+
+    var is_one_line = $ps.get().every(function(el) {
+        return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
+    });
+
+    while (! is_one_line) {
+        $ps.css('font-size', `${current_fs - 1}px`);
+        current_fs -= 1;
+        is_one_line = $ps.get().every(function(el) {
+            return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
+        });
+    }
+    var ws = [];
+    $ps.find('span').each( function() {
+        ws.push( $(this).width() );
+    });
+    ws = d3.max(ws);
+    return ws;
 };
 
 // --- Topic map ------------------------------------------------------------------------------------------------------

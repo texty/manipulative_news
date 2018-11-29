@@ -658,7 +658,20 @@ div#tline_text {
     display: block !important;
   }
 
+  figure {
+    margin: 0;
+    padding: 0;
 
+    p.site_row {
+      font-size: 0.9em;
+      margin: 0.5em 3em 0.5em 3em;
+      line-height: 1.25;
+
+      span {
+        background-color: transparent;
+      }
+    }
+  }
 }
 
 .tippy-popper {

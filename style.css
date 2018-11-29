@@ -464,6 +464,15 @@ div#tline_text {
   @media screen and (max-width: 577px) {
     #sites_mobile {
       display: block !important; } }
+  #sites_mobile figure {
+    margin: 0;
+    padding: 0; }
+    #sites_mobile figure p.site_row {
+      font-size: 0.9em;
+      margin: 0.5em 3em 0.5em 3em;
+      line-height: 1.25; }
+      #sites_mobile figure p.site_row span {
+        background-color: transparent; }
 
 .tippy-popper div.tippy-tooltip {
   color: #22232f;

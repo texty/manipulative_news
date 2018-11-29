@@ -824,18 +824,31 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 });
             });
         } else {
-            var mob_table = d3.select('table#mobile_ranking');
-            var mob_rows = mob_table.selectAll('tr.site_row')
+            var mob_table = d3.select('figure#mobile_ranking');
+            var mob_rows = mob_table.selectAll('p.site_row')
                 .data(data)
                 .enter()
-                .append('tr')
+                .append('p')
                 .classed('site_row', true);
 
-            mob_rows.selectAll('td')
-                .data(function (d) {
-                    debugger;
-                    Object.values(d);
+            var mob_scale_audience = d3.scaleLog()
+                .base(2)
+                .domain( d3.extent(mob_rows.data(), function (d) { return d.ukr_audience }) )
+                .range([5, 100]);
+
+            var mob_spans = mob_rows.append('span')
+                .text(function (d) { return d.comment || d.url_domain });
+
+            var mob_row_w = calc_site_h();
+            mob_spans
+                .style('display', 'block')
+                .style('width', `${mob_row_w}px`)
+                .style('background-image', function (d) {
+                    
+                    var point = mob_scale_audience(d.ukr_audience);
+                    return `linear-gradient(to right, ${man_scale(1 - d.norm_pers)} ${point}%, transparent ${point}%)`;
                 })
+
         }
 
         
@@ -869,6 +882,29 @@ var calc_site_w = function () {
         i++;
     }
     return ws - +$('#sites_list div.site').css('padding-left').match(/[0-9\.]+/)[0] * 2;
+};
+
+var calc_site_h = function () {
+    var $ps = $('#sites_mobile p.site_row');
+    var current_fs = +$ps.css('font-size').replace(/[^0-9\.]+/, '');
+
+    var is_one_line = $ps.get().every(function(el) {
+        return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
+    });
+
+    while (! is_one_line) {
+        $ps.css('font-size', `${current_fs - 1}px`);
+        current_fs -= 1;
+        is_one_line = $ps.get().every(function(el) {
+            return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
+        });
+    }
+    var ws = [];
+    $ps.find('span').each( function() {
+        ws.push( $(this).width() );
+    });
+    ws = d3.max(ws);
+    return ws;
 };
 
 // --- Topic map ------------------------------------------------------------------------------------------------------
