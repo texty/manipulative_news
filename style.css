@@ -332,7 +332,7 @@ div#tline_text {
   grid-template-columns: 2fr 1fr; }
   @media screen and (max-width: 577px) {
     #sites {
-      grid-template-columns: 1fr; } }
+      display: none !important; } }
   #sites .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
@@ -458,6 +458,12 @@ div#tline_text {
     flex-direction: column;
     justify-content: center;
     padding: 1.5em 1em 1.5em 1em; }
+
+#sites_mobile {
+  display: none; }
+  @media screen and (max-width: 577px) {
+    #sites_mobile {
+      display: block !important; } }
 
 .tippy-popper div.tippy-tooltip {
   color: #22232f;
