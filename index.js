@@ -1027,13 +1027,13 @@ var calc_site_h = function () {
         return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
     });
 
-    while (! is_one_line) {
-        $ps.css('font-size', `${current_fs - 1}px`);
-        current_fs -= 1;
-        is_one_line = $ps.get().every(function(el) {
-            return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
-        });
-    }
+    // while (! is_one_line) {
+    //     $ps.css('font-size', `${current_fs - 1}px`);
+    //     current_fs -= 1;
+    //     is_one_line = $ps.get().every(function(el) {
+    //         return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
+    //     });
+    // }
     var ws = [];
     $ps.find('span').each( function() {
         ws.push( $(this).width() );
