@@ -332,7 +332,7 @@ div#tline_text {
   grid-template-columns: 2fr 1fr; }
   @media screen and (max-width: 577px) {
     #sites {
-      grid-template-columns: 1fr; } }
+      display: none !important; } }
   #sites .h3 {
     grid-row: 1 / 2;
     grid-column: 1 / -1;
@@ -458,6 +458,78 @@ div#tline_text {
     flex-direction: column;
     justify-content: center;
     padding: 1.5em 1em 1.5em 1em; }
+
+#sites_mobile {
+  display: none; }
+  @media screen and (max-width: 577px) {
+    #sites_mobile {
+      display: block !important; } }
+  #sites_mobile figure {
+    margin: 0;
+    padding: 0; }
+    #sites_mobile figure #mob_pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1em 1em 1em 1.5em; }
+      #sites_mobile figure #mob_pagination a {
+        padding: 0.75em;
+        line-height: 0.5;
+        text-decoration: none;
+        background-color: #dddddd;
+        transition: background-color 0.2s;
+        font-size: 0.85em; }
+      #sites_mobile figure #mob_pagination a.active {
+        background-color: #bcbcbc; }
+    #sites_mobile figure #mobrank_header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 1em;
+      margin: 1em 1em 1em 1.5em; }
+      #sites_mobile figure #mobrank_header p {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase; }
+        #sites_mobile figure #mobrank_header p svg {
+          display: inline-flex;
+          height: 2em;
+          background: transparent;
+          overflow: visible; }
+          #sites_mobile figure #mobrank_header p svg line {
+            stroke: #585a79; }
+          #sites_mobile figure #mobrank_header p svg text {
+            fill: #22232f;
+            font-size: 0.75em;
+            text-anchor: middle; }
+        #sites_mobile figure #mobrank_header p span {
+          background: linear-gradient(-90deg, #9b00b7, #eebeff); }
+      #sites_mobile figure #mobrank_header p:last-of-type {
+        text-transform: none; }
+      #sites_mobile figure #mobrank_header button, #sites_mobile figure #mobrank_header a {
+        font-size: 0.85em;
+        background-color: #dddddd;
+        border: none;
+        border-radius: 0;
+        padding: 0.75em 0 0.75em 0;
+        text-transform: uppercase; }
+      #sites_mobile figure #mobrank_header .active {
+        background-color: #bcbcbc; }
+    #sites_mobile figure #mob_rank {
+      padding: 1em 0 1em 0; }
+      #sites_mobile figure #mob_rank p.site_row {
+        font-size: 0.9em;
+        margin: 0.5em 1.5em 0.5em 1.5em;
+        line-height: 1.25;
+        transition: all 0.5s; }
+        #sites_mobile figure #mob_rank p.site_row span {
+          background-color: transparent; }
+  #sites_mobile .sites_step, #sites_mobile h3 {
+    margin: 1em 1em 0 1em;
+    box-sizing: border-box; }
+    #sites_mobile .sites_step #go_to_desktop, #sites_mobile h3 #go_to_desktop {
+      font-style: italic; }
 
 .tippy-popper div.tippy-tooltip {
   color: #22232f;
