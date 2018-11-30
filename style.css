@@ -492,6 +492,21 @@ div#tline_text {
         margin: 0;
         padding: 0;
         text-transform: uppercase; }
+        #sites_mobile figure #mobrank_header p svg {
+          display: inline-flex;
+          height: 2em;
+          background: transparent;
+          overflow: visible; }
+          #sites_mobile figure #mobrank_header p svg line {
+            stroke: #585a79; }
+          #sites_mobile figure #mobrank_header p svg text {
+            fill: #22232f;
+            font-size: 0.75em;
+            text-anchor: middle; }
+        #sites_mobile figure #mobrank_header p span {
+          background: linear-gradient(-90deg, #9b00b7, #eebeff); }
+      #sites_mobile figure #mobrank_header p:last-of-type {
+        text-transform: none; }
       #sites_mobile figure #mobrank_header button, #sites_mobile figure #mobrank_header a {
         font-size: 0.85em;
         background-color: #dddddd;

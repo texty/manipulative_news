@@ -940,6 +940,37 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 sort_rows();
             });
 
+            var size_legend = d3.select('#mobrank_header svg');
+            var site_w = $('#mob_rank span').width();
+
+            size_legend.attr('width', site_w * 1.01)
+                .append('line')
+                .attr('x1', 0)
+                .attr('x2', site_w)
+                .attr('y1', '2em')
+                .attr('y2', '2em');
+
+            var legend_gs = size_legend.selectAll('g')
+                .data([10000, 100000, 1000000, 3000000, 12000000])
+                .enter()
+                .append('g')
+                .attr('transform', function (d) {
+                    return `translate(${site_w*mob_scale_audience(d) / 100}, ${+$(this).closest('p').css('font-size').match(/[0-9\.]+/)[0]*1.5})`
+                });
+
+            legend_gs
+                .append('line')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', '0.5em')
+                .attr('y2', '0')
+                .style('stroke', font_col);
+
+            legend_gs.append('text')
+                .attr('x', 0)
+                .attr('y', '-1px')
+                .text(function (d) { return d3.format(".1s")(d) });
+
             var tippy_tip;
 
             $(function () {

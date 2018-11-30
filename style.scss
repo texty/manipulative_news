@@ -695,6 +695,31 @@ div#tline_text {
         margin: 0;
         padding: 0;
         text-transform: uppercase;
+
+        svg {
+          display: inline-flex;
+          height: 2em;
+          background: transparent;
+          overflow: visible;
+
+          line {
+            stroke: lighten($fontcol, 25%);
+          }
+
+          text {
+            fill: $fontcol;
+            font-size: 0.75em;
+            text-anchor: middle;
+          }
+        }
+
+        span {
+          background: linear-gradient(-90deg, #9b00b7, #eebeff);
+        }
+      }
+
+      p:last-of-type {
+        text-transform: none;
       }
 
       button, a {
