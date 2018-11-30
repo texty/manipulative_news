@@ -662,14 +662,78 @@ div#tline_text {
     margin: 0;
     padding: 0;
 
-    p.site_row {
-      font-size: 0.9em;
-      margin: 0.5em 3em 0.5em 3em;
-      line-height: 1.25;
+    #mob_pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1em 1em 1em 1.5em;
 
-      span {
-        background-color: transparent;
+      a {
+        padding: 0.75em;
+        line-height: 0.5;
+        text-decoration: none;
+        background-color: darken($bgcol, 7%);
+        transition: background-color 0.2s;
+        font-size: 0.85em;
       }
+
+      a.active {
+        background-color: darken($bgcol, 20%);
+        //font-weight: 600;
+      }
+    }
+
+    #mobrank_header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 1em;
+      margin: 1em 1em 1em 1.5em;
+
+      p {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+      }
+
+      button, a {
+        font-size: 0.85em;
+        background-color: darken($bgcol, 7%);
+        border: none;
+        border-radius: 0;
+        padding: 0.75em 0 0.75em 0;
+        text-transform: uppercase;
+      }
+
+      .active {
+        background-color: darken($bgcol, 20%);
+      }
+
+    }
+
+    #mob_rank {
+      padding: 1em 0 1em 0;
+
+      p.site_row {
+        font-size: 0.9em;
+        margin: 0.5em 1.5em 0.5em 1.5em;
+        line-height: 1.25;
+        transition: all 0.5s;
+
+        span {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .sites_step, h3 {
+    margin: 1em 1em 0 1em;
+    box-sizing: border-box;
+
+    #go_to_desktop {
+      font-style: italic;
     }
   }
 }

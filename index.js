@@ -824,7 +824,33 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 });
             });
         } else {
-            var mob_table = d3.select('figure#mobile_ranking');
+            var mob_table = d3.select('figure#mobile_ranking #mob_rank');
+
+            var mob_paging = d3.select('figure#mobile_ranking #mob_pagination');
+            var page_links = mob_paging.selectAll('a')
+                .data(['<<',1,2,3,4,5,6,'>>'])
+                .enter()
+                .append('a')
+                .classed('page_n', true)
+                .text(function (d) { return d; });
+
+            page_links.filter(function () { return !this.innerText.match(/\d/); })
+                .classed('paging_nav', true)
+                .classed('page_n', false)
+                .on('click', function (d) {
+                    var $current_page = $('#mob_pagination a.active');
+                    if (d === '<<' && $current_page.text() !== '1' ) {
+                        $current_page.removeClass('active').prev().addClass('active');
+                    } else if (d === '>>' && $current_page.text() !== '6') {
+                        $current_page.removeClass('active').next().addClass('active')
+                    }
+                    show_page_rows()
+                });
+
+            var num_page_links = d3.selectAll('#mob_pagination a.page_n');
+            num_page_links.filter(function (d) { return d === 1 })
+                .classed('active', true);
+
             var mob_rows = mob_table.selectAll('p.site_row')
                 .data(data)
                 .enter()
@@ -844,10 +870,88 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                 .style('display', 'block')
                 .style('width', `${mob_row_w}px`)
                 .style('background-image', function (d) {
-                    
                     var point = mob_scale_audience(d.ukr_audience);
                     return `linear-gradient(to right, ${man_scale(1 - d.norm_pers)} ${point}%, transparent ${point}%)`;
-                })
+                });
+            
+            var show_page_rows = function () {
+                mob_rows
+                    .style('display', 'none')
+                    .filter(function (d, i) {
+                        var page = +$('#mob_pagination a.active').text();
+                        return i < page*15 && i >= page*15 - 15;
+                    })
+                    .style('display', 'block')
+            };
+
+            show_page_rows();
+            $('#mob_rank').css('min-height', function () { return this.offsetHeight });
+            
+            num_page_links.on('click', function (d) {
+                d3.select('#mob_pagination a.active')
+                    .classed('active', false);
+                
+                d3.select(this)
+                    .classed('active', true);
+                show_page_rows();
+            });
+
+            var sort_rows = function () {
+
+                var field = $('#mobrank_header button.active').attr('id');
+                mob_rows = mob_rows.sort(function (a, b) {
+                    if (field === 'norm_pers') {
+                        return (a[field] > b[field]) ? 1 : -1;
+                    } else {
+                        return (a[field] < b[field]) ? 1 : -1;
+                    }
+                });
+                
+                mob_rows
+                    .style('display', 'none')
+                    .selectAll('span')
+                    .style('background-image', function (d) {
+                        var point = mob_scale_audience(d.ukr_audience);
+                        var val = (field === 'norm_pers') ? 1 - d[field] : d[field];
+                        return `linear-gradient(to right, ${man_scale(val)} ${point}%, transparent ${point}%)`;
+                    })
+                    .attr('data-tippy-content', function (d) {
+                        var name_man;
+                        if (field === 'emo_pers') {
+                            name_man = 'Новин, що маніпулюють емоціями';
+                        } else if (field === 'arg_pers') {
+                            name_man = 'Новин, що маніпулюють аргументами';
+                        } else {
+                            name_man = 'Новин, що містять маніпуляції';
+                        }
+                        return `<h6>${d.comment || d.url_domain}</h6>
+                            <p>Візитів на місяць: ${d3.format(".2s")(d.ukr_audience)}</p>
+                            <p>${name_man}: ${d3.format(".2%")((field === 'norm_pers') ? 1 - d[field] : d[field])}</p>`;
+                    });
+
+                $('#mob_pagination .page_n').removeClass('active').first().addClass('active');
+                show_page_rows();
+            };
+
+            sort_rows();
+            $('#mobrank_header button').on('click', function () {
+                $('#mobrank_header button').removeClass('active');
+                $(this).addClass('active');
+                sort_rows();
+            });
+
+            var tippy_tip;
+
+            $(function () {
+                tippy_tip = tippy(document.querySelectorAll('.site_row span'), {
+                    animation: 'fade',
+                    placement: 'right',
+                    onShow(tip) {
+                        tip.setContent(tip.reference.getAttribute('data-tippy-content'))
+                    }
+                });
+            });
+            
 
         }
 
