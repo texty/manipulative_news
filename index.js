@@ -487,22 +487,22 @@ sshot_scroller
 
 // Ranking
 
-Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.csv('site_links_edges.csv')])
-    .then(function ([data, target_only_nodes, site_links]) {
-        data.forEach(function (d, i) {
-            for (var pr in d) {
-                if ( d[pr].search(/[^0-9\.]/) === -1 ) {
-                    d[pr] = +d[pr];
+if (window.innerWidth > 576) {
+    Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.csv('site_links_edges.csv')])
+        .then(function ([data, target_only_nodes, site_links]) {
+            data.forEach(function (d, i) {
+                for (var pr in d) {
+                    if (d[pr].search(/[^0-9\.]/) === -1) {
+                        d[pr] = +d[pr];
+                    }
                 }
-            }
-            d.ukr_audience = (d.ukr_audience > 0) ? d.ukr_audience : 10000;
-        });
-        target_only_nodes = target_only_nodes.split('\n');
-        site_links.forEach(function (d) {
-            d.weight = +d.weight;
-        });
-        
-        if (window.innerWidth > 576) {
+                d.ukr_audience = (d.ukr_audience > 0) ? d.ukr_audience : 10000;
+            });
+            target_only_nodes = target_only_nodes.split('\n');
+            site_links.forEach(function (d) {
+                d.weight = +d.weight;
+            });
+
             var site_divs = sites_list
                 .style('height', function () { return $(this).css('min-height') })
                 .selectAll('div.site')
@@ -535,7 +535,7 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
             var site_w = calc_site_w(site_divs);
 
             // target_only_sites
-            // .style('display', 'none');      
+            // .style('display', 'none');
 
             var scale_audience = d3.scaleLog()
                 .base(2)
@@ -823,171 +823,183 @@ Promise.all([d3.csv('results201118.csv'), d3.text('site_links_targets.txt'), d3.
                     }
                 });
             });
-        } else {
-            var mob_table = d3.select('figure#mobile_ranking #mob_rank');
+        });
+} else {
+    d3.csv('results201118.csv').then(function (data) {
+        data.forEach(function (d, i) {
+            for (var pr in d) {
+                if ( d[pr].search(/[^0-9\.]/) === -1 ) {
+                    d[pr] = +d[pr];
+                }
+            }
+            d.ukr_audience = (d.ukr_audience > 0) ? d.ukr_audience : 10000;
+        });
 
-            var mob_paging = d3.select('figure#mobile_ranking #mob_pagination');
-            var page_links = mob_paging.selectAll('a')
-                .data(['<<',1,2,3,4,5,6,'>>'])
-                .enter()
-                .append('a')
-                .classed('page_n', true)
-                .text(function (d) { return d; });
+        var mob_table = d3.select('figure#mobile_ranking #mob_rank');
 
-            page_links.filter(function () { return !this.innerText.match(/\d/); })
-                .classed('paging_nav', true)
-                .classed('page_n', false)
-                .on('click', function (d) {
-                    var $current_page = $('#mob_pagination a.active');
-                    if (d === '<<' && $current_page.text() !== '1' ) {
-                        $current_page.removeClass('active').prev().addClass('active');
-                    } else if (d === '>>' && $current_page.text() !== '6') {
-                        $current_page.removeClass('active').next().addClass('active')
-                    }
-                    show_page_rows()
-                });
+        var mob_paging = d3.select('figure#mobile_ranking #mob_pagination');
+        var page_links = mob_paging.selectAll('a')
+            .data(['<<',1,2,3,4,5,6,'>>'])
+            .enter()
+            .append('a')
+            .classed('page_n', true)
+            .text(function (d) { return d; });
 
-            var num_page_links = d3.selectAll('#mob_pagination a.page_n');
-            num_page_links.filter(function (d) { return d === 1 })
-                .classed('active', true);
+        page_links.filter(function () { return !this.innerText.match(/\d/); })
+            .classed('paging_nav', true)
+            .classed('page_n', false)
+            .on('click', function (d) {
+                var $current_page = $('#mob_pagination a.active');
+                if (d === '<<' && $current_page.text() !== '1' ) {
+                    $current_page.removeClass('active').prev().addClass('active');
+                } else if (d === '>>' && $current_page.text() !== '6') {
+                    $current_page.removeClass('active').next().addClass('active')
+                }
+                show_page_rows()
+            });
 
-            var mob_rows = mob_table.selectAll('p.site_row')
-                .data(data)
-                .enter()
-                .append('p')
-                .classed('site_row', true);
+        var num_page_links = d3.selectAll('#mob_pagination a.page_n');
+        num_page_links.filter(function (d) { return d === 1 })
+            .classed('active', true);
 
-            var mob_scale_audience = d3.scaleLog()
-                .base(2)
-                .domain( d3.extent(mob_rows.data(), function (d) { return d.ukr_audience }) )
-                .range([5, 100]);
+        var mob_rows = mob_table.selectAll('p.site_row')
+            .data(data)
+            .enter()
+            .append('p')
+            .classed('site_row', true);
 
-            var mob_spans = mob_rows.append('span')
-                .text(function (d) { return d.comment || d.url_domain });
+        var mob_scale_audience = d3.scaleLog()
+            .base(2)
+            .domain( d3.extent(mob_rows.data(), function (d) { return d.ukr_audience }) )
+            .range([5, 100]);
 
-            var mob_row_w = calc_site_h();
-            mob_spans
+        var mob_spans = mob_rows.append('span')
+            .text(function (d) { return d.comment || d.url_domain });
+
+        var mob_row_w = [];
+        mob_spans.each( function() {
+            mob_row_w.push( $(this).width() );
+        });
+        mob_row_w = d3.max(mob_row_w);
+
+        mob_spans
+            .style('display', 'block')
+            .style('width', `${mob_row_w}px`)
+            .style('background-image', function (d) {
+                var point = mob_scale_audience(d.ukr_audience);
+                return `linear-gradient(to right, ${man_scale(1 - d.norm_pers)} ${point}%, transparent ${point}%)`;
+            });
+
+        var show_page_rows = function () {
+            mob_rows
+                .style('display', 'none')
+                .filter(function (d, i) {
+                    var page = +$('#mob_pagination a.active').text();
+                    return i < page*15 && i >= page*15 - 15;
+                })
                 .style('display', 'block')
-                .style('width', `${mob_row_w}px`)
+        };
+
+        show_page_rows();
+        $('#mob_rank').css('min-height', function () { return this.offsetHeight });
+
+        num_page_links.on('click', function (d) {
+            d3.select('#mob_pagination a.active')
+                .classed('active', false);
+
+            d3.select(this)
+                .classed('active', true);
+            show_page_rows();
+        });
+
+        var sort_rows = function () {
+
+            var field = $('#mobrank_header button.active').attr('id');
+            mob_rows = mob_rows.sort(function (a, b) {
+                if (field === 'norm_pers') {
+                    return (a[field] > b[field]) ? 1 : -1;
+                } else {
+                    return (a[field] < b[field]) ? 1 : -1;
+                }
+            });
+
+            mob_rows
+                .style('display', 'none')
+                .selectAll('span')
                 .style('background-image', function (d) {
                     var point = mob_scale_audience(d.ukr_audience);
-                    return `linear-gradient(to right, ${man_scale(1 - d.norm_pers)} ${point}%, transparent ${point}%)`;
-                });
-            
-            var show_page_rows = function () {
-                mob_rows
-                    .style('display', 'none')
-                    .filter(function (d, i) {
-                        var page = +$('#mob_pagination a.active').text();
-                        return i < page*15 && i >= page*15 - 15;
-                    })
-                    .style('display', 'block')
-            };
-
-            show_page_rows();
-            $('#mob_rank').css('min-height', function () { return this.offsetHeight });
-            
-            num_page_links.on('click', function (d) {
-                d3.select('#mob_pagination a.active')
-                    .classed('active', false);
-                
-                d3.select(this)
-                    .classed('active', true);
-                show_page_rows();
-            });
-
-            var sort_rows = function () {
-
-                var field = $('#mobrank_header button.active').attr('id');
-                mob_rows = mob_rows.sort(function (a, b) {
-                    if (field === 'norm_pers') {
-                        return (a[field] > b[field]) ? 1 : -1;
+                    var val = (field === 'norm_pers') ? 1 - d[field] : d[field];
+                    return `linear-gradient(to right, ${man_scale(val)} ${point}%, transparent ${point}%)`;
+                })
+                .attr('data-tippy-content', function (d) {
+                    var name_man;
+                    if (field === 'emo_pers') {
+                        name_man = 'Новин, що маніпулюють емоціями';
+                    } else if (field === 'arg_pers') {
+                        name_man = 'Новин, що маніпулюють аргументами';
                     } else {
-                        return (a[field] < b[field]) ? 1 : -1;
+                        name_man = 'Новин, що містять маніпуляції';
                     }
-                });
-                
-                mob_rows
-                    .style('display', 'none')
-                    .selectAll('span')
-                    .style('background-image', function (d) {
-                        var point = mob_scale_audience(d.ukr_audience);
-                        var val = (field === 'norm_pers') ? 1 - d[field] : d[field];
-                        return `linear-gradient(to right, ${man_scale(val)} ${point}%, transparent ${point}%)`;
-                    })
-                    .attr('data-tippy-content', function (d) {
-                        var name_man;
-                        if (field === 'emo_pers') {
-                            name_man = 'Новин, що маніпулюють емоціями';
-                        } else if (field === 'arg_pers') {
-                            name_man = 'Новин, що маніпулюють аргументами';
-                        } else {
-                            name_man = 'Новин, що містять маніпуляції';
-                        }
-                        return `<h6>${d.comment || d.url_domain}</h6>
+                    return `<h6>${d.comment || d.url_domain}</h6>
                             <p>Візитів на місяць: ${d3.format(".2s")(d.ukr_audience)}</p>
                             <p>${name_man}: ${d3.format(".2%")((field === 'norm_pers') ? 1 - d[field] : d[field])}</p>`;
-                    });
+                });
 
-                $('#mob_pagination .page_n').removeClass('active').first().addClass('active');
-                show_page_rows();
-            };
+            $('#mob_pagination .page_n').removeClass('active').first().addClass('active');
+            show_page_rows();
+        };
 
+        sort_rows();
+        $('#mobrank_header button').on('click', function () {
+            $('#mobrank_header button').removeClass('active');
+            $(this).addClass('active');
             sort_rows();
-            $('#mobrank_header button').on('click', function () {
-                $('#mobrank_header button').removeClass('active');
-                $(this).addClass('active');
-                sort_rows();
+        });
+
+        var size_legend = d3.select('#mobrank_header svg');
+        var site_w = $('#mob_rank span').width();
+
+        size_legend.attr('width', site_w * 1.01)
+            .append('line')
+            .attr('x1', 0)
+            .attr('x2', site_w)
+            .attr('y1', '2em')
+            .attr('y2', '2em');
+
+        var legend_gs = size_legend.selectAll('g')
+            .data([10000, 100000, 1000000, 3000000, 12000000])
+            .enter()
+            .append('g')
+            .attr('transform', function (d) {
+                return `translate(${site_w*mob_scale_audience(d) / 100}, ${+$(this).closest('p').css('font-size').match(/[0-9\.]+/)[0]*1.5})`
             });
 
-            var size_legend = d3.select('#mobrank_header svg');
-            var site_w = $('#mob_rank span').width();
+        legend_gs
+            .append('line')
+            .attr('x1', 0)
+            .attr('x2', 0)
+            .attr('y1', '0.5em')
+            .attr('y2', '0')
+            .style('stroke', font_col);
 
-            size_legend.attr('width', site_w * 1.01)
-                .append('line')
-                .attr('x1', 0)
-                .attr('x2', site_w)
-                .attr('y1', '2em')
-                .attr('y2', '2em');
+        legend_gs.append('text')
+            .attr('x', 0)
+            .attr('y', '-1px')
+            .text(function (d) { return d3.format(".1s")(d) });
 
-            var legend_gs = size_legend.selectAll('g')
-                .data([10000, 100000, 1000000, 3000000, 12000000])
-                .enter()
-                .append('g')
-                .attr('transform', function (d) {
-                    return `translate(${site_w*mob_scale_audience(d) / 100}, ${+$(this).closest('p').css('font-size').match(/[0-9\.]+/)[0]*1.5})`
-                });
+        var tippy_tip;
 
-            legend_gs
-                .append('line')
-                .attr('x1', 0)
-                .attr('x2', 0)
-                .attr('y1', '0.5em')
-                .attr('y2', '0')
-                .style('stroke', font_col);
-
-            legend_gs.append('text')
-                .attr('x', 0)
-                .attr('y', '-1px')
-                .text(function (d) { return d3.format(".1s")(d) });
-
-            var tippy_tip;
-
-            $(function () {
-                tippy_tip = tippy(document.querySelectorAll('.site_row span'), {
-                    animation: 'fade',
-                    placement: 'right',
-                    onShow(tip) {
-                        tip.setContent(tip.reference.getAttribute('data-tippy-content'))
-                    }
-                });
+        $(function () {
+            tippy_tip = tippy(document.querySelectorAll('.site_row span'), {
+                animation: 'fade',
+                placement: 'right',
+                onShow(tip) {
+                    tip.setContent(tip.reference.getAttribute('data-tippy-content'))
+                }
             });
-            
-
-        }
-
-        
-    });
+        });
+    })
+}
 
 $(window).resize( function() { fullscreen_fig() } );
 
@@ -1017,29 +1029,6 @@ var calc_site_w = function () {
         i++;
     }
     return ws - +$('#sites_list div.site').css('padding-left').match(/[0-9\.]+/)[0] * 2;
-};
-
-var calc_site_h = function () {
-    var $ps = $('#sites_mobile p.site_row');
-    var current_fs = +$ps.css('font-size').replace(/[^0-9\.]+/, '');
-
-    var is_one_line = $ps.get().every(function(el) {
-        return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
-    });
-
-    // while (! is_one_line) {
-    //     $ps.css('font-size', `${current_fs - 1}px`);
-    //     current_fs -= 1;
-    //     is_one_line = $ps.get().every(function(el) {
-    //         return +$(el).css('line-height').match(/[0-9\.]+/)[0] === $(el).height();
-    //     });
-    // }
-    var ws = [];
-    $ps.find('span').each( function() {
-        ws.push( $(this).width() );
-    });
-    ws = d3.max(ws);
-    return ws;
 };
 
 // --- Topic map ------------------------------------------------------------------------------------------------------
@@ -1227,4 +1216,7 @@ $( document ).ready( function() {
                 .css('background-color', '')
                 .css('z-index', 6);
         });
+    window.addEventListener('scroll', function () {
+        tippy.hideAllPoppers();
+    })
 });

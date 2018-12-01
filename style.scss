@@ -402,7 +402,7 @@ div#tline_text {
         justify-self: center;
         box-sizing: border-box;
         max-width: 550px;
-        padding: 0 0 2em 1em;
+        padding: 0 1em 2em 1em;
         margin: 0 auto 2em auto;
         @media #{$mobile} {
           max-width: 100%;
@@ -661,12 +661,14 @@ div#tline_text {
   figure {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 
     #mob_pagination {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 1em 1em 1em 1.5em;
+      box-sizing: border-box;
 
       a {
         padding: 0.75em;
@@ -688,6 +690,7 @@ div#tline_text {
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 1em;
       margin: 1em 1em 1em 1.5em;
+      box-sizing: border-box;
 
       p {
         grid-column: 1 / -1;
@@ -723,6 +726,7 @@ div#tline_text {
       }
 
       button, a {
+        box-sizing: border-box;
         font-size: 0.85em;
         background-color: darken($bgcol, 7%);
         border: none;
