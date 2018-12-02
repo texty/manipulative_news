@@ -1028,10 +1028,10 @@ if (window.innerWidth > 576) {
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     // sliding horizontally
                     var $current_page = $('#mob_pagination a.active');
-                    if (diffX > 0 && $current_page.text() !== '6') {
-                        $current_page.removeClass('active').next().addClass('active');
-                    } else if (!(diffX > 0) && $current_page.text() !== '1') {
+                    if (diffX > 0 && $current_page.text() !== '1') {
                         $current_page.removeClass('active').prev().addClass('active');
+                    } else if (!(diffX > 0) && $current_page.text() !== '6') {
+                        $current_page.removeClass('active').next().addClass('active');
                     }
                     show_page_rows();
                 } else {
