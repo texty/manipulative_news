@@ -1,12 +1,12 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-var $ = require("jquery");
+const $ = require("jquery");
 require('intersection-observer');
 const scrollama = require('scrollama');
 const d3 = require('d3');
 const chroma = require('chroma-js');
 const tippy = require('tippy.js');
 
-var man_scale = chroma
+const man_scale = chroma
     .scale(['#eebeff', '#9b00b7'])
     .mode('hsl')
     .domain([0.2, 1]);
@@ -998,6 +998,52 @@ if (window.innerWidth > 576) {
                     tip.setContent(tip.reference.getAttribute('data-tippy-content'))
                 }
             });
+
+            document.getElementById('mob_rank').addEventListener("touchstart", startTouch, false);
+            document.getElementById('mob_rank').addEventListener("touchmove", moveTouch, false);
+
+            var initialX = null;
+            var initialY = null;
+
+            function startTouch(e) {
+                initialX = e.touches[0].clientX;
+                initialY = e.touches[0].clientY;
+            }
+
+            function moveTouch(e) {
+                if (initialX === null) {
+                    return;
+                }
+
+                if (initialY === null) {
+                    return;
+                }
+
+                var currentX = e.touches[0].clientX;
+                var currentY = e.touches[0].clientY;
+
+                var diffX = initialX - currentX;
+                var diffY = initialY - currentY;
+
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // sliding horizontally
+                    var $current_page = $('#mob_pagination a.active');
+                    if (diffX > 0 && $current_page.text() !== '1') {
+                        $current_page.removeClass('active').prev().addClass('active');
+                    } else if (!(diffX > 0) && $current_page.text() !== '6') {
+                        $current_page.removeClass('active').next().addClass('active');
+                    }
+                    show_page_rows();
+                } else {
+                    return;
+                }
+
+                initialX = null;
+                initialY = null;
+
+                e.preventDefault();
+            }
+
         });
     })
 }

@@ -667,7 +667,7 @@ div#tline_text {
 #sites_mobile figure #mobrank_header p:last-of-type {
   text-transform: none;
 }
-#sites_mobile figure #mobrank_header button, #sites_mobile figure #mobrank_header a {
+#sites_mobile figure #mobrank_header button, #sites_mobile figure #mobrank_header #mob_pagination a {
   box-sizing: border-box;
   font-size: 0.85em;
   background-color: #dddddd;
