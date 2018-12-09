@@ -1,4 +1,6 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+// sass style.scss style.css && browserify index.js -o bundle.js && postcss style.css -o style_prefixed.css --use autoprefixer
+// sass for win only - if no normal watcher
 const $ = require("jquery");
 require('intersection-observer');
 const scrollama = require('scrollama');
@@ -102,8 +104,6 @@ var fullscreen_fig = function (scroller=null) {
 
     if (scroller == null) {} else { scroller.resize() }
 };
-
-// var stickyfill = Stickyfill();
 
 // Timeline
 
@@ -411,32 +411,6 @@ var change_sites_list = {
     'm_arg': 'arg_pers',
     'm_man': 'norm_pers'
 };
-
-// var sites_headlines = {
-//     'm_emo': [
-//         'Емоційні маніпуляції',
-//         '<p>Колір та місце у рейтингу - % емоційно маніпулятивних новин. Довжина прямокутника - місячна кількість візитів, логарифмічна шкала з основою = 2</p>' +
-//         '<p>При гортанні тип рейтингу зміниться</p>'
-//     ],
-//     'm_arg': [
-//         'Маніпулювання аргументами',
-//         '<p>Рейтинг сайтів за часкою новин, що містять хибні аргументи</p>' +
-//         '<p>Колір та місце у рейтингу - % новин з маніпуляцією аргументами. Довжина прямокутника - місячна кількість візитів, логарифмічна шкала з основою = 2</p>'
-//     ],
-//     'm_man': [
-//         'Сумарний рейтинг маніпулятивності',
-//         '<p>За часткою новин, у яких зафіксували одну з маніпуляцій</p>' +
-//         '<p>Колір та місце у рейтингу - % новин, що містять маніпуляції. Довжина прямокутника - місячна кількість візитів, логарифмічна шкала з основою = 2</p>'
-//     ],
-//     'links_net': [
-//         'Посилання між сайтами',
-//         '<p>Кольорові лінії - на які джерела посилався сайт. Сірі зв\'язки - хто посилався на сайт, який ми не досліджували</p>'
-//     ],
-//     'about_ru': [
-//         'Роспропаганда',
-//         '<p>Місце в рейтингу маніпулятивності</p>'
-//     ]
-// };
 
 var sites_headlines = {
     'm_emo': [
@@ -797,21 +771,7 @@ if (window.innerWidth > 576) {
                             site_divs.filter(function (d) { return d.site_type !== 'vata' })
                                 .classed('hide_non_ru', false);
                         }
-                    })
-                .onStepProgress(function (r) {
-                    if (r.element.id === 'about_ru' && r.progress > prev_step_progress && r.progress > 0.85) {
-                        $(r.element).closest('section').find('.h3')
-                            .css('opacity', 0)
-                            .css('pointer-events', 'none');
-                        prev_step_progress = null;
-                    } else if (r.element.id === 'about_ru' && r.progress < prev_step_progress && r.progress > 0.85) {
-                        $(r.element).closest('section').find('.h3')
-                            .css('opacity', 1)
-                            .css('pointer-events', 'auto');
-                        prev_step_progress = null;
-                    }
-                    prev_step_progress = r.progress;
-                });
+                    });
 
             var tippy_tip;
 

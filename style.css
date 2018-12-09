@@ -65,18 +65,29 @@ header {
 header #logos {
   position: absolute;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
   padding: 1.5em;
   box-sizing: border-box;
+}
+header #logos div {
+  display: flex;
+  align-items: center;
+  line-height: 1em;
 }
 header #logos img {
   max-height: 1em;
 }
-header #logos i {
+header #logos #social i {
   color: #efefef;
   font-size: 1.75em;
   padding: 0 0 0 0.5em;
+  max-height: 1em;
+}
+header #logos #lang_switch {
+  color: #efefef;
+  font-weight: 600;
+  padding: 0 0.5em 0 0.5em;
 }
 header h1 {
   font-size: 3em;
