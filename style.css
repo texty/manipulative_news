@@ -93,7 +93,8 @@ header h1 {
   font-size: 3em;
   background-image: url("img/glitch.jpg");
   border: 2px solid #efefef;
-  background-size: cover;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   color: #efefef;
   margin: 0 0 10% 0;
   padding: 3em 5px 3em 5px;
