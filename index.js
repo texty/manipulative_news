@@ -1,3 +1,5 @@
+// sass style.scss style.css && browserify index.js -o bundle.js && postcss style.css -o style_prefixed.css --use autoprefixer
+// sass for win only - if no normal watcher
 const $ = require("jquery");
 require('intersection-observer');
 const scrollama = require('scrollama');
