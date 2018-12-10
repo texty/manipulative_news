@@ -102,7 +102,7 @@ var fullscreen_fig = function (scroller=null) {
         });
 
     $('#topic_viz canvas')
-        .attr('width', '100vw')
+        .attr('width', document.documentElement.offsetWidth )
         .attr('height', function () {
             return window.innerHeight - document.querySelector('#topic_map div.h3').offsetHeight;
         });
