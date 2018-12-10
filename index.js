@@ -85,10 +85,6 @@ var fullscreen_fig = function (scroller=null) {
         .attr('height', function() {
             return window.innerHeight - $(this).closest('section').find('.h3').get(0).offsetHeight;
         });
-    
-    $('#topic_viz canvas')
-        .attr('width', function () { return `window.innerWidth`; })
-        .attr('height', function () { return `${window.outerHeight - $(this).closest('section').find('.h3').get(0).offsetHeight}`; });
 
     $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites')
         .css( 'min-height', window.innerHeight );
@@ -1135,6 +1131,9 @@ var points = {
 d3.json("./labels.json").then(function(data) {
     const tmap_scroller = scrollama();
     fullscreen_fig(tmap_scroller);
+    $('#topic_viz canvas')
+        .attr('width', function () { return $(this).closest('figure').width(); })
+        .attr('height', function () { return $(this).closest('figure').height(); });
 
     width = +canvas.attr('width');
     height = +canvas.attr('height');
