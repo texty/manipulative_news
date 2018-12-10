@@ -1136,6 +1136,14 @@ d3.json("./labels.json").then(function(data) {
         .attr('width', function () { return $(this).closest('figure').width(); })
         .attr('height', function () { return $(this).closest('figure').height(); });
 
+    $(window).resize( function() {
+        $('#topic_viz canvas')
+            .attr('width', function () { return $(this).closest('figure').width(); })
+            .attr('height', function () { return $(this).closest('figure').height(); });
+        width = +canvas.attr('width');
+        height = +canvas.attr('height');
+    } );
+
     width = +canvas.attr('width');
     height = +canvas.attr('height');
     label_array = data;
