@@ -659,6 +659,8 @@ div#tline_text {
           background-color: rgba(239, 239, 239, 0.8);
           font-size: 0.85em;
           font-style: italic; }
+      #topic_map figure #topic_tip #saakashvili {
+        margin-bottom: 20vh; }
       #topic_map figure #topic_tip p {
         background-color: rgba(239, 239, 239, 0.8);
         box-shadow: 0 0 0.5em 1px #d6d6d6;
