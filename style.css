@@ -629,8 +629,8 @@ div#tline_text {
       box-sizing: border-box; }
     #topic_map figure #topic_tip {
       position: absolute;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       box-sizing: border-box;
       padding: 2em;
       top: 0;
