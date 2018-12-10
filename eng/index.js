@@ -88,7 +88,7 @@ var fullscreen_fig = function (scroller=null) {
 
     $('#topic_viz canvas')
         .attr('width', function () { window.innerWidth })
-        .attr('height', function () { return `${window.outerHeight}px`; });
+        .attr('height', function () { return window.outerHeight });
 
     $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites')
         .css( 'min-height', window.innerHeight );
