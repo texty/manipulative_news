@@ -103,8 +103,10 @@ var fullscreen_fig = function (scroller=null) {
         });
 
     $('#topic_viz canvas')
-        .attr('width', function () { return $(this).closest('figure').width(); })
-        .attr('height', function () { return $(this).closest('figure').height(); });
+        .attr('width', '100vw')
+        .attr('height', function () {
+            return window.innerHeight - document.querySelector('#topic_map div.h3').offsetHeight;
+        });
 
     if (scroller == null) {} else { scroller.resize() }
 };

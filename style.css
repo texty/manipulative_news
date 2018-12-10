@@ -621,7 +621,7 @@ div#tline_text {
     position: sticky;
     top: 0; }
   #topic_map figure {
-    margin: 1em;
+    margin: 0;
     padding: 0;
     position: sticky;
     box-sizing: border-box; }
