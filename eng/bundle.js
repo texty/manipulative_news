@@ -102,6 +102,10 @@ var fullscreen_fig = function (scroller=null) {
             return `${h3.get(0).offsetHeight}px`;
         });
 
+    $('#topic_viz canvas')
+        .attr('width', function () { return $(this).closest('figure').width(); })
+        .attr('height', function () { return $(this).closest('figure').height(); });
+
     if (scroller == null) {} else { scroller.resize() }
 };
 
@@ -1131,14 +1135,8 @@ d3.json("../labels.json").then(function(data) {
     const tmap_scroller = scrollama();
     fullscreen_fig(tmap_scroller);
 
-    $('#topic_viz canvas')
-        .attr('width', function () { return $(this).closest('figure').width(); })
-        .attr('height', function () { return $(this).closest('figure').height(); });
-
     $(window).resize( function() {
-        $('#topic_viz canvas')
-            .attr('width', function () { return $(this).closest('figure').width(); })
-            .attr('height', function () { return $(this).closest('figure').height(); });
+        fullscreen_fig(tmap_scroller);
         width = +canvas.attr('width');
         height = +canvas.attr('height');
     } );
