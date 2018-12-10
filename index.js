@@ -80,11 +80,15 @@ var fullscreen_fig = function (scroller=null) {
             .css( 'min-height', window.innerHeight );
     }
 
-    d3.selectAll('#sites_net_svg, #topic_viz canvas')
+    d3.selectAll('#sites_net_svg')
         .attr('width', function () { return this.parentNode.offsetWidth })
         .attr('height', function() {
             return window.innerHeight - $(this).closest('section').find('.h3').get(0).offsetHeight;
         });
+    
+    $('#topic_viz canvas')
+        .attr('width', function () { return `${window.innerWidth}px`; })
+        .attr('height', function () { return `${window.outerHeight}px`; });
 
     $('#wire_vru #spread_wire div.hline_day_feed, #spread_wire div#tline_text, #sites')
         .css( 'min-height', window.innerHeight );
