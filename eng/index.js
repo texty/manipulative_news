@@ -421,7 +421,7 @@ var sites_headlines = {
     'm_emo': [
         'EMOTIONAL MANIPULATIONS',
         '<p>Coloring and placing in this ranking indicate the percentage of emotionally manipulative news, <span>20% - 85%</span>. The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank">log<sub>2</sub></a> scale <svg></svg></p>' +
-        '<p>When scrolling – ranking’s type is changing</p>'
+        '<p>Scroll down to change the type of ranking</p>'
     ],
     'm_arg': [
         'THE MANIPULATIONS WITH ARGUMENTS',
