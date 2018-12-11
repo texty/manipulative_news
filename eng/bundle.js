@@ -421,18 +421,18 @@ var change_sites_list = {
 var sites_headlines = {
     'm_emo': [
         'EMOTIONAL MANIPULATIONS',
-        '<p>Coloring and placing in this ranking indicate the percentage of emotionally manipulative news, <span>20% - 85%</span>. The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank">log<sub>2</sub></a> scale <svg></svg></p>' +
-        '<p>When scrolling – ranking’s type is changing</p>'
+        '<p>Coloring and placing in this ranking indicate the percentage of emotionally manipulative news, <span>20% - 85%</span>. The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank" class="green">log<sub>2</sub></a> scale <svg></svg></p>' +
+        '<p>Scroll down to change the type of ranking</p>'
     ],
     'm_arg': [
         'THE MANIPULATIONS WITH ARGUMENTS',
         '<p>Ranking of websites with the proportion of news containing false arguments, <span>20% - 85%</span></p>' +
-        '<p>The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank">log<sub>2</sub></a> scale <svg></svg></p>'
+        '<p>The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank" class="green">log<sub>2</sub></a> scale <svg></svg></p>'
     ],
     'm_man': [
         'TOTAL SCORE OF MANIPULATIVENESS',
         '<p>% of news in which at least one of the manipulations has been found, <span>20% - 85%</span></p>' +
-        '<p>Coloring and placing in this ranking indicate the percentage of news containing manipulations. The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank">log<sub>2</sub></a> scale <svg></svg></p>'
+        '<p>Coloring and placing in this ranking indicate the percentage of news containing manipulations. The length of each rectangle means a number of visits per month, <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" target="_blank" class="green">log<sub>2</sub></a> scale <svg></svg></p>'
     ],
     'links_net': [
         'Links between sites',
