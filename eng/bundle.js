@@ -1127,13 +1127,13 @@ function transition(canvas) {
 }
 var correction = 0;
 var points = { 
-    'poroshenko': 730,
-    'saakashvili': 728,
-    'ukraine': 741
+    'poroshenko': 1450,
+    'saakashvili': 1448,
+    'ukraine': 1472
 };
 
 // Main logic
-d3.json("../labels.json").then(function(data) {
+d3.json("labels.json").then(function(data) {
     const tmap_scroller = scrollama();
     fullscreen_fig(tmap_scroller);
 
