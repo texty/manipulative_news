@@ -1,4 +1,4 @@
-// sass style.scss style.css && browserify index.js -o bundle.js && postcss style.css -o style_prefixed.css --use autoprefixer
+// sass style.scss style.css && browserify index.js -o bundle.js && postcss style.css -o style_prefixed.css --use autoprefixer && browserify eng/index.js -o eng/bundle.js
 // sass for win only - if no normal watcher
 const $ = require("jquery");
 require('intersection-observer');
