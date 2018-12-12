@@ -203,7 +203,6 @@ a.green {
 
   p {
     font-size: 0.75em;
-    line-height: 2;
     letter-spacing: 0.075em;
     margin: 0;
   }
@@ -971,7 +970,8 @@ div#tline_text {
       width: 80%;
       background-color: rgba($bgcol, 0.85);
       z-index: 1;
-      padding: 2em;
+      padding: 1em;
+      box-sizing: border-box;
       @media #{$medium} {
         width: 25%;
         margin-right: 4em;
@@ -1041,7 +1041,7 @@ footer {
   justify-content: center;
   justify-items: center;
   align-content: center;
-  margin: 4em 0 0 1em;
+  margin: 4em 0 0 0;
 
   i{
     margin: 0.5em;
@@ -1066,6 +1066,11 @@ footer {
 
   img {
     max-height: 4em;
+    max-width: 90%;
+  }
+
+  div {
+    text-align: center;
   }
 
   h3 {
