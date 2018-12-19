@@ -39,6 +39,10 @@ body {
   @media #{$mobile} {
     font-size: 85%;
   }
+
+  * {
+    outline: none;
+  }
 }
 
 .reading {
@@ -818,6 +822,7 @@ div#tline_text {
     padding: 0 0 0 0;
     text-align: left;
   }
+
 }
 
 #howto {
