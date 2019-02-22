@@ -470,7 +470,7 @@ div#tline_text {
       position: sticky;
       display: flex;
       flex-direction: column;
-      justify-content: start;
+      justify-content: flex-start;
       background-color: $bgcol;
       z-index: 7;
 
@@ -581,8 +581,6 @@ div#tline_text {
     flex-wrap: wrap;
     align-items: flex-start;
     position: sticky;
-    //z-index: 6;
-    //align-content: flex-start;
     overflow: hidden;
 
     .big_text {
@@ -966,6 +964,7 @@ div#tline_text {
     justify-content: flex-end;
     align-items: flex-end;
     z-index: 4;
+    transform: translate3d(0, 0, 0);
     @media #{$mobile} {
       justify-content: space-around;
       align-items: center;
